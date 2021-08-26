@@ -6,13 +6,36 @@
     >
       <!--  -->
 
+       <v-list
+          dense
+          rounded
+        >
+          <v-list-item link to="dashboard">
+            <v-list-item-icon>
+              <v-icon>mdi-laptop</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title>dashboard</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
+
+           <v-list-item link to="contact">
+            <v-list-item-icon>
+              <v-icon>mdi-account</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title>contact</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
+
+        </v-list>
+
     </v-navigation-drawer>
 
-    <!-- <v-app-bar app>
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-
-      <v-toolbar-title>Application</v-toolbar-title>
-    </v-app-bar> -->
 
     <v-app-bar
     app
@@ -63,6 +86,7 @@
 
     <v-main>
       <!--  -->
+      <router-view></router-view>
     </v-main>
   </v-app>
 </template>

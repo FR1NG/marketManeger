@@ -9,6 +9,7 @@ require('./bootstrap');
 window.Vue = require('vue').default;
 
 import vuetify from '../plugins/vuetify';
+import router from './router'
 
 /**
  * The following block of code may be used to automatically register your
@@ -31,5 +32,6 @@ Vue.component('app-container', require('./layouts/AppContainer.vue').default);
 
 const app = new Vue({
     vuetify : vuetify,
+    router : router,
     el: '#app',
 });
