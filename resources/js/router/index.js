@@ -4,7 +4,6 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter);
 
 import dashboard from '../components/dashboard/DashboardContainer'
-import contact from '../components/contact/ContactContainer'
 
 const routes = [
     {
@@ -13,10 +12,35 @@ const routes = [
         path : "/dashboard"
     },
     {
-        component : contact,
-        name : "contact",
-        path : "/contact"
-    }
+        component : () => import('../components/fournisseur/list'),
+        name : "fournisseur",
+        path : "/fournisseur"
+    },
+    {
+        component : () => import('../components/fournisseur/ajouter'),
+        name : "ajouterFournisseur",
+        path : "/ajouterFournisseur"
+    },
+    {
+        component : () => import('../components/employe/list'),
+        name : "employe",
+        path : "/employe"
+    },
+    {
+        component : () => import('../components/achat/list'),
+        name : "achat",
+        path : "/achat"
+    },
+    {
+        component : () => import('../components/branchement/list'),
+        name : "branchement",
+        path : "/branchement"
+    },
+    {
+        component : () => import('../components/parametre/index'),
+        name : "parametre",
+        path : "/parametre"
+    },
 ];
 
 export default new VueRouter({

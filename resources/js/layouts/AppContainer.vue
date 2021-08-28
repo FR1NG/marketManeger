@@ -1,106 +1,33 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer
-      v-model="drawer"
-      app
-    >
-      <!--  -->
 
-       <v-list
-          dense
-          rounded
-        >
-          <v-list-item link to="dashboard">
-            <v-list-item-icon>
-              <v-icon>mdi-laptop</v-icon>
-            </v-list-item-icon>
+    <!-- sidebar:BEGIN -->
+    <side-bar></side-bar>
+    <!-- sidebar:END -->
 
-            <v-list-item-content>
-              <v-list-item-title>dashboard</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
+    <!-- navbar:BEGIN -->
+    <nav-bar></nav-bar>
+    <!-- navbar:END -->
 
-
-           <v-list-item link to="contact">
-            <v-list-item-icon>
-              <v-icon>mdi-account</v-icon>
-            </v-list-item-icon>
-
-            <v-list-item-content>
-              <v-list-item-title>contact</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-
-
-        </v-list>
-
-    </v-navigation-drawer>
-
-
-    <v-app-bar
-    app
-      color="deep-purple accent-4"
-      dense
-      dark
-    >
-      <v-app-bar-nav-icon @click="drawer= !drawer"></v-app-bar-nav-icon>
-
-      <v-toolbar-title>Page title</v-toolbar-title>
-
-      <v-spacer></v-spacer>
-
-      <v-btn icon>
-        <v-icon>mdi-heart</v-icon>
-      </v-btn>
-
-      <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
-
-      <v-menu
-        left
-        bottom
-      >
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            icon
-            v-bind="attrs"
-            v-on="on"
-          >
-            <v-icon>mdi-dots-vertical</v-icon>
-          </v-btn>
-        </template>
-
-        <v-list>
-          <v-list-item link @click="logout">
-              <v-list-item-icon>
-                  <v-icon>
-                      mdi-logout
-                  </v-icon>
-              </v-list-item-icon>
-            <v-list-item-title>Logout</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
-    </v-app-bar>
 
     <v-main>
-      <!--  -->
+      <!--main:BEGIN-->
       <router-view></router-view>
+      <!-- main:END -->
     </v-main>
   </v-app>
 </template>
 
 <script>
+import NavBar from './partials/NavBar.vue';
+import SideBar from './partials/SideBar.vue';
   export default {
-    data: () => ({ drawer: null }),
-    methods : {
-        logout(){
-            axios.post('logout')
-            .then(response =>{
-                window.location.href = 'login';
-            })
-        }
-    }
+    components : {
+      NavBar,
+      SideBar,
+    },
+    
+        SideBardata: () => ({ drawer: null }),
+   
   }
 </script>
