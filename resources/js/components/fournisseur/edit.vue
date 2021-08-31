@@ -1,7 +1,12 @@
 <template>
   <v-card class="ma-4 pa-4">
+    <!-- loader:BEGIN -->
+    <v-overlay :value="overlay">
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
+    </v-overlay>
+    <!-- loader:END -->
     <v-toolbar flat>
-      <v-toolbar-title>Ajouter Fournisseur</v-toolbar-title>
+      <v-toolbar-title>Modifier Fournisseur</v-toolbar-title>
       <v-divider class="mx-4" inset vertical></v-divider>
       <v-spacer></v-spacer>
 
@@ -48,10 +53,10 @@
       ></v-textarea>
 
       <v-card-actions>
-          <v-spacer></v-spacer>
+        <v-spacer></v-spacer>
         <v-btn outlined class="mr-4">Annuler</v-btn>
         <v-btn color="success" class="mr-4" type="submit" :loading="loading"
-          >Ajouter
+          >Modifier
         </v-btn>
       </v-card-actions>
     </v-form>
@@ -59,6 +64,7 @@
 </template>
 
 <script>
+import { useRoute } from "vue-router";
 export default {
   data() {
     return {
@@ -69,7 +75,6 @@ export default {
         address: "",
         note: "",
       },
-      loading: false,
       errors: {
         name: [],
         phone: [],
@@ -77,23 +82,17 @@ export default {
         address: [],
         note: [],
       },
+      loading: false,
+      overlay: true,
     };
   },
   methods: {
     handleSubmit() {
       this.loading = true;
       this.$store
-        .dispatch("fournisseur/store", { form: this.form })
+        .dispatch("fournisseur/update", { form: this.form })
         .then((response) => {
           this.loading = false;
-          console.log(this.errors);
-          this.form = {
-            name: "",
-            phone: null,
-            email: "",
-            address: "",
-            note: "",
-          };
           this.errors = {
             name: [],
             phone: [],
@@ -123,6 +122,28 @@ export default {
           }
         });
     },
+    getProvider() {
+      this.overlay = true;
+      this.$store
+        .dispatch("fournisseur/getProvider", { id: this.$route.params.id })
+        .then((response) => {
+          const provider = response.data;
+          this.form.id = provider.id;
+          this.form.name = provider.name;
+          this.form.phone = provider.phone;
+          this.form.email = provider.email;
+          this.form.address = provider.address;
+          this.form.note = provider.note;
+          this.overlay = false;
+        })
+        .catch(()=>{
+            this.overlay = false;
+        })
+    },
+  },
+  created() {
+    console.log(this.$route.params);
+    this.getProvider();
   },
 };
 </script>

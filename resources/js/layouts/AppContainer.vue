@@ -1,6 +1,5 @@
 <template>
   <v-app id="inspire">
-
     <!-- sidebar:BEGIN -->
     <side-bar></side-bar>
     <!-- sidebar:END -->
@@ -11,6 +10,10 @@
 
 
     <v-main>
+      <!-- alert holder:BEGIN -->
+      <alert></alert>
+      <!-- alert holder:END -->
+
       <!--main:BEGIN-->
       <router-view></router-view>
       <!-- main:END -->
@@ -19,15 +22,14 @@
 </template>
 
 <script>
+import Alert from '../components/extra/alert.vue';
 import NavBar from './partials/NavBar.vue';
 import SideBar from './partials/SideBar.vue';
   export default {
     components : {
       NavBar,
       SideBar,
-    },
-    
-        SideBardata: () => ({ drawer: null }),
-   
+      Alert,
+    }, 
   }
 </script>

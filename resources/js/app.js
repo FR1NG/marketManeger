@@ -8,6 +8,14 @@ require('./bootstrap');
 
 window.Vue = require('vue').default;
 
+    let token = document.head.querySelector('meta[name="csrf-token"]');
+
+    if (token) {
+        window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+    } else {
+        console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+    }
+
 import vuetify from '../plugins/vuetify';
 import router from './router'
 import store from './store'

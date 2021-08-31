@@ -19,12 +19,27 @@ const routes = [
     {
         component : () => import('../components/fournisseur/ajouter'),
         name : "ajouterFournisseur",
-        path : "/ajouterFournisseur"
+        path : "/fournisseur/ajouter"
+    },
+    {
+        component : () => import('../components/fournisseur/edit'),
+        name : "modifierFournisseur",
+        path : "/fournisseur/:id/modifier",
     },
     {
         component : () => import('../components/employe/list'),
         name : "employe",
         path : "/employe"
+    },
+    {
+        component : () => import('../components/employe/ajouter'),
+        name : "ajouterEmploye",
+        path : "/employe/ajouter"
+    },
+    {
+        component : () => import('../components/employe/edit'),
+        name : "modifierEmploye",
+        path : "/employe/:id/modifier",
     },
     {
         component : () => import('../components/achat/list'),
