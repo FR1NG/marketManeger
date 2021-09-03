@@ -14,7 +14,7 @@
       <v-divider></v-divider>
 
     <v-list dense >
-      <v-list-item v-for="link in links" :key="link.test" link :to="link.path">
+      <v-list-item v-for="link in links" :key="link.test" link :to="{name : link.path}">
         <v-list-item-icon>
           <v-icon>{{link.icon}}</v-icon>
         </v-list-item-icon>
@@ -33,12 +33,13 @@ export default {
     data(){
         return {
             links : [
-                {text : 'Tableau de bord', icon : 'mdi-laptop', path : '/dashboard'},
-                {text : 'Achat', icon : 'mdi-cart-outline', path : '/achat'},
-                {text : 'Employé', icon : 'mdi-account-outline', path : '/employe'},
-                {text : 'Fournisseur', icon : 'mdi-truck-outline', path : '/fournisseur'},
-                {text : 'Branchement', icon : 'mdi-tools', path : '/branchement'},
-                {text : 'Paramètres', icon : 'mdi-tune', path : '/parametre'},
+                {text : 'Tableau de bord', icon : 'mdi-laptop', path : 'dashboard'},
+                {text : 'Achat', icon : 'mdi-cart-outline', path : 'achats'},
+                {text : 'Employé', icon : 'mdi-account-outline', path : 'employes'},
+                {text : 'Fournisseur', icon : 'mdi-truck-outline', path : 'fournisseurs'},
+                {text : 'Article', icon : 'mdi-package-variant-closed', path : 'articles'},
+                {text : 'Branchement', icon : 'mdi-tools', path : 'branchements'},
+                {text : 'Paramètres', icon : 'mdi-tune', path : 'parametres'},
             ]
         }
     },
@@ -60,7 +61,7 @@ export default {
 
 <style>
 a.v-list-item--active.v-list-item.v-list-item--link.theme--light {
-    background: #0000007d;
+    background: #E53935;
     color: #fff;
 }
 

@@ -12,7 +12,7 @@
     >
       <template v-slot:top>
         <v-toolbar flat>
-          <v-toolbar-title>List Des Achats</v-toolbar-title>
+          <v-toolbar-title>List Des Articles</v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
 
@@ -21,7 +21,7 @@
             color="primary"
             dark
             class="mb-2"
-            :to="{ name: 'ajouterEmploye' }"
+            :to="{ name: 'ajouterArticles' }"
           >
             Ajouter
           </v-btn>
@@ -71,13 +71,10 @@ export default {
   data() {
     return {
       headers: [
-        { text: "№ de bon d'achat", value: "name" },
-        { text: "Fournisseur", value: "cin" },
-        { text: "Mode de payment", value: "cnss" },
-        { text: "Montant", value: "phone" },
-        { text: "Échéance", value: "email" },
-        { text: "Date & heure", value: "salery" },
-        { text: "Nbr d'article", value: "quality" },
+        { text: "DSG", value: "name" },
+        { text: "Catégorie", value: "category" },
+        { text: "Quantité en dépot", value: "quantity" },
+        { text: "Quantité de notification", value: "minimum_quantity" },
         { text: "Actions", value: "actions" },
       ],
       searchLoading: false,

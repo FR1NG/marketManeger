@@ -7,54 +7,74 @@ import dashboard from '../components/dashboard/DashboardContainer'
 
 const routes = [
     {
+        path : "/",
+        redirect : "/dashboard"
+    },
+    {
         component : dashboard,
         name : "dashboard",
         path : "/dashboard"
     },
     {
-        component : () => import('../components/fournisseur/list'),
-        name : "fournisseur",
-        path : "/fournisseur"
-    },
-    {
-        component : () => import('../components/fournisseur/ajouter'),
-        name : "ajouterFournisseur",
-        path : "/fournisseur/ajouter"
-    },
-    {
-        component : () => import('../components/fournisseur/edit'),
-        name : "modifierFournisseur",
-        path : "/fournisseur/:id/modifier",
+        component : () => import('../components/achat/list'),
+        name : "achats",
+        path : "/achats"
     },
     {
         component : () => import('../components/employe/list'),
-        name : "employe",
-        path : "/employe"
+        name : "employes",
+        path : "/employes"
     },
     {
         component : () => import('../components/employe/ajouter'),
         name : "ajouterEmploye",
-        path : "/employe/ajouter"
+        path : "/employes/ajouter"
     },
     {
         component : () => import('../components/employe/edit'),
         name : "modifierEmploye",
-        path : "/employe/:id/modifier",
+        path : "/employes/:id/modifier",
     },
     {
-        component : () => import('../components/achat/list'),
-        name : "achat",
-        path : "/achat"
+        component : () => import('../components/fournisseur/list'),
+        name : "fournisseurs",
+        path : "/fournisseurs"
+    },
+    {
+        component : () => import('../components/fournisseur/ajouter'),
+        name : "ajouterFournisseur",
+        path : "/fournisseurs/ajouter"
+    },
+    {
+        component : () => import('../components/fournisseur/edit'),
+        name : "modifierFournisseur",
+        path : "/fournisseurs/:id/modifier",
+    },
+    // articles routes
+    {
+        component : () => import('../components/article/list'),
+        name : "articles",
+        path : "/articles",
+    },
+    {
+        component : () => import('../components/article/ajouter'),
+        name : "ajouterArticles",
+        path : "/articles/ajouter",
+    },
+    {
+        component : () => import('../components/article/edit'),
+        name : "modifierArticles",
+        path : "/articles/:id/modifier",
     },
     {
         component : () => import('../components/branchement/list'),
-        name : "branchement",
-        path : "/branchement"
+        name : "branchements",
+        path : "/branchements"
     },
     {
         component : () => import('../components/parametre/index'),
-        name : "parametre",
-        path : "/parametre"
+        name : "parametres",
+        path : "/parametres"
     },
 ];
 

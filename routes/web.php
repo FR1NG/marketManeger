@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AchatController;
 use App\Http\Controllers\EmployeController;
 use App\Http\Controllers\FournisseurController;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +33,9 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/employe/details',[EmployeController::class,'details']);
     Route::patch('/employe/update',[EmployeController::class,'update']);
     Route::delete('/employe/delete',[EmployeController::class,'delete']);
+
+    // achats routes
+    // Route::post('/employe/store',[AchatController::class,'store']);
 
 
 
