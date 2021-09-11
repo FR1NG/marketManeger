@@ -21,7 +21,7 @@
             color="primary"
             dark
             class="mb-2"
-            :to="{ name: 'ajouterEmploye' }"
+            :to="{ name: 'ajouterAchats' }"
           >
             Ajouter
           </v-btn>
@@ -81,7 +81,7 @@ export default {
         { text: "Actions", value: "actions" },
       ],
       searchLoading: false,
-      loading : false,
+      loading: false,
     };
   },
   watch: {
@@ -119,13 +119,14 @@ export default {
   methods: {
     getData() {
       this.loading = true;
-      this.$store.dispatch("employe/getData")
-      .then(()=>{
-        this.loading = false;
-      })
-      .catch(()=>{
-        this.loading = false;
-      });
+      this.$store
+        .dispatch("employe/getData")
+        .then(() => {
+          this.loading = false;
+        })
+        .catch(() => {
+          this.loading = false;
+        });
     },
     handleSearch() {
       this.searchLoading = true;
@@ -141,16 +142,16 @@ export default {
       }, 500); // delay
     },
     remove(id) {
-      this.$store.commit('employe/setDelete',{id : id});
+      this.$store.commit("employe/setDelete", { id: id });
     },
-    edit(employe){
+    edit(employe) {
       this.$router.replace({
-        name : 'modifierEmploye',
-        params : {
-          id : employe.id
-        }
-      })
-    }
+        name: "modifierEmploye",
+        params: {
+          id: employe.id,
+        },
+      });
+    },
   },
   created() {
     this.getData();

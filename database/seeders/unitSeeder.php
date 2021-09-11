@@ -15,20 +15,19 @@ class unitSeeder extends Seeder
     public function run()
     {
         $units = [
-            ['text'=>'Article','abr'=>'Article','description'=>''],
-            ['text'=>'Kilograme','abr'=>'KG','description'=>''],
-            ['text'=>'Litre','abr'=>'L','description'=>''],
-            ['text'=>'Mètre','abr'=>'M','description'=>''],
-            ['text'=>'Pack','abr'=>'Pack','description'=>''],
+            ['name' => 'Article', 'abr' => 'Article', 'description' => ''],
+            ['name' => 'Kilograme', 'abr' => 'KG', 'description' => ''],
+            ['name' => 'Litre', 'abr' => 'L', 'description' => ''],
+            ['name' => 'Mètre', 'abr' => 'M', 'description' => ''],
+            ['name' => 'Pack', 'abr' => 'Pack', 'description' => ''],
         ];
-        
-            foreach($units as $unit)
-            {
-                unit::create([
-                    'name'=>$unit['name'],
-                    'abr'=>$unit['abr'],
-                    'description'=>$unit['description'],
-                ]);
-            }
+
+        foreach ($units as $unit) {
+            unit::create([
+                'name' => $unit['name'],
+                'abr' => $unit['abr'],
+                'description' => $unit['description'],
+            ]);
+        }
     }
 }

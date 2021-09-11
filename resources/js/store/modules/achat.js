@@ -6,6 +6,8 @@ export const state = {
     lastPage: null,
     search: "",
     idToDelete: null,
+    articles: [],
+    fournisseurs: [],
 };
 
 export const getters = {
@@ -15,6 +17,8 @@ export const getters = {
     search: state => state.search,
     idToDelete: state => state.idToDelete,
     deleteDialog: state => state.idToDelete != null,
+    articles: state => state.articles,
+    fournisseurs: state => state.fournisseurs,
 };
 
 export const mutations = {
@@ -35,6 +39,10 @@ export const mutations = {
     endDelete(state) {
         state.idToDelete = null;
     },
+    setCreateData(state, data) {
+        state.articles = data.articles;
+        state.fournisseurs = data.fournisseurs;
+    }
 };
 
 export const actions = {
@@ -59,24 +67,24 @@ export const actions = {
                 });
         });
     },
-    getAchat(context,payload){
-        return new Promise((resolve,reject)=> {
-            axios.get('achats/details',{
-                params : {
-                    id : payload.id,
+    getAchat(context, payload) {
+        return new Promise((resolve, reject) => {
+            axios.get('achats/details', {
+                params: {
+                    id: payload.id,
                 }
             })
-            .then(response => {
-                // resolve Promise
-                resolve(response);
-            })
-            .catch(error => {
-                // reject Promise
-                reject(error.response);
+                .then(response => {
+                    // resolve Promise
+                    resolve(response);
+                })
+                .catch(error => {
+                    // reject Promise
+                    reject(error.response);
 
-                // alert
-                context.dispatch('alert/show',{text : error.response.data.message,type : 'error'},{root : true});
-            })
+                    // alert
+                    context.dispatch('alert/show', { text: error.response.data.message, type: 'error' }, { root: true });
+                })
         });
     },
     store(context, payload) {
@@ -148,38 +156,54 @@ export const actions = {
                 });
         });
     },
-    update(context,payload){
+    update(context, payload) {
         const provider = payload.form;
-        return new Promise((resolve,reject)=> {
-            axios.patch('achats/update',{
-                id : provider.id,
-                name : provider.name,
-                cin : provider.cin,
-                cnss : provider.cnss,
-                phone : provider.phone,
-                email : provider.email,
-                address : provider.address,
-                salery : provider.salery,
-                quality : provider.quality,
-                note : provider.note,
+        return new Promise((resolve, reject) => {
+            axios.patch('achats/update', {
+                id: provider.id,
+                name: provider.name,
+                cin: provider.cin,
+                cnss: provider.cnss,
+                phone: provider.phone,
+                email: provider.email,
+                address: provider.address,
+                salery: provider.salery,
+                quality: provider.quality,
+                note: provider.note,
             })
-            .then(response => {
+                .then(response => {
 
-                // resolve promise
-                resolve(response);
+                    // resolve promise
+                    resolve(response);
 
-                // alert
-                context.dispatch('alert/show',{text : response.data.message,type : 'success'},{root : true});
-            })
-            .catch(error => {
+                    // alert
+                    context.dispatch('alert/show', { text: response.data.message, type: 'success' }, { root: true });
+                })
+                .catch(error => {
 
-                // reject Promise
-                reject(error.response);
+                    // reject Promise
+                    reject(error.response);
 
-                // alert
-                context.dispatch('alert/show',{text : error.response.data.message,type : 'error'},{root : true});
+                    // alert
+                    context.dispatch('alert/show', { text: error.response.data.message, type: 'error' }, { root: true });
 
-            })
+                })
         })
+    },
+
+    getCreateData(context, payload) {
+        return new Promise((resolve, reject) => {
+            axios.get('achats/create')
+                .then(response => {
+                    // resolve promise
+                    resolve(response);
+                    // set data
+                    context.commit('setCreateData', response.data);
+                })
+                .catch(error => {
+                    // test
+                    console.log(error.response);
+                })
+        });
     }
 };

@@ -16,9 +16,9 @@ class CreateArticlesTable extends Migration
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('categorie_id');
+            $table->foreignId('category_id');
             $table->foreignId('unit_id')->default(1);
-            $table->integer('minimu_quantity');
+            $table->integer('notification_quantity')->default(0);
             $table->string('image')->nullable();
             $table->timestamps();
         });

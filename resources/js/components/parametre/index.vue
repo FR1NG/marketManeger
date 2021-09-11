@@ -14,14 +14,14 @@
       </v-toolbar>
 
       <v-tabs-items v-model="tab">
-        <v-tab-item >
+        <v-tab-item>
           <v-card flat v-if="tab == 0">
-            <Article></Article>
+            <v-card-text>afichage component</v-card-text>
           </v-card>
         </v-tab-item>
-        <v-tab-item >
+        <v-tab-item>
           <v-card flat v-if="tab == 1">
-            <v-card-text>the second</v-card-text>
+            <Article></Article>
           </v-card>
         </v-tab-item>
       </v-tabs-items>
@@ -30,23 +30,18 @@
 </template>
 
 <script>
-import Article from "./article.vue"
+import Article from "./partials/articles/articles.vue";
 export default {
-  components : {
+  components: {
     Article,
   },
   data() {
     return {
       tab: null,
-      items: ["afichage","articles"],
+      items: ["afichage", "articles", "Catégories", "Unités de mesure"],
       text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     };
   },
-  watch: {
-    tab(newval){
-      console.log(newval);
-    }
-  }
 };
 </script>
 <style>

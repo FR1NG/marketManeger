@@ -1,5 +1,19 @@
 <template>
   <v-container>
+    <v-row>
+      <!-- getgories:BEGIN -->
+      <categories></categories>
+      <!-- getgories:END -->
+      <v-spacer></v-spacer>
+      <v-divider class="mx-4" inset vertical></v-divider>
+
+      <!-- units:BEGIN -->
+      <units></units>
+      <!-- units:END -->
+    </v-row>
+    <!-- create artice:BEGIN -->
+    <create-article v-if="createArticleDialog"></create-article>
+    <!-- create artice:END -->
     <!-- delete dialog:BEGIN -->
     <!-- <delete></delete> -->
     <!-- delete dialog:END -->
@@ -16,13 +30,7 @@
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
 
-          <v-btn
-            link
-            color="primary"
-            dark
-            class="mb-2"
-            :to="{ name: 'ajouterArticles' }"
-          >
+          <v-btn color="primary" dark class="mb-2" @click="createArticle">
             Ajouter
           </v-btn>
         </v-toolbar>
@@ -63,22 +71,29 @@
 </template>
 
 <script>
+import Categories from "../categories/categories.vue";
+import Units from "../units/units.vue";
+import CreateArticle from "./CreateArticle.vue";
 // import Delete from "./delete.vue";
 export default {
   components: {
+    Categories,
+    Units,
+    CreateArticle,
     // Delete,
   },
   data() {
     return {
       headers: [
         { text: "DSG", value: "name" },
-        { text: "Catégorie", value: "category" },
+        { text: "Catégorie", value: "category.name" },
+        { text: "Unité", value: "unit.name" },
         { text: "Quantité en dépot", value: "quantity" },
-        { text: "Quantité de notification", value: "minimum_quantity" },
+        { text: "Quantité de notification", value: "notification_quantity" },
         { text: "Actions", value: "actions" },
       ],
       searchLoading: false,
-      loading : false,
+      loading: false,
     };
   },
   watch: {
@@ -91,38 +106,42 @@ export default {
   },
   computed: {
     items() {
-      return this.$store.getters["employe/items"];
+      return this.$store.getters["article/articles"];
     },
     lastPage() {
-      return this.$store.getters["employe/lastPage"];
+      return this.$store.getters["article/lastPage"];
     },
     currentPage: {
       get() {
-        return this.$store.getters["employe/currentPage"];
+        return this.$store.getters["article/currentPage"];
       },
       set(value) {
-        this.$store.commit("employe/setCurrentPage", { page: value });
+        this.$store.commit("article/setCurrentPage", { page: value });
       },
     },
     search: {
       get() {
-        return this.$store.getters["employe/search"];
+        return this.$store.getters["article/search"];
       },
       set(value) {
-        this.$store.commit("employe/setSearch", { search: value });
+        this.$store.commit("article/setSearch", { search: value });
       },
+    },
+    createArticleDialog() {
+      return this.$store.getters["article/createArticleDialog"];
     },
   },
   methods: {
     getData() {
       this.loading = true;
-      this.$store.dispatch("employe/getData")
-      .then(()=>{
-        this.loading = false;
-      })
-      .catch(()=>{
-        this.loading = false;
-      });
+      this.$store
+        .dispatch("article/getData")
+        .then(() => {
+          this.loading = false;
+        })
+        .catch(() => {
+          this.loading = false;
+        });
     },
     handleSearch() {
       this.searchLoading = true;
@@ -130,24 +149,27 @@ export default {
       this.timeout = setTimeout(() => {
         //action
         this.$store
-          .dispatch("employe/getData")
+          .dispatch("article/getData")
           // promis resolved
           .then(() => {
             this.searchLoading = false;
           });
       }, 500); // delay
     },
-    remove(id) {
-      this.$store.commit('employe/setDelete',{id : id});
+    createArticle() {
+      this.$store.commit("article/showCreateArticleDialog");
     },
-    edit(employe){
+    remove(id) {
+      this.$store.commit("employe/setDelete", { id: id });
+    },
+    edit(employe) {
       this.$router.replace({
-        name : 'modifierEmploye',
-        params : {
-          id : employe.id
-        }
-      })
-    }
+        name: "modifierEmploye",
+        params: {
+          id: employe.id,
+        },
+      });
+    },
   },
   created() {
     this.getData();
