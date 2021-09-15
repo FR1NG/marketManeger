@@ -15,6 +15,10 @@ class CreateArticleEnLivraisonsTable extends Migration
     {
         Schema::create('article_en_livraisons', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('achat_id');
+            $table->foreignId('article_id');
+            $table->foreignId('livraison_id');
+            $table->integer('quantity');
             $table->timestamps();
         });
     }

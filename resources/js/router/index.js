@@ -15,16 +15,29 @@ const routes = [
         name: "dashboard",
         path: "/dashboard"
     },
+    // achat routers
     {
         component: () => import('../components/achat/list'),
         name: "achats",
         path: "/achats"
     },
     {
+        component: () => import('../components/achat/details'),
+        name: "achatDetails",
+        path: "/achats/:id/details"
+    },
+    {
         component: () => import('../components/achat/ajouter'),
         name: "ajouterAchats",
         path: "/achats/ajouter"
     },
+    // livraison routers
+    {
+        component: () => import('../components/achat/livraison/details.vue'),
+        name: "livraisonDetails",
+        path: "/livraisons/:id/details"
+    },
+    // employees routers
     {
         component: () => import('../components/employe/list'),
         name: "employes",

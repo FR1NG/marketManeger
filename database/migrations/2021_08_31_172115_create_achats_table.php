@@ -17,7 +17,7 @@ class CreateAchatsTable extends Migration
             $table->id();
             $table->string('ndbc');
             $table->foreignId('fournisseur_id');
-            $table->integer('payment_mode')->default(1);
+            $table->string('payment_mode');
             $table->string('check_number')->nullable();
             $table->float('amount');
             $table->date('deadline');

@@ -9,6 +9,10 @@
     <!-- navbar:END -->
 
     <v-main>
+      <!-- toast holder:BEGIN -->
+      <toast v-if="toast"></toast>
+      <!-- toast holder:END -->
+
       <!-- alert holder:BEGIN -->
       <alert></alert>
       <!-- alert holder:END -->
@@ -22,6 +26,7 @@
 
 <script>
 import Alert from "../components/extra/alert.vue";
+import Toast from "../components/extra/toast.vue";
 import NavBar from "./partials/NavBar.vue";
 import SideBar from "./partials/SideBar.vue";
 export default {
@@ -29,6 +34,12 @@ export default {
     NavBar,
     SideBar,
     Alert,
+    Toast,
+  },
+  computed: {
+    toast() {
+      return this.$store.getters["toast/toast"];
+    },
   },
 };
 </script>

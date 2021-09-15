@@ -5,6 +5,7 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\EmployeController;
 use App\Http\Controllers\FournisseurController;
+use App\Http\Controllers\LivraisonController;
 use App\Http\Controllers\UnitController;
 use Illuminate\Support\Facades\Route;
 
@@ -54,11 +55,14 @@ Route::middleware(['auth'])->group(function () {
 
 
     // achats routes
-    Route::get('achats/create', [AchatController::class, 'create']);
-    // Route::post('/employe/store',[AchatController::class,'store']);
+    Route::get('/achats/index', [AchatController::class, 'index']);
+    Route::get('/achats/create', [AchatController::class, 'create']);
+    Route::post('/achats/store', [AchatController::class, 'store']);
+    Route::get('/achats/details', [AchatController::class, 'details']);
 
-
-
+    // livraison routes
+    Route::post('/livraisons/store', [LivraisonController::class, 'store']);
+    Route::get('/livraisons/details', [LivraisonController::class, 'details']);
 });
 
 Auth::routes();

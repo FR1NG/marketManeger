@@ -9,6 +9,7 @@
       :items="items"
       :loading="loading"
       hide-default-footer
+      @click:row="handleRowClick"
     >
       <template v-slot:top>
         <v-toolbar flat>
@@ -39,6 +40,12 @@
         </v-card-title>
       </template>
 
+      <!-- BEGIN:action column -->
+      <template v-slot:item.check_number="{ item }">
+        <v-icon v-if="!item.check_number"> mdi-minus </v-icon>
+        <div v-else>{{ item.check_number }}</div>
+      </template>
+      <!-- END:action column -->
       <!-- BEGIN:action column -->
       <template v-slot:item.actions="{ item }">
         <v-btn color="info" @click.stop="edit(item)" icon text small>
@@ -71,13 +78,13 @@ export default {
   data() {
     return {
       headers: [
-        { text: "№ de bon d'achat", value: "name" },
-        { text: "Fournisseur", value: "cin" },
-        { text: "Mode de payment", value: "cnss" },
-        { text: "Montant", value: "phone" },
-        { text: "Échéance", value: "email" },
-        { text: "Date & heure", value: "salery" },
-        { text: "Nbr d'article", value: "quality" },
+        { text: "№ de bon de commande", value: "ndbc" },
+        { text: "Fournisseur", value: "fournisseur.name" },
+        { text: "Mode de payment", value: "payment_mode" },
+        { text: "№ de chéque", value: "check_number" },
+        { text: "Montant", value: "amount" },
+        { text: "Échéance", value: "deadline" },
+        { text: "Nbr d'article", value: "items_count" },
         { text: "Actions", value: "actions" },
       ],
       searchLoading: false,
@@ -94,17 +101,17 @@ export default {
   },
   computed: {
     items() {
-      return this.$store.getters["employe/items"];
+      return this.$store.getters["achat/items"];
     },
     lastPage() {
-      return this.$store.getters["employe/lastPage"];
+      return this.$store.getters["achat/lastPage"];
     },
     currentPage: {
       get() {
-        return this.$store.getters["employe/currentPage"];
+        return this.$store.getters["achat/currentPage"];
       },
       set(value) {
-        this.$store.commit("employe/setCurrentPage", { page: value });
+        this.$store.commit("achat/setCurrentPage", { page: value });
       },
     },
     search: {
@@ -120,7 +127,7 @@ export default {
     getData() {
       this.loading = true;
       this.$store
-        .dispatch("employe/getData")
+        .dispatch("achat/getData")
         .then(() => {
           this.loading = false;
         })
@@ -149,6 +156,14 @@ export default {
         name: "modifierEmploye",
         params: {
           id: employe.id,
+        },
+      });
+    },
+    handleRowClick(row) {
+      this.$router.replace({
+        name: "achatDetails",
+        params: {
+          id: row.id,
         },
       });
     },

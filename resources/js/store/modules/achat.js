@@ -8,6 +8,12 @@ export const state = {
     idToDelete: null,
     articles: [],
     fournisseurs: [],
+    details: {
+        fournisseur: {}
+    },
+    articlesInDetails: [],
+    createDelivery: false,
+    deliveryInDetails: [],
 };
 
 export const getters = {
@@ -19,13 +25,17 @@ export const getters = {
     deleteDialog: state => state.idToDelete != null,
     articles: state => state.articles,
     fournisseurs: state => state.fournisseurs,
+    details: state => state.details,
+    articlesInDetails: state => state.articlesInDetails,
+    createDelivery: state => state.createDelivery,
+    createDelideliveryInDetailsvery: state => state.deliveryInDetails,
 };
 
 export const mutations = {
     setData(state, response) {
-        state.items = response.data;
-        state.currentPage = response.current_page;
-        state.lastPage = response.last_page;
+        state.items = response.achats.data;
+        state.currentPage = response.achats.current_page;
+        state.lastPage = response.achats.last_page;
     },
     setCurrentPage(state, data) {
         state.currentPage = data.page;
@@ -42,7 +52,23 @@ export const mutations = {
     setCreateData(state, data) {
         state.articles = data.articles;
         state.fournisseurs = data.fournisseurs;
-    }
+    },
+    setDetails(state, data) {
+        state.details = data.achat;
+        state.articlesInDetails = data.achat.items;
+        state.deliveryInDetails = data.achat.livraisons;
+    },
+    resetDetails(state) {
+        state.details = {
+            fournisseur: {},
+        }
+    },
+    showCreateDelivery(state) {
+        state.createDelivery = true;
+    },
+    hideCreateDelivery(state) {
+        state.createDelivery = false;
+    },
 };
 
 export const actions = {
@@ -90,7 +116,15 @@ export const actions = {
     store(context, payload) {
         return new Promise((resolve, reject) => {
             axios
-                .post("/achats/store", payload.form)
+                .post("/achats/store", {
+                    ndbc: payload.form.ndbc,
+                    fournisseur: payload.form.fournisseur,
+                    payment_mode: payload.form.paymentMode,
+                    check_number: payload.form.checkNumber,
+                    deadline: payload.form.deadline,
+                    amount: payload.amount,
+                    items: payload.items
+                })
                 .then(response => {
                     // resolve promise
                     resolve(response);
@@ -205,5 +239,23 @@ export const actions = {
                     console.log(error.response);
                 })
         });
+    },
+    getAchatDetails(context, payload) {
+        return new Promise((resolve, reject) => {
+            axios.get('achats/details', {
+                params: {
+                    id: payload.id,
+                }
+            })
+                .then(response => {
+                    // resolve promise 
+                    resolve(response);
+                    // set data
+                    context.commit('setDetails', response.data);
+                })
+                .catch(error => {
+                    console.log(error.response);
+                })
+        })
     }
 };

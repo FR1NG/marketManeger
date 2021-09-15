@@ -9,11 +9,13 @@ class articleEnLivraison extends Model
 {
     use HasFactory;
 
-    public function livraison(){
-        return $this->belongsTo(livraison::class,'livraison_id');
+    public function livraison()
+    {
+        return $this->belongsTo(livraison::class, 'livraison_id');
     }
-    
-    public function atricle(){
-        return $this->hasOne(article::class,'article_id');
+
+    public function article()
+    {
+        return $this->belongsTo(article::class, 'article_id');
     }
 }

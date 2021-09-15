@@ -18,8 +18,8 @@ class CreateLivraisonsTable extends Migration
             $table->foreignId('achat_id');
             $table->string('dilevery_note_number');
             $table->date('date');
-            $table->string('delivery_man');
-            $table->float('delivery_cost')->default(0);
+            $table->string('delivery_man')->nullable();
+            $table->float('delivery_cost')->default(0.00);
             $table->timestamps();
         });
     }

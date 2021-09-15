@@ -1,23 +1,14 @@
 <template>
-  <div>
+  <v-container>
+    <v-card>
       <h1>this is the dashboard container</h1>
-      <h1>{{hamza}}</h1>
-  </div>
+    </v-card>
+  </v-container>
 </template>
 
 <script>
-export default {
-computed : {
-    hamza(){
-        return this.$store.getters['currentUser/hamza'];
-    }
-},
-created(){
-    console.log(this.hamza);
-}
-}
+export default {};
 </script>
 
 <style>
-
 </style>

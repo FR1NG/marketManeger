@@ -26,9 +26,9 @@
               :items="fournisseurs"
               item-value="id"
               item-text="name"
-              v-model="form.fournisseur_id"
+              v-model="form.fournisseur"
               label="Fournisseur"
-              :error-messages="errors.fournisseur_id[0]"
+              :error-messages="errors.fournisseur[0]"
             ></v-select>
           </v-col>
 
@@ -43,7 +43,7 @@
 
           <v-col cols="12" v-if="checkField">
             <v-text-field
-              v-model="form.chechNumber"
+              v-model="form.checkNumber"
               label="Numero de chèque"
               :error-messages="errors.checkNumber[0]"
             ></v-text-field>
@@ -62,7 +62,8 @@
               <template v-slot:activator="{ on, attrs }">
                 <v-text-field
                   v-model="form.deadline"
-                  label="Picker in menu"
+                  label="Date échéance"
+                  :error-messages="errors.deadline[0]"
                   prepend-icon="mdi-calendar"
                   readonly
                   v-bind="attrs"
@@ -87,7 +88,7 @@
         </v-row>
 
         <v-divider></v-divider>
-
+        <!-- =========================[items inputs:BEGIN]========================== -->
         <v-row>
           <v-col cols="12" md="5">
             <v-select
@@ -109,6 +110,7 @@
             <v-btn outlined color="secondary" text>Annuler</v-btn>
             <v-btn color="primary" @click="addToCart">ajouter</v-btn>
           </v-col>
+          <!-- =========================[items inputs:END]========================== -->
 
           <!-- =========================[items table:begin]========================== -->
           <v-col cols="12" md="7">
@@ -120,6 +122,7 @@
                     <th class="text-left">Prix</th>
                     <th class="text-left">Quantité</th>
                     <th class="text-left">Total</th>
+                    <th class="text-left"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -128,12 +131,26 @@
                     <td>{{ item.price }}</td>
                     <td>{{ item.quantity }}</td>
                     <td>{{ item.total }}</td>
+                    <td>
+                      <v-btn
+                        icon
+                        color="error"
+                        @click="removeFromCart(item.article_id)"
+                      >
+                        <v-icon>mdi-close-circle-outline</v-icon>
+                      </v-btn>
+                    </td>
                   </tr>
                 </tbody>
               </template>
             </v-simple-table>
           </v-col>
           <!-- =========================[items table:END]========================== -->
+        </v-row>
+        <v-row>
+          <v-col offset-md="6">
+            <h4 class="font-weight-light">total : {{ total }} Dh</h4>
+          </v-col>
         </v-row>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -153,7 +170,7 @@ export default {
     return {
       form: {
         ndbc: "",
-        fournisseur_id: "",
+        fournisseur: "",
         paymentMode: "",
         checkNumber: "",
         deadline: null,
@@ -166,7 +183,7 @@ export default {
       cartItems: [],
       errors: {
         ndbc: [],
-        fournisseur_id: [],
+        fournisseur: [],
         paymentMode: [],
         checkNumber: [],
         deadline: [],
@@ -195,108 +212,118 @@ export default {
     fournisseurs() {
       return this.$store.getters["achat/fournisseurs"];
     },
+    total() {
+      let total = 0;
+      this.cartItems.forEach((item) => {
+        total += item.price * item.quantity;
+      });
+      return total.toFixed(2);
+    },
   },
   methods: {
     addToCart() {
-      let article = this.articles
-        .filter((article) => article.id == this.item.article_id)
-        .shift();
-      const exist = this.cartItems.some((el) => el.article_id == article.id);
-      let othePrice = false;
-      if (exist) {
-        this.cartItems.map((element) => {
-          if (
-            element.article_id == article.id &&
-            element.price == this.item.price
-          ) {
-            element.quantity =
-              parseInt(this.item.quantity) + parseInt(element.quantity);
-            element.total += this.item.price * this.item.quantity;
-          } else if (element.price != this.item.price) {
-            othePrice = true;
-          }
-          return element;
-        });
+      if (this.item.article_id && this.item.price && this.item.quantity) {
+        let article = this.articles
+          .filter((article) => article.id == this.item.article_id)
+          .shift();
+        const exist = this.cartItems.some((el) => el.article_id == article.id);
+        let othePrice = false;
+        if (exist) {
+          this.cartItems.map((element) => {
+            if (
+              element.article_id == article.id &&
+              element.price == this.item.price
+            ) {
+              element.quantity =
+                parseInt(this.item.quantity) + parseInt(element.quantity);
+              element.total += this.item.price * this.item.quantity;
+            } else if (element.price != this.item.price) {
+              othePrice = true;
+            }
+            return element;
+          });
+          this.emptyItem();
+        } else {
+          const newItem = {
+            article_id: article.id,
+            name: article.name,
+            price: this.item.price,
+            quantity: this.item.quantity,
+            total: (this.item.price * this.item.quantity).toFixed(2),
+          };
+          this.cartItems.push(newItem);
+          this.emptyItem();
+        }
+        if (othePrice) {
+          this.$store.dispatch("alert/show", {
+            text: "Vous ne pouvez pas ajouter le même article à des prix différents",
+            type: "error",
+          });
+        }
       } else {
-        const newItem = {
-          article_id: article.id,
-          name: article.name,
-          price: this.item.price,
-          quantity: this.item.quantity,
-          total: this.item.price * this.item.quantity,
-        };
-        this.cartItems.push(newItem);
+        this.$store.dispatch("alert/show", {
+          text: "Les données fournies sont invalides",
+          type: "error",
+        });
       }
-      if (othePrice) {
-        alert("cant add");
-      }
+    },
+    emptyItem() {
+      this.item = {
+        article_id: null,
+        price: null,
+        quantity: null,
+      };
+    },
+    removeFromCart(id) {
+      this.cartItems = this.cartItems.filter(
+        (element) => element.article_id != id
+      );
     },
     handleSubmit() {
       this.loading = true;
       this.$store
-        .dispatch("achats/store", { form: this.form })
-        .then((response) => {
+        .dispatch("achat/store", {
+          form: this.form,
+          amount: this.total,
+          items: this.cartItems,
+        })
+        .then(() => {
           this.loading = false;
           this.form = {
-            name: "",
-            cin: "",
-            cnss: "",
-            phone: null,
-            email: "",
-            salery: null,
-            quality: "",
-            note: "",
+            ndbc: "",
+            fournisseur: "",
+            paymentMode: "",
+            checkNumber: "",
+            deadline: null,
           };
           this.errors = {
-            name: [],
-            cin: [],
-            cnss: [],
-            phone: [],
-            email: [],
-            address: [],
-            salery: [],
-            quality: [],
-            note: [],
+            ndbc: [],
+            fournisseur: [],
+            paymentMode: [],
+            checkNumber: [],
+            deadline: [],
           };
+          this.cartItems = [];
         })
         .catch((error) => {
+          console.log(error);
           this.loading = false;
           if (error.data) {
-            error.data.errors.name
-              ? (this.errors.name = error.data.errors.name)
-              : (this.errors.name = []);
+            error.data.errors.ndbc
+              ? (this.errors.ndbc = error.data.errors.ndbc)
+              : (this.errors.ndbc = []);
 
-            error.data.errors.cin
-              ? (this.errors.cin = error.data.errors.cin)
-              : (this.errors.cin = []);
+            error.data.errors.fournisseur
+              ? (this.errors.fournisseur = error.data.errors.fournisseur)
+              : (this.errors.fournisseur = []);
 
-            error.data.errors.cnss
-              ? (this.errors.cnss = error.data.errors.cnss)
-              : (this.errors.cnss = []);
+            error.data.errors.payment_mode
+              ? (this.errors.paymentMode = error.data.errors.payment_mode)
+              : (this.errors.paymentMode = []);
 
-            error.data.errors.phone
-              ? (this.errors.phone = error.data.errors.phone)
-              : (this.errors.phone = []);
-
-            error.data.errors.email
-              ? (this.errors.email = error.data.errors.email)
-              : (this.errors.email = []);
-
-            error.data.errors.address
-              ? (this.errors.address = error.data.errors.address)
-              : (this.errors.address = []);
-
-            error.data.errors.salery
-              ? (this.errors.salery = error.data.errors.salery)
-              : (this.errors.salery = []);
-
-            error.data.errors.quality
-              ? (this.errors.quality = error.data.errors.quality)
-              : (this.errors.quality = []);
-
-            error.data.errors.note
-              ? (this.errors.note = error.data.errors.note)
-              : (this.errors.note = []);
+            error.data.errors.deadline
+              ? (this.errors.deadline = error.data.errors.deadline)
+              : (this.errors.deadline = []);
           }
         });
     },
