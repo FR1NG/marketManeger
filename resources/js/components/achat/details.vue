@@ -89,7 +89,14 @@
                   <td>{{ item.price }}</td>
                   <td>{{ item.quantity }}</td>
                   <td>{{ item.livred_quantity }}</td>
-                  <td>{{ item.quantity - item.livred_quantity }}</td>
+                  <td v-if="item.quantity - item.livred_quantity > 0">
+                    {{ item.quantity - item.livred_quantity }}
+                  </td>
+                  <td v-else>
+                    <v-chip class="ma-2" color="green" outlined>
+                      totalement livrée
+                    </v-chip>
+                  </td>
                   <td>{{ (item.quantity * item.price).toFixed(2) }}</td>
                 </tr>
               </tbody>

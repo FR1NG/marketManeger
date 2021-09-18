@@ -88,7 +88,7 @@ export default {
         { text: "DSG", value: "name" },
         { text: "Catégorie", value: "category.name" },
         { text: "Unité", value: "unit.name" },
-        { text: "Quantité en dépot", value: "quantity" },
+        { text: "Quantité en dépot", value: "items_in_warehouse_sum_quantity" },
         { text: "Quantité de notification", value: "notification_quantity" },
         { text: "Actions", value: "actions" },
       ],

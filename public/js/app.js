@@ -2202,6 +2202,18 @@ if (token) {
 
 
 
+_router__WEBPACK_IMPORTED_MODULE_1__.default.beforeEach(function (to, from, next) {
+  alert('rout changed');
+  NProgress.start();
+  NProgress.set(0.1);
+  next();
+});
+_router__WEBPACK_IMPORTED_MODULE_1__.default.afterEach(function () {
+  alert('router ended');
+  setTimeout(function () {
+    return NProgress.done();
+  }, 500);
+});
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -2291,12 +2303,10 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0__.default.use(vue_router__WEBPACK_IMPORTED_MODULE_1__.default);
 
 var routes = [{
-  path: "/",
-  redirect: "/dashboard"
-}, {
   component: _components_dashboard_DashboardContainer__WEBPACK_IMPORTED_MODULE_2__.default,
   name: "dashboard",
-  path: "/dashboard"
+  path: "/dashboard",
+  alias: '/'
 }, // achat routers
 {
   component: function component() {
@@ -2376,12 +2386,25 @@ var routes = [{
 //     name : "modifierArticles",
 //     path : "/articles/:id/modifier",
 // },
+// branchement routers
 {
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_components_branchement_list_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../components/branchement/list */ "./resources/js/components/branchement/list.vue"));
   },
   name: "branchements",
   path: "/branchements"
+}, {
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_components_branchement_ajouter_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../components/branchement/ajouter */ "./resources/js/components/branchement/ajouter.vue"));
+  },
+  name: "ajouterBranchements",
+  path: "/branchements/ajouter"
+}, {
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_components_branchement_details_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../components/branchement/details */ "./resources/js/components/branchement/details.vue"));
+  },
+  name: "branchementDetails",
+  path: "/branchements/:id/details"
 }, {
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_components_parametre_index_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../components/parametre/index */ "./resources/js/components/parametre/index.vue"));
@@ -3266,6 +3289,111 @@ var actions = {
         context.commit('setData', response.data);
       })["catch"](function (error) {
         // test
+        console.log(error.response);
+      });
+    });
+  }
+};
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/branchement.js":
+/*!***************************************************!*\
+  !*** ./resources/js/store/modules/branchement.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "state": () => (/* binding */ state),
+/* harmony export */   "getters": () => (/* binding */ getters),
+/* harmony export */   "mutations": () => (/* binding */ mutations),
+/* harmony export */   "actions": () => (/* binding */ actions)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+var state = {
+  articles: []
+};
+var getters = {
+  articles: function articles(state) {
+    return state.articles;
+  }
+};
+var mutations = {
+  setCreateData: function setCreateData(state, data) {
+    state.articles = data.articles;
+  }
+};
+var actions = {
+  store: function store(context, payload) {
+    return new Promise(function (resolve, reject) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post('branchements/store', _objectSpread({}, payload.form)).then(function (response) {
+        // resolve promise
+        resolve(response); // alert
+
+        context.dispatch('alert/show', {
+          text: response.data.message,
+          type: 'success'
+        }, {
+          root: true
+        });
+      })["catch"](function (error) {
+        // reject
+        reject(error.response); // alert
+
+        context.dispatch('alert/show', {
+          text: error.response.data.message,
+          type: 'error'
+        }, {
+          root: true
+        });
+      });
+    });
+  },
+  getCreateData: function getCreateData(context, payload) {
+    return new Promise(function (resolve, reject) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get('/branchements/create').then(function (response) {
+        // resolve promise
+        resolve(response); // set data
+
+        context.commit('setCreateData', response.data);
+      })["catch"](function (error) {
+        // reject promise
+        reject(error.response); // test
+
+        console.log(error.response);
+      });
+    });
+  },
+  getItemPrice: function getItemPrice(context, payload) {
+    return new Promise(function (resolve, reject) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get('/branchements/getItemPrice', {
+        params: {
+          id: payload.id
+        }
+      }).then(function (response) {
+        // resolve promise
+        resolve(response);
+      })["catch"](function (error) {
+        // reject promise
+        reject(error.resonse); // alert (toast)
+
+        context.dispatch('toast/show', {
+          text: error.response.data.message,
+          type: "error"
+        }, {
+          root: true
+        }); // test
+
         console.log(error.response);
       });
     });
@@ -70410,6 +70538,7 @@ var map = {
 	"./achat.js": "./resources/js/store/modules/achat.js",
 	"./alert.js": "./resources/js/store/modules/alert.js",
 	"./article.js": "./resources/js/store/modules/article.js",
+	"./branchement.js": "./resources/js/store/modules/branchement.js",
 	"./currentUser.js": "./resources/js/store/modules/currentUser.js",
 	"./employe.js": "./resources/js/store/modules/employe.js",
 	"./fournisseur.js": "./resources/js/store/modules/fournisseur.js",
@@ -70547,7 +70676,7 @@ webpackContext.id = "./resources/js/store/modules sync .*\\.js$";
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_components_achat_list_vue":1,"resources_js_components_achat_details_vue":1,"resources_js_components_achat_ajouter_vue":1,"resources_js_components_achat_livraison_details_vue":1,"resources_js_components_employe_list_vue":1,"resources_js_components_employe_ajouter_vue":1,"resources_js_components_employe_edit_vue":1,"resources_js_components_fournisseur_list_vue":1,"resources_js_components_fournisseur_ajouter_vue":1,"resources_js_components_fournisseur_edit_vue":1,"resources_js_components_branchement_list_vue":1,"resources_js_components_parametre_index_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_components_achat_list_vue":1,"resources_js_components_achat_details_vue":1,"resources_js_components_achat_ajouter_vue":1,"resources_js_components_achat_livraison_details_vue":1,"resources_js_components_employe_list_vue":1,"resources_js_components_employe_ajouter_vue":1,"resources_js_components_employe_edit_vue":1,"resources_js_components_fournisseur_list_vue":1,"resources_js_components_fournisseur_ajouter_vue":1,"resources_js_components_fournisseur_edit_vue":1,"resources_js_components_branchement_list_vue":1,"resources_js_components_branchement_ajouter_vue":1,"resources_js_components_branchement_details_vue":1,"resources_js_components_parametre_index_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

@@ -298,7 +298,7 @@ __webpack_require__.r(__webpack_exports__);
         value: "unit.name"
       }, {
         text: "Quantité en dépot",
-        value: "quantity"
+        value: "items_in_warehouse_sum_quantity"
       }, {
         text: "Quantité de notification",
         value: "notification_quantity"

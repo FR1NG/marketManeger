@@ -6,6 +6,7 @@ use App\Models\achat;
 use App\Models\articleEnAchat;
 use App\Models\articleEnLivraison;
 use App\Models\livraison;
+use App\Models\warehouse;
 use Illuminate\Http\Request;
 
 class LivraisonController extends Controller
@@ -38,7 +39,17 @@ class LivraisonController extends Controller
                 $article->quantity = $item['quantity'];
                 $articleProcess = $article->save();
                 if ($articleProcess) {
-                    $articleEnAchat = articleEnAchat::where('id', '=', $item['article_id'])->first();
+                    $articleEnAchat = articleEnAchat::where('article_id', '=', $item['article_id'])
+                        ->where('achat_id', '=', $request->achat_id)
+                        ->first();
+                    // add warehouse entry
+                    $warehouse = new warehouse();
+                    $warehouse->article_id = $item['article_id'];
+                    $warehouse->quantity = $item['quantity'];
+                    $warehouse->price = $articleEnAchat->price;
+                    $warehouse->save();
+
+                    // update livered quantity
                     $articleEnAchat->livred_quantity += $item['quantity'];
                     $articleEnAchat->update();
                 }

@@ -7,13 +7,10 @@ import dashboard from '../components/dashboard/DashboardContainer'
 
 const routes = [
     {
-        path: "/",
-        redirect: "/dashboard"
-    },
-    {
         component: dashboard,
         name: "dashboard",
-        path: "/dashboard"
+        path: "/dashboard",
+        alias: '/',
     },
     // achat routers
     {
@@ -84,10 +81,22 @@ const routes = [
     //     name : "modifierArticles",
     //     path : "/articles/:id/modifier",
     // },
+
+    // branchement routers
     {
         component: () => import('../components/branchement/list'),
         name: "branchements",
         path: "/branchements"
+    },
+    {
+        component: () => import('../components/branchement/ajouter'),
+        name: "ajouterBranchements",
+        path: "/branchements/ajouter"
+    },
+    {
+        component: () => import('../components/branchement/details'),
+        name: "branchementDetails",
+        path: "/branchements/:id/details"
     },
     {
         component: () => import('../components/parametre/index'),

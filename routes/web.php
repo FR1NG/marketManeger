@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AchatController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\BranchementController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\EmployeController;
 use App\Http\Controllers\FournisseurController;
@@ -21,7 +22,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // return view('welcome');
+    return redirect()->route('login');
 });
 Route::middleware(['auth'])->group(function () {
     //fournisseur routes
@@ -63,6 +65,11 @@ Route::middleware(['auth'])->group(function () {
     // livraison routes
     Route::post('/livraisons/store', [LivraisonController::class, 'store']);
     Route::get('/livraisons/details', [LivraisonController::class, 'details']);
+
+    // branchements routes
+    Route::post('/branchements/store', [BranchementController::class, 'store']);
+    Route::get('/branchements/create', [BranchementController::class, 'create']);
+    Route::get('/branchements/getItemPrice', [BranchementController::class, 'getItemPrice']);
 });
 
 Auth::routes();

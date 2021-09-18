@@ -17,4 +17,8 @@ class article extends Model
     {
         return $this->belongsTo(unit::class, 'unit_id');
     }
+    public function itemsInWarehouse()
+    {
+        return $this->hasMany(warehouse::class, 'article_id');
+    }
 }

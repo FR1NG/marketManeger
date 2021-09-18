@@ -24,6 +24,8 @@ class ArticleController extends Controller
         ];
         $search = '%' . $request->search . '%';
         $query->with(['category:id,name', 'unit:id,name']);
+        // $query->with(['itemsInWarehouse:article_id,quantity']);
+        $query->withSum('itemsInWarehouse', 'quantity');
         foreach ($columnsToSearch as $column) {
             if ($column == "category" || $column ==  "unit") {
                 $query->orWhereHas($column, function ($q) use ($search) {
