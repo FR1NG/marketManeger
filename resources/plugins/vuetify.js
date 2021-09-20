@@ -1,8 +1,31 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify/lib'
+import colors from "vuetify/lib/util/colors";
+import "mdi-icons/css/materialdesignicons.min.css";
 
 Vue.use(Vuetify)
 
-const opts = {}
+const opts = {
+    theme: {
+        icons: {
+            iconfont: 'mdi', // default - only for display purposes
+        },
+        options: { customProperties: true },
+        dark: localStorage.getItem('darkMode'),
+        themes: {
+            light: {
+                primary: colors.purple,
+                secondary: colors.grey.darken1,
+                accent: colors.shades.black,
+                error: colors.red.accent3,
+                white: colors.white
+            },
+            dark: {
+                white: '#000000',
+                primary: localStorage.getItem('primaryColor') || colors.purple,
+            }
+        }
+    }
+}
 
 export default new Vuetify(opts)

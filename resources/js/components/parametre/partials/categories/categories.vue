@@ -1,6 +1,6 @@
 <template>
   <!-- categories:BEGIN -->
-  <v-col cols="12" md="6">
+  <v-col cols="12">
     <!-- create dialog:BEGIN -->
     <create-category v-if="createDialog"></create-category>
     <!-- create dialog:END -->
@@ -94,6 +94,20 @@ export default {
     CreateCategory() {
       this.$store.commit("article/showCreateCategoryDialog");
     },
+    getData() {
+      this.loading = true;
+      this.$store
+        .dispatch("article/getData")
+        .then(() => {
+          this.loading = false;
+        })
+        .catch(() => {
+          this.loading = false;
+        });
+    },
+  },
+  created() {
+    this.getData();
   },
 };
 </script>

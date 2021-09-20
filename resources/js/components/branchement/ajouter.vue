@@ -207,34 +207,34 @@ export default {
           error.data.errors.contract_number
             ? (this.errors.contract_number = error.data.errors.contract_number)
             : (this.errors.contract_number = []);
-          errors.client_name
+          error.data.errors.client_name
             ? (this.errors.client_name = error.data.errors.client_name)
             : (this.errors.client_name = []);
-          errors.address
+          error.data.errors.address
             ? (this.errors.address = error.data.errors.address)
             : (this.errors.address = []);
-          errors.intervention
+          error.data.errors.intervention
             ? (this.errors.intervention = error.data.errors.intervention)
             : (this.errors.intervention = []);
-          errors.estimate_number
+          error.data.errors.estimate_number
             ? (this.errors.estimate_number = error.data.errors.estimate_number)
             : (this.errors.estimate_number = []);
-          errors.phone
+          error.data.errors.phone
             ? (this.errors.phone = error.data.errors.phone)
             : (this.errors.phone = []);
-          errors.diameter
+          error.data.errors.diameter
             ? (this.errors.diameter = error.data.errors.diameter)
             : (this.errors.diameter = []);
-          errors.caliber
+          error.data.errors.caliber
             ? (this.errors.caliber = error.data.errors.caliber)
             : (this.errors.caliber = []);
-          errors.nature
+          error.data.errors.nature
             ? (this.errors.nature = error.data.errors.nature)
             : (this.errors.nature = []);
-          errors.arrival_date
+          error.data.errors.arrival_date
             ? (this.errors.arrival_date = error.data.errors.arrival_date)
             : (this.errors.arrival_date = []);
-          errors.motive
+          error.data.errors.motive
             ? (this.errors.motive = error.data.errors.motive)
             : (this.errors.motive = []);
         });

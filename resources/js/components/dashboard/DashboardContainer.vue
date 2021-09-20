@@ -1,13 +1,15 @@
 <template>
   <v-container>
-    <v-card>
-      <h1>this is the dashboard container</h1>
-    </v-card>
+    <statistics></statistics>
+    <v-card> </v-card>
   </v-container>
 </template>
 
 <script>
-export default {};
+import statistics from "./partials/statistics.vue";
+export default {
+  components: { statistics },
+};
 </script>
 
 <style>

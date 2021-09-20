@@ -1,11 +1,12 @@
 <template>
   <v-app id="inspire">
+    <vue-ins-progress-bar></vue-ins-progress-bar>
     <!-- sidebar:BEGIN -->
     <side-bar></side-bar>
     <!-- sidebar:END -->
 
     <!-- navbar:BEGIN -->
-    <nav-bar></nav-bar>
+    <nav-bar :user="user"></nav-bar>
     <!-- navbar:END -->
 
     <v-main>
@@ -14,17 +15,21 @@
       <!-- toast holder:END -->
 
       <!-- alert holder:BEGIN -->
-      <alert></alert>
+      <alert v-if="alertd"></alert>
       <!-- alert holder:END -->
 
       <!--main:BEGIN-->
-      <router-view></router-view>
+      <v-fade-transition leave-absolute>
+        <router-view></router-view>
+      </v-fade-transition>
       <!-- main:END -->
     </v-main>
   </v-app>
 </template>
 
 <script>
+import colors from "vuetify/lib/util/colors";
+
 import Alert from "../components/extra/alert.vue";
 import Toast from "../components/extra/toast.vue";
 import NavBar from "./partials/NavBar.vue";
@@ -36,10 +41,29 @@ export default {
     Alert,
     Toast,
   },
+  props: ["user"],
   computed: {
     toast() {
       return this.$store.getters["toast/toast"];
     },
+    alertd() {
+      return this.$store.getters["alert/alert"];
+    },
+  },
+  mounted() {
+    this.$insProgress.finish();
+  },
+  created() {
+    this.$insProgress.start();
+
+    this.$router.beforeEach((to, from, next) => {
+      this.$insProgress.start();
+      next();
+    });
+
+    this.$router.afterEach((to, from) => {
+      this.$insProgress.finish();
+    });
   },
 };
 </script>

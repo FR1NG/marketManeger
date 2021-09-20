@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateArticleEnBranchementsTable extends Migration
+class CreateEmployesEnBranchementsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateArticleEnBranchementsTable extends Migration
      */
     public function up()
     {
-        Schema::create('article_en_branchements', function (Blueprint $table) {
+        Schema::create('employes_en_branchements', function (Blueprint $table) {
             $table->id();
             $table->foreignId('branchement_id');
-            $table->foreignId('article_id');
-            $table->double('price');
+            $table->foreignId('employe_id');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateArticleEnBranchementsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('article_en_branchements');
+        Schema::dropIfExists('employes_en_branchements');
     }
 }

@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-card class="pa-4">
-      <v-toolbar flat>
+      <v-toolbar flat color="primary  lighten-4">
         <v-toolbar-title>Details</v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-spacer></v-spacer>
@@ -67,7 +67,7 @@
 
         <!-- ==========================[items table:START]======================== -->
         <v-col cols="12">
-          <v-toolbar flat>
+          <v-toolbar flat color="primary  lighten-4">
             <v-toolbar-title>Articles</v-toolbar-title>
             <v-divider class="mx-4" inset vertical></v-divider>
           </v-toolbar>
@@ -109,7 +109,7 @@
         </v-col>
         <!-- ==========================[delivery table:START]======================== -->
         <v-col cols="12">
-          <v-toolbar flat>
+          <v-toolbar flat color="primary  lighten-4">
             <v-toolbar-title>Livraisons</v-toolbar-title>
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-spacer></v-spacer>

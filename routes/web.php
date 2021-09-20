@@ -67,11 +67,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/livraisons/details', [LivraisonController::class, 'details']);
 
     // branchements routes
+    Route::get('/branchements/index', [BranchementController::class, 'index']);
     Route::post('/branchements/store', [BranchementController::class, 'store']);
-    Route::get('/branchements/create', [BranchementController::class, 'create']);
+    Route::get('/branchements/details', [BranchementController::class, 'details']);
+    Route::get('/branchements/getArticles', [BranchementController::class, 'getArticles']);
+    Route::post('/branchements/addArticles', [BranchementController::class, 'addArticles']);
+    Route::get('/branchements/getEmployees', [BranchementController::class, 'getEmployees']);
+    Route::post('/branchements/addEmployees', [BranchementController::class, 'addEmployees']);
     Route::get('/branchements/getItemPrice', [BranchementController::class, 'getItemPrice']);
 });
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

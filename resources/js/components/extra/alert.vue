@@ -1,31 +1,46 @@
 <template>
-<v-expand-transition>
-      <v-alert class="ma-4" v-if="alert" :type="type">
-      {{text}}
-    </v-alert>
-</v-expand-transition>
+  <v-snackbar :timeout="-1" :value="true" top :color="type">
+    <v-list-item>
+      <v-list-item-icon>
+        <v-icon v-text="icon"></v-icon>
+      </v-list-item-icon>
+      <v-list-item-content v-text="text"> </v-list-item-content>
+    </v-list-item>
+  </v-snackbar>
 </template>
 
 <script>
 export default {
-computed : {
-    type(){
-        return this.$store.getters['alert/type'];
+  computed: {
+    type() {
+      return this.$store.getters["alert/type"];
     },
-    text(){
-        return this.$store.getters['alert/text'];
+    text() {
+      return this.$store.getters["alert/text"];
     },
-    alert(){
-        return this.$store.getters['alert/alert'];
-    }
-},
-mounted(){
-     //scroll to the top
-      this.$vuetify.goTo(0, {
-        duration: 200,
-        offset: 0,
-        easing: "easeOutQuad",
-      });
-}
-}
+
+    icon() {
+      let icon;
+      let color;
+      switch (this.type) {
+        case "error":
+          icon = "mdi-alert-outline";
+          break;
+        case "success":
+          icon = "mdi-check-outline";
+          break;
+        case "info":
+          icon = "mdi-alert-circle-outline";
+          break;
+        default:
+          icon = "mdi-bell-outline";
+          break;
+      }
+      return icon;
+    },
+  },
+};
 </script>
+
+<style>
+</style>

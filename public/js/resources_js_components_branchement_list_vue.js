@@ -92,6 +92,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -150,27 +151,27 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     items: function items() {
-      return this.$store.getters["fournisseur/items"];
+      return this.$store.getters["branchement/branchements"];
     },
     lastPage: function lastPage() {
-      return this.$store.getters["fournisseur/lastPage"];
+      return this.$store.getters["branchement/lastPage"];
     },
     currentPage: {
       get: function get() {
-        return this.$store.getters["fournisseur/currentPage"];
+        return this.$store.getters["branchement/currentPage"];
       },
       set: function set(value) {
-        this.$store.commit("fournisseur/setCurrentPage", {
+        this.$store.commit("branchement/setCurrentPage", {
           page: value
         });
       }
     },
     search: {
       get: function get() {
-        return this.$store.getters["fournisseur/search"];
+        return this.$store.getters["branchement/search"];
       },
       set: function set(value) {
-        this.$store.commit("fournisseur/setSearch", {
+        this.$store.commit("branchement/setSearch", {
           search: value
         });
       }
@@ -181,7 +182,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.loading = true;
-      this.$store.dispatch("fournisseur/getData").then(function () {
+      this.$store.dispatch("branchement/getData").then(function () {
         _this.loading = false;
       })["catch"](function () {
         _this.loading = false;
@@ -194,28 +195,25 @@ __webpack_require__.r(__webpack_exports__);
       if (this.timeout) clearTimeout(this.timeout);
       this.timeout = setTimeout(function () {
         //action
-        _this2.$store.dispatch("fournisseur/getData") // promis resolved
+        _this2.$store.dispatch("branchement/getData") // promis resolved
         .then(function () {
           _this2.searchLoading = false;
         });
       }, 500); // delay
     },
     remove: function remove(id) {
-      this.$store.commit("fournisseur/setDelete", {
-        id: id
-      });
+      alert("not setted yet");
     },
     edit: function edit(fournisseur) {
-      this.$store.commit("fournisseur/setSelected", {
-        fournisseur: fournisseur
-      });
+      alert("not setted yet");
+    },
+    gotoDetails: function gotoDetails(item) {
       this.$router.replace({
-        name: "modifierFournisseur",
+        name: "branchementDetails",
         params: {
-          id: fournisseur.id
+          id: item.id
         }
       });
-      console.log(fournisseur);
     }
   },
   created: function created() {
@@ -1068,6 +1066,7 @@ var render = function() {
           loading: _vm.loading,
           "hide-default-footer": ""
         },
+        on: { "click:row": _vm.gotoDetails },
         scopedSlots: _vm._u([
           {
             key: "top",
@@ -1293,6 +1292,25 @@ _node_modules_vuetify_loader_lib_runtime_installComponents_js__WEBPACK_IMPORTED_
 if (false) { var api; }
 component.options.__file = "resources/js/components/branchement/list.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./node_modules/vuetify/lib/components/VBtn/index.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/vuetify/lib/components/VBtn/index.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "VBtn": () => (/* reexport safe */ _VBtn__WEBPACK_IMPORTED_MODULE_0__.default),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _VBtn__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./VBtn */ "./node_modules/vuetify/lib/components/VBtn/VBtn.js");
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_VBtn__WEBPACK_IMPORTED_MODULE_0__.default);
+//# sourceMappingURL=index.js.map
 
 /***/ }),
 
@@ -6608,6 +6626,39 @@ const dirtyTypes = ['color', 'file', 'time', 'date', 'datetime-local', 'week', '
   }
 }));
 //# sourceMappingURL=VTextField.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vuetify/lib/components/VToolbar/index.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/vuetify/lib/components/VToolbar/index.js ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "VToolbar": () => (/* reexport safe */ _VToolbar__WEBPACK_IMPORTED_MODULE_1__.default),
+/* harmony export */   "VToolbarItems": () => (/* binding */ VToolbarItems),
+/* harmony export */   "VToolbarTitle": () => (/* binding */ VToolbarTitle),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _VToolbar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./VToolbar */ "./node_modules/vuetify/lib/components/VToolbar/VToolbar.js");
+/* harmony import */ var _util_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../util/helpers */ "./node_modules/vuetify/lib/util/helpers.js");
+// Components
+ // Utilities
+
+
+const VToolbarTitle = (0,_util_helpers__WEBPACK_IMPORTED_MODULE_0__.createSimpleFunctional)('v-toolbar__title');
+const VToolbarItems = (0,_util_helpers__WEBPACK_IMPORTED_MODULE_0__.createSimpleFunctional)('v-toolbar__items');
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  $_vuetify_subcomponents: {
+    VToolbar: _VToolbar__WEBPACK_IMPORTED_MODULE_1__.default,
+    VToolbarItems,
+    VToolbarTitle
+  }
+});
+//# sourceMappingURL=index.js.map
 
 /***/ }),
 

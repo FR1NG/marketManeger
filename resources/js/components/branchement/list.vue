@@ -8,6 +8,7 @@
       :search="search"
       :items="items"
       :loading="loading"
+      @click:row="gotoDetails"
       hide-default-footer
     >
       <template v-slot:top>
@@ -98,25 +99,25 @@ export default {
   },
   computed: {
     items() {
-      return this.$store.getters["fournisseur/items"];
+      return this.$store.getters["branchement/branchements"];
     },
     lastPage() {
-      return this.$store.getters["fournisseur/lastPage"];
+      return this.$store.getters["branchement/lastPage"];
     },
     currentPage: {
       get() {
-        return this.$store.getters["fournisseur/currentPage"];
+        return this.$store.getters["branchement/currentPage"];
       },
       set(value) {
-        this.$store.commit("fournisseur/setCurrentPage", { page: value });
+        this.$store.commit("branchement/setCurrentPage", { page: value });
       },
     },
     search: {
       get() {
-        return this.$store.getters["fournisseur/search"];
+        return this.$store.getters["branchement/search"];
       },
       set(value) {
-        this.$store.commit("fournisseur/setSearch", { search: value });
+        this.$store.commit("branchement/setSearch", { search: value });
       },
     },
   },
@@ -124,7 +125,7 @@ export default {
     getData() {
       this.loading = true;
       this.$store
-        .dispatch("fournisseur/getData")
+        .dispatch("branchement/getData")
         .then(() => {
           this.loading = false;
         })
@@ -138,7 +139,7 @@ export default {
       this.timeout = setTimeout(() => {
         //action
         this.$store
-          .dispatch("fournisseur/getData")
+          .dispatch("branchement/getData")
           // promis resolved
           .then(() => {
             this.searchLoading = false;
@@ -146,19 +147,18 @@ export default {
       }, 500); // delay
     },
     remove(id) {
-      this.$store.commit("fournisseur/setDelete", { id: id });
+      alert("not setted yet");
     },
     edit(fournisseur) {
-      this.$store.commit("fournisseur/setSelected", {
-        fournisseur: fournisseur,
-      });
+      alert("not setted yet");
+    },
+    gotoDetails(item) {
       this.$router.replace({
-        name: "modifierFournisseur",
+        name: "branchementDetails",
         params: {
-          id: fournisseur.id,
+          id: item.id,
         },
       });
-      console.log(fournisseur);
     },
   },
   created() {

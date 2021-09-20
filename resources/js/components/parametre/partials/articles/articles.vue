@@ -1,16 +1,5 @@
 <template>
   <v-container>
-    <v-row>
-      <!-- getgories:BEGIN -->
-      <categories></categories>
-      <!-- getgories:END -->
-      <v-spacer></v-spacer>
-      <v-divider class="mx-4" inset vertical></v-divider>
-
-      <!-- units:BEGIN -->
-      <units></units>
-      <!-- units:END -->
-    </v-row>
     <!-- create artice:BEGIN -->
     <create-article v-if="createArticleDialog"></create-article>
     <!-- create artice:END -->
@@ -163,12 +152,13 @@ export default {
       this.$store.commit("employe/setDelete", { id: id });
     },
     edit(employe) {
-      this.$router.replace({
-        name: "modifierEmploye",
-        params: {
-          id: employe.id,
-        },
-      });
+      // this.$router.replace({
+      //   name: "modifierEmploye",
+      //   params: {
+      //     id: employe.id,
+      //   },
+      // });
+      alert("Not setted yet");
     },
   },
   created() {

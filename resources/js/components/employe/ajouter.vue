@@ -5,13 +5,7 @@
       <v-divider class="mx-4" inset vertical></v-divider>
       <v-spacer></v-spacer>
 
-      <v-btn
-        link
-        color="primary"
-        dark
-        class="mb-2"
-        :to="{ name: 'employe' }"
-      >
+      <v-btn link color="primary" dark class="mb-2" :to="{ name: 'employes' }">
         List
       </v-btn>
     </v-toolbar>
@@ -108,7 +102,7 @@ export default {
         quality: [],
         note: [],
       },
-        loading: false,
+      loading: false,
     };
   },
   methods: {

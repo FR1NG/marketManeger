@@ -3,12 +3,43 @@
 namespace App\Http\Controllers;
 
 use App\Models\article;
+use App\Models\articleEnBranchement;
 use App\Models\branchement;
+use App\Models\employe;
+use App\Models\employesEnBranchement;
 use App\Models\warehouse;
 use Illuminate\Http\Request;
 
 class BranchementController extends Controller
 {
+
+    public function index(Request $request)
+    {
+        $query = branchement::query();
+
+        if ($request->search) {
+            $search = '%' . $request->search . '%';
+            $columns = [
+                'contract_number',
+                'client_name',
+                'address',
+                'intervention',
+                'estimate_number',
+                'phone',
+                'diameter',
+                'caliber',
+                'nature',
+                'arrival_date',
+                'motive',
+            ];
+
+            foreach ($columns as $column) {
+                $query->orWhere($column, 'LIKE', $search);
+            }
+        }
+        $branchements = $query->paginate(10);
+        return response()->json(['branchements' => $branchements], 200);
+    }
 
     public function store(Request $request)
     {
@@ -48,11 +79,81 @@ class BranchementController extends Controller
         }
     }
 
-    public function create()
+    public function details(Request $request)
+    {
+        $branchement = branchement::where('id', '=', $request->id)
+            ->with(['items:id,price,article_id,branchement_id', 'items.article:id,name', 'employees.employe:id,name,quality'])
+            ->first();
+        return response()->json(['branchement' => $branchement], 200);
+    }
+
+    public function getArticles()
     {
         $articles = article::select('id', 'name')->get();
 
         return response()->json(['articles' => $articles]);
+    }
+
+    public function getEmployees()
+    {
+        $employees = employe::select('id', 'name')->get();
+
+        return response()->json(['employees' => $employees]);
+    }
+
+    public function addArticles(Request $request)
+    {
+        $errors = 0;
+        foreach ($request->items as $item) {
+            $warehouse = warehouse::where('article_id', '=', $item['id'])
+                ->where('quantity', '>', 0)
+                ->orderBy('created_at', 'ASC')
+                ->first();
+            if ($warehouse) {
+                $existed = articleEnBranchement::where('branchement_id', '=', $request->branchement_id)->where('article_id', '=', $item['id'])->first();
+                if (!$existed) {
+                    $itemInBranchement = new articleEnBranchement();
+                    $itemInBranchement->branchement_id = $request->branchement_id;
+                    $itemInBranchement->article_id = $item['id'];
+                    $itemInBranchement->price = $warehouse->price;
+                    $saving = $itemInBranchement->save();
+                    if ($saving) {
+                        $warehouse->quantity -= 1;
+                        $warehouse->update();
+                    }
+                }
+            } else {
+                // return response()->json(['message' => 'Cet article n\'existe pas dans l\'entrepôt'], 500);
+                $errors++;
+            }
+        }
+        if ($errors > 0) {
+            return response()->json(['message' => $errors . ' Pièces n\'existe pas dans l\'entrepôt'], 405);
+        } else {
+            return response()->json(['message' => 'Les pièces ont été ajoutées avec succès'], 200);
+        }
+    }
+
+
+    public function addEmployees(Request $request)
+    {
+        $request->validate([
+            'branchement_id' => 'required|numeric',
+            'employe_id' => 'required|numeric',
+        ]);
+        $existed = employesEnBranchement::where('branchement_id', '=', $request->branchement_id)->where('employe_id', '=', $request->employe_id)->first();
+        if ($existed) {
+
+            return response()->json(['message' => 'cet employé est déjà ajouté'], 500);
+        } else {
+            $eib = new employesEnBranchement();
+            $eib->branchement_id = $request->branchement_id;
+            $eib->employe_id = $request->employe_id;
+            $process = $eib->save();
+            if ($process) {
+                return response()->json(['message' => 'l\'employé a été ajouté avec succès'], 200);
+            }
+        }
     }
 
     public function getItemPrice(Request $request)

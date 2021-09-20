@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-card>
-      <v-toolbar color="red darken-1" dark flat>
+      <v-toolbar color="primary" dark flat>
         <template v-slot:extension>
           <v-tabs v-model="tab" align-with-title>
             <v-tabs-slider color="yellow"></v-tabs-slider>
@@ -24,6 +24,16 @@
             <Article></Article>
           </v-card>
         </v-tab-item>
+        <v-tab-item>
+          <v-card flat v-if="tab == 2">
+            <categories></categories>
+          </v-card>
+        </v-tab-item>
+        <v-tab-item>
+          <v-card flat v-if="tab == 3">
+            <units></units>
+          </v-card>
+        </v-tab-item>
       </v-tabs-items>
     </v-card>
   </v-container>
@@ -31,15 +41,18 @@
 
 <script>
 import Article from "./partials/articles/articles.vue";
+import Categories from "./partials/categories/categories.vue";
+import Units from "./partials/units/units.vue";
 export default {
   components: {
     Article,
+    Categories,
+    Units,
   },
   data() {
     return {
       tab: null,
       items: ["afichage", "articles", "Catégories", "Unités de mesure"],
-      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     };
   },
 };

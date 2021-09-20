@@ -8,29 +8,30 @@ require('./bootstrap');
 
 window.Vue = require('vue').default;
 
-let token = document.head.querySelector('meta[name="csrf-token"]');
+// let token = document.head.querySelector('meta[name="csrf-token"]');
 
-if (token) {
-    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
-} else {
-    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
-}
+// if (token) {
+//     window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+// } else {
+//     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+// }
 
 import vuetify from '../plugins/vuetify';
 import router from './router'
 import store from './store'
+import './plugins/progressBar'
+import axios from 'axios';
 
+// redirect if Unauthenticated
+axios.interceptors.response.use(response => {
+    return response;
+}, error => {
+    if (error.response.status === 401 || error.response.status === 419) {
+        window.location.reload();
+    }
+    return Promise.reject(error);
+});
 
-router.beforeEach((to, from, next) => {
-    alert('rout changed')
-    NProgress.start()
-    NProgress.set(0.1)
-    next()
-})
-router.afterEach(() => {
-    alert('router ended')
-    setTimeout(() => NProgress.done(), 500)
-})
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

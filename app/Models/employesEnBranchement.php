@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class articleEnBranchement extends Model
+class employesEnBranchement extends Model
 {
     use HasFactory;
-    public function article()
+    public function employe()
     {
-        return $this->belongsTo(article::class, 'article_id');
+        return $this->belongsTo(employe::class, 'employe_id');
     }
 }

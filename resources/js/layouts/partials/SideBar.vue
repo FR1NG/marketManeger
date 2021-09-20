@@ -1,15 +1,19 @@
 <template>
   <v-navigation-drawer v-model="drawer" app>
-    <v-list-item>
-      <v-list-item-content>
-        <v-list-item-title class="text-h6"> Application </v-list-item-title>
-        <v-list-item-subtitle> subtext </v-list-item-subtitle>
-      </v-list-item-content>
-    </v-list-item>
-
-    <v-divider></v-divider>
-
     <v-list dense>
+      <v-list-item>
+        <v-list-item-avatar>
+          <img src="/assets/brand_icon.png" alt="logo" />
+        </v-list-item-avatar>
+        <v-list-item-content>
+          <v-list-item-title>
+            <h1 class="font-weight-light">Meediaty</h1>
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-divider></v-divider>
+
       <v-list-item
         v-for="link in links"
         :key="link.test"
@@ -59,8 +63,8 @@ export default {
 };
 </script>
 
-<style>
-a.v-list-item--active.v-list-item.v-list-item--link.theme--light {
+<style lang="scss">
+/* a.v-list-item--active.v-list-item.v-list-item--link.theme--light {
   background: #e53935;
   color: #fff;
 }
@@ -70,5 +74,17 @@ a.v-list-item {
 }
 a.v-list-item.v-list-item--link.theme--light:hover {
   text-decoration: none;
+} */
+//light mode
+.theme--light {
+  &.v-list-item--active {
+    color: var(--v-primary-lighten3) !important;
+  }
+}
+//darl mode
+.theme--dark {
+  &.v-list-item--active {
+    color: var(--v-primary-lighten3) !important;
+  }
 }
 </style>
