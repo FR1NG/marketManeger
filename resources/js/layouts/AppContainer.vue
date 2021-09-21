@@ -41,7 +41,7 @@ export default {
     Alert,
     Toast,
   },
-  props: ["user"],
+  props: ["user", "roles"],
   computed: {
     toast() {
       return this.$store.getters["toast/toast"];
