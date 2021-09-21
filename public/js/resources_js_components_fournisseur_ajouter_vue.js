@@ -515,7 +515,7 @@ var render = function() {
                 link: "",
                 color: "primary",
                 dark: "",
-                to: { name: "fournisseur" }
+                to: { name: "fournisseurs" }
               }
             },
             [_vm._v("\n      List\n    ")]

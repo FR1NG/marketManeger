@@ -45,6 +45,7 @@ export default {
           icon: "mdi-truck-outline",
           path: "fournisseurs",
         },
+        { text: "Dépot", icon: "mdi-warehouse", path: "depot" },
         { text: "Branchement", icon: "mdi-tools", path: "branchements" },
         { text: "Paramètres", icon: "mdi-tune", path: "parametres" },
       ],

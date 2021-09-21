@@ -15,14 +15,14 @@ class EmployeController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|max:100',
-            'cin' => 'required|max:50',
+            'name' => 'required|max:100|min:3',
+            'cin' => 'required|max:50|min:3',
             'cnss' => 'required|max:100',
-            'phone' => 'numeric',
+            'phone' => 'numeric|digits:10',
             'salery' => 'numeric|required',
             'quality' => 'required|max:100',
-            'email' => 'email',
-            'address' => 'max:255',
+            'email' => 'nullable|email',
+            'address' => 'required|max:255|min:3',
             'nore' => 'max:255'
         ]);
         $employe = new employe();

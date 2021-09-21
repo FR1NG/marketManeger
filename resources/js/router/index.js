@@ -7,6 +7,10 @@ import dashboard from '../components/dashboard/DashboardContainer'
 
 const routes = [
     {
+        path: '/',
+        redirect: '/dashboard'
+    },
+    {
         component: dashboard,
         name: "dashboard",
         path: "/dashboard",
@@ -64,6 +68,12 @@ const routes = [
         component: () => import('../components/fournisseur/edit'),
         name: "modifierFournisseur",
         path: "/fournisseurs/:id/modifier",
+    },
+    // warehouse
+    {
+        component: () => import('../components/depot/list'),
+        name: "depot",
+        path: "/depot",
     },
     // articles routes
     // {

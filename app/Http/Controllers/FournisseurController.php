@@ -12,9 +12,10 @@ class FournisseurController extends Controller
     *this function for gettin list of providers
     *==========================================
     */
-    public function getData(Request $requesr){
+    public function getData(Request $requesr)
+    {
         $query = fournisseur::query();
-        if ($requesr->search){
+        if ($requesr->search) {
             $column_to_search = [
                 'name',
                 'phone',
@@ -22,9 +23,9 @@ class FournisseurController extends Controller
                 'email',
                 'note'
             ];
-            $search = '%'. $requesr->search .'%';
-            foreach($column_to_search as $column){
-                $query->orWhere($column,'LIKE',$search);
+            $search = '%' . $requesr->search . '%';
+            foreach ($column_to_search as $column) {
+                $query->orWhere($column, 'LIKE', $search);
             }
         }
         $fournisseurs = $query->paginate(10);
@@ -36,13 +37,14 @@ class FournisseurController extends Controller
     *this function for storing new provider
     *======================================
     */
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $request->validate([
-            'name'=>'required|max:100',
-            'phone'=>'numeric',
-            'email'=>'email',
-            'address'=>'max:255',
-            'nore'=>'max:255'
+            'name' => 'required|max:100',
+            'phone' => 'numeric|digits:10',
+            'email' => 'nullable|email',
+            'address' => 'required|max:255',
+            'note' => 'max:255'
         ]);
         $fournisseur = new fournisseur();
         $fournisseur->name = $request->name;
@@ -51,7 +53,7 @@ class FournisseurController extends Controller
         $fournisseur->address = $request->address;
         $fournisseur->note = $request->note;
         $fournisseur->save();
-        return response()->json(["message"=>"fournisseur a été ajouté avec succès"],200);
+        return response()->json(["message" => "fournisseur a été ajouté avec succès"], 200);
     }
 
     /*
@@ -59,19 +61,18 @@ class FournisseurController extends Controller
     *this function for delete provider
     *=================================
     */
-    public function delete(Request $requesr){
+    public function delete(Request $requesr)
+    {
         $fournisseur = fournisseur::find($requesr->id);
-        if($fournisseur){
+        if ($fournisseur) {
             $process = $fournisseur->delete();
-            if($process){
-                return response()->json(['message'=>'fournisseur a été supprimé'],200);
+            if ($process) {
+                return response()->json(['message' => 'fournisseur a été supprimé'], 200);
+            } else {
+                return response()->json(['message' => 'il y a un problème lors de la suppression du fournisseur'], 500);
             }
-            else {
-                return response()->json(['message'=>'il y a un problème lors de la suppression du fournisseur'],500);
-            }
-        }
-        else {
-            return response()->json(['message'=>'fournisseur introuvable'],404);
+        } else {
+            return response()->json(['message' => 'fournisseur introuvable'], 404);
         }
     }
 
@@ -80,13 +81,13 @@ class FournisseurController extends Controller
     *this function for getting one provider
     *======================================
     */
-    public function details(Request $request){
+    public function details(Request $request)
+    {
         $fournisseur = fournisseur::find($request->id);
-        if($fournisseur){
+        if ($fournisseur) {
             return response()->json($fournisseur);
-        }
-        else {
-            return response()->json(['message'=>'fournisseur introuvable'],404);
+        } else {
+            return response()->json(['message' => 'fournisseur introuvable'], 404);
         }
     }
 
@@ -95,29 +96,28 @@ class FournisseurController extends Controller
     *this function for updating provider
     *===================================
     */
-    public function update(Request $request){
+    public function update(Request $request)
+    {
         $request->validate([
-            'name'=>'required|max:100',
-            'phone'=>'numeric',
-            'email'=>'email',
-            'address'=>'max:255',
-            'nore'=>'max:255'
+            'name' => 'required|max:100',
+            'phone' => 'numeric',
+            'email' => 'email',
+            'address' => 'max:255',
+            'nore' => 'max:255'
         ]);
         $provider = fournisseur::find($request->id);
-        if($provider){
+        if ($provider) {
             $provider->name = $request->name;
             $provider->phone = $request->phone;
             $provider->email = $request->email;
             $provider->address = $request->address;
             $provider->note = $request->note;
             $process = $provider->update();
-            if($process){
-                return response()->json(['message'=>'Le fournisseur a été mis à jour avec succès'],200);
+            if ($process) {
+                return response()->json(['message' => 'Le fournisseur a été mis à jour avec succès'], 200);
             }
-        }
-        else
-        {
-            return response()->json(['message'=> "Fournisseur introuvable"],404);
+        } else {
+            return response()->json(['message' => "Fournisseur introuvable"], 404);
         }
     }
 }

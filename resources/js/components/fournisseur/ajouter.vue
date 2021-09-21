@@ -10,7 +10,7 @@
         color="primary"
         dark
         class="mb-2"
-        :to="{ name: 'fournisseur' }"
+        :to="{ name: 'fournisseurs' }"
       >
         List
       </v-btn>
@@ -48,7 +48,7 @@
       ></v-textarea>
 
       <v-card-actions>
-          <v-spacer></v-spacer>
+        <v-spacer></v-spacer>
         <v-btn outlined class="mr-4">Annuler</v-btn>
         <v-btn color="success" class="mr-4" type="submit" :loading="loading"
           >Ajouter

@@ -4,6 +4,7 @@ use App\Http\Controllers\AchatController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\BranchementController;
 use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeController;
 use App\Http\Controllers\FournisseurController;
 use App\Http\Controllers\LivraisonController;
@@ -75,6 +76,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/branchements/getEmployees', [BranchementController::class, 'getEmployees']);
     Route::post('/branchements/addEmployees', [BranchementController::class, 'addEmployees']);
     Route::get('/branchements/getItemPrice', [BranchementController::class, 'getItemPrice']);
+
+    // dashboard routes
+    Route::get('/dashboard/index', [DashboardController::class, 'index']);
 });
 
 Auth::routes(['register' => false]);

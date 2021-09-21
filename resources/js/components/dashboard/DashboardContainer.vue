@@ -1,14 +1,18 @@
 <template>
   <v-container>
     <statistics></statistics>
-    <v-card> </v-card>
+    <chart></chart>
   </v-container>
 </template>
 
 <script>
+import Chart from "./partials/chart.vue";
 import statistics from "./partials/statistics.vue";
 export default {
-  components: { statistics },
+  components: { statistics, Chart },
+  created() {
+    this.$store.dispatch("dashboard/getData");
+  },
 };
 </script>
 
