@@ -13,6 +13,9 @@ export default {
   created() {
     this.$store.dispatch("dashboard/getData");
   },
+  mounted() {
+    console.log(this.$roles);
+  },
 };
 </script>
 

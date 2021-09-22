@@ -15,7 +15,7 @@
       <v-divider></v-divider>
 
       <v-list-item
-        v-for="link in links"
+        v-for="link in filtredLinks"
         :key="link.test"
         link
         :to="{ name: link.path }"
@@ -37,7 +37,12 @@ export default {
   data() {
     return {
       links: [
-        { text: "Tableau de bord", icon: "mdi-laptop", path: "dashboard" },
+        {
+          text: "Tableau de bord",
+          icon: "mdi-laptop",
+          path: "dashboard",
+          condition: this.$hasRole("owner"),
+        },
         { text: "Achat", icon: "mdi-cart-outline", path: "achats" },
         { text: "Employé", icon: "mdi-account-outline", path: "employes" },
         {
@@ -52,6 +57,10 @@ export default {
     };
   },
   computed: {
+    filtredLinks() {
+      const newLinks = this.links.filter((el) => el.condition != false);
+      return newLinks;
+    },
     drawer: {
       get() {
         return this.$store.getters["global/navigationDrawer"];
@@ -60,6 +69,9 @@ export default {
         this.$store.commit("global/setDrawer", value);
       },
     },
+  },
+  created() {
+    console.log(this.filtredLinks);
   },
 };
 </script>

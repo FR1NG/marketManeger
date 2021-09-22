@@ -29,7 +29,7 @@
 
 <script>
 import colors from "vuetify/lib/util/colors";
-
+import Vue from "vue";
 import Alert from "../components/extra/alert.vue";
 import Toast from "../components/extra/toast.vue";
 import NavBar from "./partials/NavBar.vue";
@@ -54,6 +54,7 @@ export default {
     this.$insProgress.finish();
   },
   created() {
+    Vue.prototype.$roles = this.roles;
     this.$insProgress.start();
 
     this.$router.beforeEach((to, from, next) => {

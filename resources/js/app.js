@@ -20,6 +20,7 @@ import vuetify from '../plugins/vuetify';
 import router from './router'
 import store from './store'
 import './plugins/progressBar'
+import './plugins/roles'
 import axios from 'axios';
 
 // redirect if Unauthenticated
