@@ -15,6 +15,7 @@ class CreateFournisseursTable extends Migration
     {
         Schema::create('fournisseurs', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('market_id');
             $table->string('name');
             $table->string('phone');
             $table->string('email')->nullable();

@@ -7,16 +7,37 @@ use App\Models\articleEnBranchement;
 use App\Models\branchement;
 use App\Models\employe;
 use App\Models\employesEnBranchement;
+use App\Models\marketArticle;
+use App\Models\marketCategory;
+use App\Models\marketCity;
 use App\Models\warehouse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BranchementController extends Controller
 {
 
+    private $market_id;
+
+    public function __construct()
+    {
+
+        $this->middleware(function ($request, $next) {
+            if (Auth::user()->hasRole('admin')) {
+                $this->market_id = $request->market_id;
+            } else {
+                $this->market_id = Auth::user()->market->id;
+            }
+
+            return $next($request);
+        });
+    }
+
+
     public function index(Request $request)
     {
         $query = branchement::query();
-
+        $query->where('market_id', '=', $this->market_id);
         if ($request->search) {
             $search = '%' . $request->search . '%';
             $columns = [
@@ -45,6 +66,9 @@ class BranchementController extends Controller
     {
         $branchement = new branchement();
         $request->validate([
+            'market_article_id' => 'required|numeric',
+            'type' => 'required|in:normal,social',
+            'city' => 'required|numeric',
             'contract_number' => 'required|max:255',
             'client_name' => 'required|max:100',
             'address' => 'required|max:255',
@@ -58,6 +82,10 @@ class BranchementController extends Controller
             'motive' => 'max:255',
         ]);
 
+        $branchement->market_id = $this->market_id;
+        $branchement->market_article_id = $request->market_article_id;
+        $branchement->type = $request->type;
+        $branchement->city_id = $request->city;
         $branchement->contract_number = $request->contract_number;
         $branchement->client_name = $request->client_name;
         $branchement->address = $request->address;
@@ -82,6 +110,7 @@ class BranchementController extends Controller
     public function details(Request $request)
     {
         $branchement = branchement::where('id', '=', $request->id)
+            ->where('market_id', '=', $this->market_id)
             ->with(['items:id,price,article_id,branchement_id', 'items.article:id,name', 'employees.employe:id,name,quality'])
             ->first();
         return response()->json(['branchement' => $branchement], 200);
@@ -96,7 +125,9 @@ class BranchementController extends Controller
 
     public function getEmployees()
     {
-        $employees = employe::select('id', 'name')->get();
+        $employees = employe::select('id', 'name')
+            ->where('market_id', '=', $this->market_id)
+            ->get();
 
         return response()->json(['employees' => $employees]);
     }
@@ -106,6 +137,7 @@ class BranchementController extends Controller
         $errors = 0;
         foreach ($request->items as $item) {
             $warehouse = warehouse::where('article_id', '=', $item['id'])
+                ->where('market_id', '=', $this->market_id)
                 ->where('quantity', '>', 0)
                 ->orderBy('created_at', 'ASC')
                 ->first();
@@ -168,5 +200,26 @@ class BranchementController extends Controller
         } else {
             return response()->json(['message' => 'cet article n\'est pas disponible en entrepôt'], 400);
         }
+    }
+
+    public function create()
+    {
+        $categories  = marketCategory::where('market_id', '=', $this->market_id)
+            ->select(['id', 'name'])
+            ->get();
+
+        $cities  = marketCity::where('market_id', '=', $this->market_id)
+            ->select(['id', 'name'])
+            ->get();
+
+        return response()->json(['categories' => $categories, 'cities' => $cities]);
+    }
+
+    public function getBranchementArticles(Request $request)
+    {
+        $articles  = marketArticle::where('market_category_id', '=', $request->id)
+            ->select(['id', 'display_name'])
+            ->get();
+        return response()->json(['articles' => $articles]);
     }
 }

@@ -15,6 +15,7 @@ class CreateWarehousesTable extends Migration
     {
         Schema::create('warehouses', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('market_id');
             $table->foreignId('article_id');
             $table->double('price');
             $table->integer('quantity');

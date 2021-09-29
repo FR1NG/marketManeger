@@ -3,10 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Models\employe;
+use App\Models\market;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EmployeController extends Controller
 {
+
+    private $market_id;
+
+    public function __construct()
+    {
+
+        $this->middleware(function ($request, $next) {
+            if (Auth::user()->hasRole('admin')) {
+                $this->market_id = $request->market_id;
+            } else {
+                $this->market_id = Auth::user()->market->id;
+            }
+
+            return $next($request);
+        });
+    }
     /*
     *======================================
     *this function for storing new employe
@@ -26,6 +44,7 @@ class EmployeController extends Controller
             'nore' => 'max:255'
         ]);
         $employe = new employe();
+        $employe->market_id = $this->market_id;
         $employe->name = $request->name;
         $employe->cin = $request->cin;
         $employe->cnss = $request->cnss;
@@ -47,6 +66,7 @@ class EmployeController extends Controller
     public function index(Request $requesr)
     {
         $query = employe::query();
+        $query->where('market_id', '=', $this->market_id);
         if ($requesr->search) {
             $column_to_search = [
                 'name',

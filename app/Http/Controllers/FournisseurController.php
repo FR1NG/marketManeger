@@ -4,9 +4,28 @@ namespace App\Http\Controllers;
 
 use App\Models\fournisseur;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FournisseurController extends Controller
 {
+
+    private $market_id;
+
+    public function __construct()
+    {
+
+        $this->middleware(function ($request, $next) {
+            if (Auth::user()->hasRole('admin')) {
+                $this->market_id = $request->market_id;
+            } else {
+                $this->market_id = Auth::user()->market->id;
+            }
+
+            return $next($request);
+        });
+    }
+
+
     /*
     *==========================================
     *this function for gettin list of providers
@@ -15,6 +34,7 @@ class FournisseurController extends Controller
     public function getData(Request $requesr)
     {
         $query = fournisseur::query();
+        $query->where('market_id', '=', $this->market_id);
         if ($requesr->search) {
             $column_to_search = [
                 'name',
@@ -47,6 +67,7 @@ class FournisseurController extends Controller
             'note' => 'max:255'
         ]);
         $fournisseur = new fournisseur();
+        $fournisseur->market_id = $this->market_id;
         $fournisseur->name = $request->name;
         $fournisseur->phone = $request->phone;
         $fournisseur->email = $request->email;
@@ -63,7 +84,7 @@ class FournisseurController extends Controller
     */
     public function delete(Request $requesr)
     {
-        $fournisseur = fournisseur::find($requesr->id);
+        $fournisseur = fournisseur::where('id', '=', $requesr->id)->where('market_id', '=', $this->market_id);
         if ($fournisseur) {
             $process = $fournisseur->delete();
             if ($process) {
@@ -83,7 +104,7 @@ class FournisseurController extends Controller
     */
     public function details(Request $request)
     {
-        $fournisseur = fournisseur::find($request->id);
+        $fournisseur = fournisseur::where('id', '=', $request->id)->where('market_id', '=', $this->market_id);
         if ($fournisseur) {
             return response()->json($fournisseur);
         } else {

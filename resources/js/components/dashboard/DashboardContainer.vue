@@ -1,21 +1,26 @@
 <template>
   <v-container>
-    <statistics></statistics>
-    <chart></chart>
+    <admin-dashboard
+      v-if="$hasRole('admin') && !$adminVisite"
+    ></admin-dashboard>
+    <manager-dashboard
+      v-if="$hasRole('manager') || $adminVisite"
+    ></manager-dashboard>
   </v-container>
 </template>
 
 <script>
-import Chart from "./partials/chart.vue";
-import statistics from "./partials/statistics.vue";
+import adminDashboard from "./admin";
+import managerDashboard from "./manager";
 export default {
-  components: { statistics, Chart },
+  components: {
+    adminDashboard,
+    managerDashboard,
+  },
   created() {
     this.$store.dispatch("dashboard/getData");
   },
-  mounted() {
-    console.log(this.$roles);
-  },
+  mounted() {},
 };
 </script>
 

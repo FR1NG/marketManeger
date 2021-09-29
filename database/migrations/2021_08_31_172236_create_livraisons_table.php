@@ -15,6 +15,7 @@ class CreateLivraisonsTable extends Migration
     {
         Schema::create('livraisons', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('market_id');
             $table->foreignId('achat_id');
             $table->string('dilevery_note_number');
             $table->date('date');

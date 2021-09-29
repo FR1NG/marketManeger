@@ -6,14 +6,32 @@ use App\Models\achat;
 use App\Models\article;
 use App\Models\articleEnAchat;
 use App\Models\fournisseur;
+use App\Models\market;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AchatController extends Controller
 {
+    private $market_id;
+
+    public function __construct()
+    {
+
+        $this->middleware(function ($request, $next) {
+            if (Auth::user()->hasRole('admin')) {
+                $this->market_id = $request->market_id;
+            } else {
+                $this->market_id = Auth::user()->market->id;
+            }
+
+            return $next($request);
+        });
+    }
 
     public function index(Request $request)
     {
         $achats = achat::withCount('items')
+            ->where('market_id', '=', $this->market_id)
             ->with(['fournisseur:id,name'])
             ->paginate(10);
         return response()->json(['achats' => $achats]);
@@ -25,6 +43,7 @@ class AchatController extends Controller
         $articles = article::select('id', 'name')
             ->get();
         $fournisseurs = fournisseur::select('id', 'name')
+            ->where('market_id', '=', $this->market_id)
             ->get();
         $response = [
             'articles' => $articles,
@@ -49,6 +68,7 @@ class AchatController extends Controller
 
         $achat = new achat();
         $achat->ndbc = $request->ndbc;
+        $achat->market_id = $this->market_id;
         $achat->fournisseur_id = $request->fournisseur;
         $achat->payment_mode = $request->payment_mode;
         $request->check_number ?  $achat->check_number = $request->check_number : null;
@@ -77,6 +97,7 @@ class AchatController extends Controller
     public function details(Request $request)
     {
         $achat = achat::where('id', '=', $request->id)
+            ->where('market_id', '=', $this->market_id)
             ->with(['items', 'fournisseur:id,name', 'items.article:id,name', 'livraisons'])
             ->first();
         if ($achat) {

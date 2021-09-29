@@ -15,6 +15,7 @@ class CreateAchatsTable extends Migration
     {
         Schema::create('achats', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('market_id');
             $table->string('ndbc');
             $table->foreignId('fournisseur_id');
             $table->string('payment_mode');

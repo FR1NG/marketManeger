@@ -15,6 +15,10 @@ class CreateBranchementsTable extends Migration
     {
         Schema::create('branchements', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('market_id');
+            $table->foreignId('market_article_id');
+            $table->foreignId('city_id');
+            $table->string('type');
             $table->string('contract_number');
             $table->string('client_name');
             $table->string('address');

@@ -1,9 +1,12 @@
 import axios from "axios";
 
 export const state = {
+    branchementCategories: [],
+    branchementArticles: [],
     branchements: [],
     articles: [],
     employees: [],
+    cities: [],
     details: [],
     articlesInBranchement: [],
     employeesInBranchement: [],
@@ -15,9 +18,12 @@ export const state = {
 };
 
 export const getters = {
+    branchementCategories: state => state.branchementCategories,
+    branchementArticles: state => state.branchementArticles,
     branchements: state => state.branchements,
     articles: state => state.articles,
     employees: state => state.employees,
+    cities: state => state.cities,
     details: state => state.details,
     articlesInBranchement: state => state.articlesInBranchement,
     employeesInBranchement: state => state.employeesInBranchement,
@@ -77,7 +83,14 @@ export const mutations = {
     },
     setSearch(state, data) {
         state.search = data.search;
-    }
+    },
+    setCreateData(state, data) {
+        state.branchementCategories = data.categories;
+        state.cities = data.cities;
+    },
+    setBranchementArticles(state, data) {
+        state.branchementArticles = data.articles;
+    },
 };
 
 export const actions = {
@@ -246,5 +259,42 @@ export const actions = {
                     reject(error.response);
                 });
         });
+    },
+    getCreateData(context, payload) {
+        return new Promise((resolve, reject) => {
+            axios.get('/branchements/create')
+                .then(response => {
+                    // resolve
+                    resolve(response)
+                    context.commit('setCreateData', response.data);
+                })
+                .catch(error => {
+                    // reject
+                    reject(error);
+                    console.log(error.response)
+
+                })
+        })
+    },
+    getBranchementArticles(context, payload) {
+        console.log(payload);
+        return new Promise((resolve, reject) => {
+            axios.get('/branchements/getBranchementArticles', {
+                params: {
+                    id: payload.id
+                }
+            })
+                .then(response => {
+                    // resolve
+                    resolve(response)
+                    context.commit('setBranchementArticles', response.data);
+                })
+                .catch(error => {
+                    // reject
+                    reject(error);
+                    console.log(error.response)
+
+                })
+        })
     },
 };

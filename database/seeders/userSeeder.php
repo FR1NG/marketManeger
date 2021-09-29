@@ -28,9 +28,9 @@ class userSeeder extends Seeder
             'description' => 'User is allowed to manage and edit other users', // optional
         ]);
 
-        $userRole = Role::create([
-            'name' => 'user',
-            'display_name' => 'user', // optional
+        $managerRole = Role::create([
+            'name' => 'manager',
+            'display_name' => 'manager', // optional
             'description' => 'manage market', // optional
         ]);
 
@@ -46,14 +46,14 @@ class userSeeder extends Seeder
             "password" => Hash::make("password")
         ]);
 
-        $user =  User::create([
-            "name" => "user",
-            "email" => "user@meediaty.com",
+        $manager =  User::create([
+            "name" => "manager",
+            "email" => "manager@meediaty.com",
             "password" => Hash::make("password")
         ]);
 
         $owner->attachRole($ownerRole);
         $admin->attachRole($adminRole);
-        $user->attachRole($userRole);
+        $manager->attachRole($managerRole);
     }
 }

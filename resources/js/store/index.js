@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import adminModules from './admin'
 
 Vue.use(Vuex);
 
 // Load store modules dynamically.
-const requireContext = require.context('./modules', false, /.*\.js$/)
+const requireContext = require.context('./modules', false, /.*\.js$/);
+
 
 const modules = requireContext.keys()
   .map(file =>
@@ -16,8 +18,9 @@ const modules = requireContext.keys()
     }
 
     return { ...modules, [name]: module }
-  }, {})
+  }, {});
 
+const allModules = { ...adminModules, ...modules };
 export default new Vuex.Store({
-  modules
+  modules: allModules,
 })

@@ -15,6 +15,7 @@ class CreateEmployesTable extends Migration
     {
         Schema::create('employes', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('market_id');
             $table->string('name');
             $table->string('cin');
             $table->string('cnss');

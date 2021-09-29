@@ -44,7 +44,9 @@ axios.interceptors.response.use(response => {
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('app-container', require('./layouts/AppContainer.vue').default);
+Vue.component('app-container', require('./AppContainer.vue').default);
+Vue.component('app-manager', require('./layouts/AppManager.vue').default);
+Vue.component('app-administrator', require('./layouts/AppAdministrator.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

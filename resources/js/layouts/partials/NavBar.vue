@@ -68,7 +68,11 @@
 
 <script>
 export default {
-  props: ["user"],
+  data() {
+    return {
+      user: [],
+    };
+  },
   methods: {
     logout() {
       axios.post("logout").then((response) => {
@@ -79,6 +83,9 @@ export default {
       console.log("clicked");
       this.$store.commit("global/toggleDrawer");
     },
+  },
+  created() {
+    this.user = this.$user;
   },
 };
 </script>

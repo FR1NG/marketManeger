@@ -11,11 +11,19 @@
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
+      <v-list-item v-if="$adminVisite" link href="/admin">
+        <v-list-item-icon>
+          <v-icon>mdi-shield-account-outline</v-icon>
+        </v-list-item-icon>
+
+        <v-list-item-content>
+          <v-list-item-title>Zone d'administration</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
 
       <v-divider></v-divider>
-
       <v-list-item
-        v-for="link in filtredLinks"
+        v-for="link in links"
         :key="link.test"
         link
         :to="{ name: link.path }"
@@ -34,32 +42,10 @@
 
 <script>
 export default {
-  data() {
-    return {
-      links: [
-        {
-          text: "Tableau de bord",
-          icon: "mdi-laptop",
-          path: "dashboard",
-          condition: this.$hasRole("owner"),
-        },
-        { text: "Achat", icon: "mdi-cart-outline", path: "achats" },
-        { text: "Employé", icon: "mdi-account-outline", path: "employes" },
-        {
-          text: "Fournisseur",
-          icon: "mdi-truck-outline",
-          path: "fournisseurs",
-        },
-        { text: "Dépot", icon: "mdi-warehouse", path: "depot" },
-        { text: "Branchement", icon: "mdi-tools", path: "branchements" },
-        { text: "Paramètres", icon: "mdi-tune", path: "parametres" },
-      ],
-    };
-  },
+  props: ["links"],
   computed: {
-    filtredLinks() {
-      const newLinks = this.links.filter((el) => el.condition != false);
-      return newLinks;
+    navLinks() {
+      return this.links;
     },
     drawer: {
       get() {
@@ -69,9 +55,6 @@ export default {
         this.$store.commit("global/setDrawer", value);
       },
     },
-  },
-  created() {
-    console.log(this.filtredLinks);
   },
 };
 </script>

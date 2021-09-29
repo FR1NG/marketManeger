@@ -19,6 +19,50 @@
     <v-form ref="form" @submit.prevent="handleSubmit">
       <v-row>
         <v-col cols="12" md="6">
+          <v-select
+            v-model="selectedCategory"
+            label="Catégorie de branchement"
+            :loading="categoriesLoading"
+            :items="categories"
+            item-text="name"
+            item-value="id"
+          ></v-select>
+        </v-col>
+
+        <v-col cols="12" md="6">
+          <v-select
+            v-model="form.market_article_id"
+            :items="branchementArticles"
+            item-text="display_name"
+            item-value="id"
+            :loading="articlesLoading"
+            label="Branchement"
+            :error-messages="errors.market_article_id"
+          ></v-select>
+        </v-col>
+
+        <v-col cols="12" md="6">
+          <v-select
+            v-model="form.type"
+            label="Type"
+            :items="['normal', 'social']"
+            :error-messages="errors.type"
+          ></v-select>
+        </v-col>
+
+        <v-col cols="12" md="6">
+          <v-select
+            v-model="form.city"
+            label="Ville"
+            :items="cities"
+            item-text="name"
+            item-value="id"
+            :error-messages="errors.city"
+          ></v-select>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="12" md="6">
           <v-text-field
             v-model="form.contract_number"
             label="№ contrt"
@@ -149,12 +193,19 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
       dateModal: false,
       loading: false,
+      categoriesLoading: false,
+      articlesLoading: false,
+      selectedCategory: null,
       form: {
+        market_article_id: null,
+        type: "",
+        city: null,
         contract_number: "",
         client_name: "",
         address: "",
@@ -168,6 +219,9 @@ export default {
         motive: "",
       },
       errors: {
+        market_article_id: [],
+        type: [],
+        city: [],
         contract_number: [],
         client_name: [],
         address: [],
@@ -184,7 +238,18 @@ export default {
       natures: ["3éme CPT", "2éme CPT", "3éme CPT", "2éme et 3éme CPT", "NBN"],
     };
   },
-
+  watch: {
+    selectedCategory() {
+      this.getArticles({ id: this.selectedCategory });
+    },
+  },
+  computed: {
+    ...mapGetters({
+      categories: "branchement/branchementCategories",
+      branchementArticles: "branchement/branchementArticles",
+      cities: "branchement/cities",
+    }),
+  },
   methods: {
     handleSubmit() {
       this.loading = true;
@@ -204,6 +269,16 @@ export default {
           this.loading = false;
           // push errors
           //   this.pushErrors(error);
+          error.data.errors.market_article_id
+            ? (this.errors.market_article_id =
+                error.data.errors.market_article_id)
+            : null;
+          error.data.errors.type
+            ? (this.errors.type = error.data.errors.type)
+            : null;
+          error.data.errors.city
+            ? (this.errors.city = error.data.errors.city)
+            : null;
           error.data.errors.contract_number
             ? (this.errors.contract_number = error.data.errors.contract_number)
             : (this.errors.contract_number = []);
@@ -244,6 +319,8 @@ export default {
     },
     resetErrors() {
       this.errors = {
+        market_article_id: [],
+        type: [],
         contract_number: [],
         client_name: [],
         address: [],
@@ -265,6 +342,23 @@ export default {
         },
       });
     },
+    getCategories() {
+      this.categoriesLoading = true;
+      this.$store.dispatch("branchement/getCreateData").then(() => {
+        this.categoriesLoading = false;
+      });
+    },
+    getArticles({ id }) {
+      this.articlesLoading = true;
+      this.$store
+        .dispatch("branchement/getBranchementArticles", { id })
+        .then(() => {
+          this.articlesLoading = false;
+        });
+    },
+  },
+  created() {
+    this.getCategories();
   },
 };
 </script>
