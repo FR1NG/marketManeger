@@ -68,14 +68,8 @@ __webpack_require__.r(__webpack_exports__);
         text: "DSG",
         value: "name"
       }, {
-        text: "Catégorie",
-        value: "category.name"
-      }, {
-        text: "Unité",
-        value: "unit.name"
-      }, {
         text: "Quantité en dépot",
-        value: "items_in_warehouse_sum_quantity"
+        value: "quantity"
       }, {
         text: "Quantité de notification",
         value: "notification_quantity"
@@ -94,33 +88,30 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     items: function items() {
-      return this.$store.getters["article/articles"];
+      return this.$store.getters["depot/items"];
     },
     lastPage: function lastPage() {
-      return this.$store.getters["article/lastPage"];
+      return this.$store.getters["depot/lastPage"];
     },
     currentPage: {
       get: function get() {
-        return this.$store.getters["article/currentPage"];
+        return this.$store.getters["depot/currentPage"];
       },
       set: function set(value) {
-        this.$store.commit("article/setCurrentPage", {
+        this.$store.commit("depot/setCurrentPage", {
           page: value
         });
       }
     },
     search: {
       get: function get() {
-        return this.$store.getters["article/search"];
+        return this.$store.getters["depot/search"];
       },
       set: function set(value) {
-        this.$store.commit("article/setSearch", {
+        this.$store.commit("depot/setSearch", {
           search: value
         });
       }
-    },
-    createArticleDialog: function createArticleDialog() {
-      return this.$store.getters["article/createArticleDialog"];
     }
   },
   methods: {
@@ -128,7 +119,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.loading = true;
-      this.$store.dispatch("article/getData").then(function () {
+      this.$store.dispatch("depot/getData").then(function () {
         _this.loading = false;
       })["catch"](function () {
         _this.loading = false;
@@ -141,28 +132,11 @@ __webpack_require__.r(__webpack_exports__);
       if (this.timeout) clearTimeout(this.timeout);
       this.timeout = setTimeout(function () {
         //action
-        _this2.$store.dispatch("article/getData") // promis resolved
+        _this2.$store.dispatch("depot/getData") // promis resolved
         .then(function () {
           _this2.searchLoading = false;
         });
       }, 500); // delay
-    },
-    createArticle: function createArticle() {
-      this.$store.commit("article/showCreateArticleDialog");
-    },
-    remove: function remove(id) {
-      this.$store.commit("employe/setDelete", {
-        id: id
-      });
-    },
-    edit: function edit(employe) {
-      // this.$router.replace({
-      //   name: "modifierEmploye",
-      //   params: {
-      //     id: employe.id,
-      //   },
-      // });
-      alert("Not setted yet");
     }
   },
   created: function created() {
@@ -540,11 +514,11 @@ var render = function() {
                 proxy: true
               },
               {
-                key: "item.items_in_warehouse_sum_quantity",
+                key: "item.quantity",
                 fn: function(ref) {
                   var item = ref.item
                   return [
-                    !item.items_in_warehouse_sum_quantity
+                    !item.quantity
                       ? _c(
                           "div",
                           [
@@ -554,9 +528,7 @@ var render = function() {
                           ],
                           1
                         )
-                      : _c("div", [
-                          _vm._v(_vm._s(item.items_in_warehouse_sum_quantity))
-                        ])
+                      : _c("div", [_vm._v(_vm._s(item.quantity))])
                   ]
                 }
               }

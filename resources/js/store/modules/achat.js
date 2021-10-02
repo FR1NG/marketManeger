@@ -14,6 +14,7 @@ export const state = {
     articlesInDetails: [],
     createDelivery: false,
     deliveryInDetails: [],
+    detailsLoading: false,
 };
 
 export const getters = {
@@ -29,6 +30,7 @@ export const getters = {
     articlesInDetails: state => state.articlesInDetails,
     createDelivery: state => state.createDelivery,
     createDelideliveryInDetailsvery: state => state.deliveryInDetails,
+    detailsLoading: state => state.detailsLoading,
 };
 
 export const mutations = {
@@ -241,6 +243,7 @@ export const actions = {
         });
     },
     getAchatDetails(context, payload) {
+        context.state.detailsLoading = true;
         return new Promise((resolve, reject) => {
             axios.get('achats/details', {
                 params: {
@@ -248,6 +251,8 @@ export const actions = {
                 }
             })
                 .then(response => {
+                    // stop loading
+                    context.state.detailsLoading = false;
                     // resolve promise 
                     resolve(response);
                     // set data

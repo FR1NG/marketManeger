@@ -20,7 +20,7 @@ class CreateAchatsTable extends Migration
             $table->foreignId('fournisseur_id');
             $table->string('payment_mode');
             $table->string('check_number')->nullable();
-            $table->float('amount');
+            $table->double('amount');
             $table->date('deadline');
             $table->timestamps();
         });

@@ -17,4 +17,16 @@ class branchement extends Model
     {
         return $this->hasMany(employesEnBranchement::class, 'branchement_id');
     }
+    public function city()
+    {
+        return $this->belongsTo(marketCity::class, 'city_id');
+    }
+    public function marketArticle()
+    {
+        return $this->belongsTo(marketArticle::class, 'market_article_id');
+    }
+    public function charges()
+    {
+        return $this->hasMany(branchementChargers::class, 'branchement_id');
+    }
 }

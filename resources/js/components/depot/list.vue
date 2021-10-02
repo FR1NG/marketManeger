@@ -28,11 +28,11 @@
         </template>
 
         <!-- BEGIN:quantity column -->
-        <template v-slot:item.items_in_warehouse_sum_quantity="{ item }">
-          <div v-if="!item.items_in_warehouse_sum_quantity">
+        <template v-slot:item.quantity="{ item }">
+          <div v-if="!item.quantity">
             <v-icon class="red--text"> mdi-alert-outline </v-icon>
           </div>
-          <div v-else>{{ item.items_in_warehouse_sum_quantity }}</div>
+          <div v-else>{{ item.quantity }}</div>
         </template>
         <!-- END:action column -->
       </v-data-table>
@@ -54,9 +54,7 @@ export default {
     return {
       headers: [
         { text: "DSG", value: "name" },
-        { text: "Catégorie", value: "category.name" },
-        { text: "Unité", value: "unit.name" },
-        { text: "Quantité en dépot", value: "items_in_warehouse_sum_quantity" },
+        { text: "Quantité en dépot", value: "quantity" },
         { text: "Quantité de notification", value: "notification_quantity" },
       ],
       searchLoading: false,
@@ -73,36 +71,33 @@ export default {
   },
   computed: {
     items() {
-      return this.$store.getters["article/articles"];
+      return this.$store.getters["depot/items"];
     },
     lastPage() {
-      return this.$store.getters["article/lastPage"];
+      return this.$store.getters["depot/lastPage"];
     },
     currentPage: {
       get() {
-        return this.$store.getters["article/currentPage"];
+        return this.$store.getters["depot/currentPage"];
       },
       set(value) {
-        this.$store.commit("article/setCurrentPage", { page: value });
+        this.$store.commit("depot/setCurrentPage", { page: value });
       },
     },
     search: {
       get() {
-        return this.$store.getters["article/search"];
+        return this.$store.getters["depot/search"];
       },
       set(value) {
-        this.$store.commit("article/setSearch", { search: value });
+        this.$store.commit("depot/setSearch", { search: value });
       },
-    },
-    createArticleDialog() {
-      return this.$store.getters["article/createArticleDialog"];
     },
   },
   methods: {
     getData() {
       this.loading = true;
       this.$store
-        .dispatch("article/getData")
+        .dispatch("depot/getData")
         .then(() => {
           this.loading = false;
         })
@@ -116,27 +111,12 @@ export default {
       this.timeout = setTimeout(() => {
         //action
         this.$store
-          .dispatch("article/getData")
+          .dispatch("depot/getData")
           // promis resolved
           .then(() => {
             this.searchLoading = false;
           });
       }, 500); // delay
-    },
-    createArticle() {
-      this.$store.commit("article/showCreateArticleDialog");
-    },
-    remove(id) {
-      this.$store.commit("employe/setDelete", { id: id });
-    },
-    edit(employe) {
-      // this.$router.replace({
-      //   name: "modifierEmploye",
-      //   params: {
-      //     id: employe.id,
-      //   },
-      // });
-      alert("Not setted yet");
     },
   },
   created() {

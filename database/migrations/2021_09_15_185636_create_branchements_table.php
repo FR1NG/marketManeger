@@ -22,13 +22,13 @@ class CreateBranchementsTable extends Migration
             $table->string('contract_number');
             $table->string('client_name');
             $table->string('address');
-            $table->string('intervention');
+            $table->string('intervention')->nullable();
             $table->string('estimate_number');
             $table->string('phone');
             $table->string('diameter')->nullable();
-            $table->string('caliber');
-            $table->string('nature');
-            $table->date('arrival_date');
+            $table->string('caliber')->nullable();
+            $table->string('nature')->nullable();
+            $table->date('arrival_date')->nullable();
             $table->string('motive')->nullable();
             $table->timestamps();
         });

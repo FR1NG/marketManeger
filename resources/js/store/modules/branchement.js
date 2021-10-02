@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export const state = {
+    detailsCardLoading: false,
     branchementCategories: [],
     branchementArticles: [],
     branchements: [],
@@ -10,14 +11,17 @@ export const state = {
     details: [],
     articlesInBranchement: [],
     employeesInBranchement: [],
-    addArticlesDialog: false,
-    addEmployeesDialog: false,
+    chargesInBranchement: [],
     currentPage: null,
     lastPage: null,
     search: '',
+    addArticlesDialog: false,
+    addEmployeesDialog: false,
+    addChargesDialog: false,
 };
 
 export const getters = {
+    detailsCardLoading: state => state.detailsCardLoading,
     branchementCategories: state => state.branchementCategories,
     branchementArticles: state => state.branchementArticles,
     branchements: state => state.branchements,
@@ -27,11 +31,13 @@ export const getters = {
     details: state => state.details,
     articlesInBranchement: state => state.articlesInBranchement,
     employeesInBranchement: state => state.employeesInBranchement,
-    addArticlesDialog: state => state.addArticlesDialog,
-    addEmployeesDialog: state => state.addEmployeesDialog,
+    chargesInBranchement: state => state.chargesInBranchement,
     currentPage: state => state.currentPage,
     lastPage: state => state.lastPage,
     search: state => state.search,
+    addArticlesDialog: state => state.addArticlesDialog,
+    addEmployeesDialog: state => state.addEmployeesDialog,
+    addChargesDialog: state => state.addChargesDialog,
 };
 
 export const mutations = {
@@ -45,6 +51,9 @@ export const mutations = {
         const { branchement } = data;
         state.details = [
             { text: "№ contrt", value: branchement.contract_number },
+            { text: "Branchement", value: branchement.market_article.display_name },
+            { text: "Type", value: branchement.type },
+            { text: "Ville", value: branchement.city.name },
             { text: "Nom", value: branchement.client_name },
             { text: "Adresse", value: branchement.address },
             { text: "Intervention", value: branchement.intervention },
@@ -58,6 +67,7 @@ export const mutations = {
         ];
         state.articlesInBranchement = branchement.items;
         state.employeesInBranchement = branchement.employees;
+        state.chargesInBranchement = branchement.charges;
     },
 
     showAddArticles(state) {
@@ -72,6 +82,12 @@ export const mutations = {
     },
     hideAddEmployees(state) {
         state.addEmployeesDialog = false;
+    },
+    showAddCharges(state) {
+        state.addChargesDialog = true;
+    },
+    hideAddCharges(state) {
+        state.addChargesDialog = false;
     },
     setData(state, data) {
         state.branchements = data.branchements.data;
@@ -114,6 +130,7 @@ export const actions = {
         })
     },
     getDetails(context, payload) {
+        context.state.detailsCardLoading = true;
         return new Promise((resolve, reject) => {
             axios.get('branchements/details', {
                 params: {
@@ -121,6 +138,8 @@ export const actions = {
                 }
             })
                 .then(response => {
+                    // stop loading
+                    context.state.detailsCardLoading = false;
                     // resolve promise
                     resolve(response);
                     // set data
@@ -239,6 +258,32 @@ export const actions = {
         });
     },
 
+    addCharges(context, payload) {
+        return new Promise((resolve, reject) => {
+            axios.post('branchements/charges/store', {
+                ...payload.form,
+                branchement_id: payload.branchement_id,
+            })
+                .then(response => {
+                    //   refetch data
+                    context.dispatch('getDetails', { id: payload.branchement_id })
+                    // resolve
+                    resolve(response);
+                    // alert 
+                    context.dispatch('alert/show', { text: response.data.message, type: 'success' }, { root: true });
+
+                })
+                .catch(error => {
+                    // test
+                    console.log(error.response);
+                    // rejact 
+                    reject(error);
+                    // alert
+                    context.dispatch('alert/show', { text: error.response.data.message, type: 'error' }, { root: true });
+
+                })
+        })
+    },
     getData(context, payload) {
         return new Promise((resolve, reject) => {
             axios

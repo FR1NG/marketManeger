@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Vuetify from 'vuetify/lib'
 import colors from "vuetify/lib/util/colors";
 import "mdi-icons/css/materialdesignicons.min.css";
+import fr from 'vuetify/lib/locale/fr';
+
 
 Vue.use(Vuetify)
 
@@ -25,6 +27,12 @@ const opts = {
                 primary: localStorage.getItem('primaryColor') || colors.purple,
             }
         }
+    },
+    lang: {
+        locales: {
+            fr,
+        },
+        current: 'fr'
     }
 }
 

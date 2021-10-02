@@ -17,7 +17,7 @@ class CreateArticleEnAchatsTable extends Migration
             $table->id();
             $table->foreignId('achat_id');
             $table->foreignId('article_id');
-            $table->float('price');
+            $table->double('price');
             $table->integer('quantity');
             $table->integer('livred_quantity')->default(0);
             $table->timestamps();

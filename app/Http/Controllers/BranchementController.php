@@ -72,13 +72,13 @@ class BranchementController extends Controller
             'contract_number' => 'required|max:255',
             'client_name' => 'required|max:100',
             'address' => 'required|max:255',
-            'intervention' => 'required|max:100',
+            'intervention' => 'max:100',
             'estimate_number' => 'required|max:100',
             'phone' => 'required|numeric|digits:10',
             'diameter' => 'max:255',
-            'caliber' => 'required|max:255',
-            'nature' => 'required|max:255',
-            'arrival_date' => 'required|date',
+            'caliber' => 'max:255',
+            'nature' => 'max:255',
+            'arrival_date' => 'date',
             'motive' => 'max:255',
         ]);
 
@@ -111,7 +111,7 @@ class BranchementController extends Controller
     {
         $branchement = branchement::where('id', '=', $request->id)
             ->where('market_id', '=', $this->market_id)
-            ->with(['items:id,price,article_id,branchement_id', 'items.article:id,name', 'employees.employe:id,name,quality'])
+            ->with(['items:id,price,article_id,branchement_id', 'items.article:id,name', 'employees.employe:id,name,quality', 'city:id,name', 'marketArticle:id,display_name,unit_price', 'charges'])
             ->first();
         return response()->json(['branchement' => $branchement], 200);
     }

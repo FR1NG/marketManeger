@@ -4,10 +4,12 @@ export const state = {
     details: {
         achat: {},
     },
+    detailsLoading: false,
 };
 
 export const getters = {
     details: state => state.details,
+    detailsLoading: state => state.detailsLoading,
 };
 
 export const mutations = {
@@ -58,6 +60,7 @@ export const actions = {
         });
     },
     getLivraisonDetails(context, payload) {
+        context.state.detailsLoading = true;
         return new Promise((resolve, reject) => {
             axios.get('livraisons/details', {
                 params: {
@@ -65,6 +68,8 @@ export const actions = {
                 }
             })
                 .then(response => {
+                    // stoo loading
+                    context.state.detailsLoading = false;
                     // resolve
                     resolve(response);
                     // set data

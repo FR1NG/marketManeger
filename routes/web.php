@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AchatController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\BranchementChargersController;
 use App\Http\Controllers\BranchementController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\DashboardController;
@@ -14,7 +15,7 @@ use App\Http\Controllers\MarketCategoryController;
 use App\Http\Controllers\MarketCityController;
 use App\Http\Controllers\MarketController;
 use App\Http\Controllers\UnitController;
-use App\Models\marketArticle;
+use App\Http\Controllers\WarehouseController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 
@@ -95,6 +96,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/branchements/getItemPrice', [BranchementController::class, 'getItemPrice']);
     Route::get('/branchements/create', [BranchementController::class, 'create']);
     Route::get('/branchements/getBranchementArticles', [BranchementController::class, 'getBranchementArticles']);
+    Route::post('branchements/charges/store', [BranchementChargersController::class, 'store']);
+
+    // warehouse routes
+    Route::get('/warehouses/index', [WarehouseController::class, 'index']);
 
     // dashboard routes
     Route::get('/dashboard/index', [DashboardController::class, 'index']);
@@ -170,6 +175,12 @@ Route::group(['prefix' => 'market/{market_id}', 'middleware' => ['auth', 'role:a
     Route::get('/branchements/getItemPrice', [BranchementController::class, 'getItemPrice']);
     Route::get('/branchements/create', [BranchementController::class, 'create']);
     Route::get('/branchements/getBranchementArticles', [BranchementController::class, 'getBranchementArticles']);
+    Route::post('branchements/charges/store', [BranchementChargersController::class, 'store']);
+
+
+
+    // warehouse routes
+    Route::get('/warehouses/index', [WarehouseController::class, 'index']);
 
     // dashboard routes
     Route::get('/dashboard/index', [DashboardController::class, 'index']);

@@ -22,7 +22,7 @@ class CreateEmployesTable extends Migration
             $table->double('phone');
             $table->string('email')->nullable();
             $table->string('address');
-            $table->float('salery');
+            $table->double('salery');
             $table->string('quality');
             $table->string('note')->nullable();
             $table->timestamps();

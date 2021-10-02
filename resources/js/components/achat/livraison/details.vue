@@ -1,7 +1,7 @@
 <template>
   <v-container>
-    <v-card class="pa-4">
-      <v-toolbar flat>
+    <v-card class="pa-4" :loading="loading">
+      <v-toolbar flat color="primary  lighten-4">
         <v-toolbar-title>Details de livraison</v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-spacer></v-spacer>
@@ -75,7 +75,7 @@
         <!-- ==========================[items table:START]======================== -->
         <v-col cols="12">
           <v-divider></v-divider>
-          <v-toolbar flat>
+          <v-toolbar flat color="primary  lighten-4">
             <v-toolbar-title>Articles</v-toolbar-title>
             <v-divider class="mx-4" inset vertical></v-divider>
           </v-toolbar>
@@ -106,13 +106,15 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   computed: {
+    ...mapGetters({
+      details: "livraison/details",
+      loading: "livraison/detailsLoading",
+    }),
     id() {
       return this.$route.params.id;
-    },
-    details() {
-      return this.$store.getters["livraison/details"];
     },
   },
   methods: {

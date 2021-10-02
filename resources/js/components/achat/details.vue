@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-card class="pa-4">
+    <v-card class="pa-4" :loading="loading">
       <v-toolbar flat color="primary  lighten-4">
         <v-toolbar-title>Details</v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
@@ -154,19 +154,19 @@
 
 <script>
 import CreateDelivery from "./livraison/ajouter.vue";
+import { mapGetters } from "vuex";
 export default {
   components: {
     CreateDelivery,
   },
   computed: {
+    ...mapGetters({
+      details: "achat/details",
+      createDeliveryDialog: "achat/createDelivery",
+      loading: "achat/detailsLoading",
+    }),
     id() {
       return this.$route.params.id;
-    },
-    details() {
-      return this.$store.getters["achat/details"];
-    },
-    createDeliveryDialog() {
-      return this.$store.getters["achat/createDelivery"];
     },
   },
   methods: {

@@ -51,7 +51,8 @@ class MarketController extends Controller
         $market->user_id = $user->id;
         $market->save();
 
-        $user->notify(new MarketCreated($generatedPassword, $market, $user));
+        // send CREDENTUALS BY EMAIL
+        // $user->notify(new MarketCreated($generatedPassword, $market, $user));
 
         return response()->json(['message' => 'market created', 'market_id' => $market->id]);
     }

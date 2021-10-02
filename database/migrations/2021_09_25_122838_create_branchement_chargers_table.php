@@ -16,7 +16,7 @@ class CreateBranchementChargersTable extends Migration
         Schema::create('branchement_chargers', function (Blueprint $table) {
             $table->id();
             $table->foreignId('branchement_id');
-            $table->string('type');
+            $table->string('nature');
             $table->double('amount');
             $table->timestamps();
         });
