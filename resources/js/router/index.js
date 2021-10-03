@@ -8,6 +8,11 @@ import dashboard from '../components/dashboard/DashboardContainer'
 
 const router = new VueRouter({
     routes: [
+        {
+            component: () => import('../components/profile/UserProfile'),
+            name: 'profile',
+            path: '/profile',
+        },
         // ======================================[admin:begin]===========================
         {
             path: '/',

@@ -35,7 +35,7 @@
         <v-list max-width="300">
           <v-list-item> </v-list-item>
 
-          <v-list-item link>
+          <v-list-item link :to="{ name: 'profile' }">
             <v-list-item-content>
               <v-list-item-title class="title d-flex justify-center">
                 {{ user.name }}
