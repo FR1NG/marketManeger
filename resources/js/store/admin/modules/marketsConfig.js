@@ -21,6 +21,7 @@ export const getters = {
 
 export const mutations = {
     setInfo(state, data) {
+        console.log(data);
         state.info = data.market
     },
     startLoading(state) {
@@ -185,6 +186,27 @@ export const actions = {
                     reject(error);
                 })
         })
+    },
+    updateInfo(context, payload) {
+        return new Promise((resolve, reject) => {
+            axios.patch('admin/markets/update', {
+                ...payload.form,
+            }).then(response => {
+                // test
+                console.log(response);
+                // resolve
+                resolve(response);
+                // alert
+                context.dispatch('alert/show', { text: response.data.message, type: 'success' }, { root: true });
+            }).catch(error => {
+                // test
+                console.log(error.response);
+                // reject
+                reject(error);
+                // alert
+                context.dispatch('alert/show', { text: error.response.data.message, type: 'error' }, { root: true });
+            });
+        });
     }
 };
 

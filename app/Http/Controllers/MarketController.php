@@ -28,8 +28,8 @@ class MarketController extends Controller
             "amount" => 'required|numeric',
             "service_order_date" => 'required|date',
             "deadline_date" => 'required|date',
-            "user.name" => 'required|max:60|min:3',
-            "user.email" => 'required|email',
+            "user.name" => 'required|max:60|min:3|unique:users,name',
+            "user.email" => 'required|email|unique:users,email',
         ]);
         // create user
         $user = new User();
@@ -61,5 +61,34 @@ class MarketController extends Controller
     {
         $market = market::where('id', '=', $request->id)->with('manager:id,name,email')->first();
         return response()->json(['market' => $market]);
+    }
+
+    public function update(Request $request)
+    {
+        // validate
+        $request->validate([
+            "id" => 'required',
+            "user_id" => 'required',
+            "name" => 'required|max:60|min:3',
+            "market_number" => 'required|max:255',
+            "amount" => 'required|numeric',
+            "service_order_date" => 'required|date',
+            "deadline_date" => 'required|date',
+            "manager.name" => 'required|max:60|min:3',
+            "manager.email" => 'required|email|unique:users,email,' . $request->user_id,
+        ]);
+        $market = market::findOrFail($request->id);
+        $market->name = $request->name;
+        $market->market_number = $request->market_number;
+        $market->amount = $request->amount;
+        $market->service_order_date = $request->service_order_date;
+        $market->deadline_date = $request->deadline_date;
+        $market->update();
+
+        $user = User::findOrFail($request->user_id);
+        $user->name = $request->manager["name"];
+        $user->email = $request->manager["email"];
+        $user->update();
+        return response()->json(['message' => 'Les informations du marché ont été mises à jour']);
     }
 }

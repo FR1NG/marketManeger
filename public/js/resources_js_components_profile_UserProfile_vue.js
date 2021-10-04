@@ -77,12 +77,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       show1: false,
       show2: false,
-      show3: false,
+      loading: false,
       form: {
         name: "",
         email: ""
@@ -90,7 +95,7 @@ __webpack_require__.r(__webpack_exports__);
       password: {
         old: "",
         "new": "",
-        confirmation: ""
+        new_confirmation: ""
       },
       errors: {
         email: [],
@@ -98,10 +103,81 @@ __webpack_require__.r(__webpack_exports__);
         password: {
           old: [],
           "new": [],
-          confirmation: []
+          new_confirmation: []
         }
       }
     };
+  },
+  methods: {
+    resetErrors: function resetErrors() {
+      this.errors = {
+        email: [],
+        name: [],
+        password: {
+          old: [],
+          "new": [],
+          new_confirmation: []
+        }
+      };
+    },
+    initialize: function initialize() {
+      this.form.name = this.$user.name;
+      this.form.email = this.$user.email;
+      this.resetErrors();
+    },
+    handleInfoSubmit: function handleInfoSubmit() {
+      var _this = this;
+
+      if (!this.loading) {
+        this.resetErrors();
+        this.loading = true;
+        this.$store.dispatch("user/updateInfo", {
+          form: this.form
+        }).then(function () {
+          _this.loading = false;
+          window.location.reload();
+        })["catch"](function (error) {
+          _this.loading = false;
+
+          if (error.response) {
+            var errors = error.response.data.errors;
+            errors.name ? _this.errors.name = errors.name : null;
+            errors.email ? _this.errors.email = errors.email : null;
+          }
+        });
+      }
+    },
+    handlePasswordSubmit: function handlePasswordSubmit() {
+      var _this2 = this;
+
+      if (!this.loading) {
+        this.resetErrors();
+        this.loading = true;
+        this.$store.dispatch("user/updatePassword", {
+          form: this.password
+        }).then(function () {
+          _this2.loading = false;
+          _this2.password = {
+            old: "",
+            "new": "",
+            new_confirmation: ""
+          };
+        })["catch"](function (error) {
+          _this2.loading = false;
+
+          if (error.response.data.errors) {
+            var errors = error.response.data.errors;
+            errors.old ? _this2.errors.password.old = errors.old : null;
+            errors["new"] ? _this2.errors.password["new"] = errors["new"] : null;
+            errors.new_confirmation ? _this2.errors.password.new_confirmation = errors.new_confirmation : null;
+            console.log(errors);
+          }
+        });
+      }
+    }
+  },
+  mounted: function mounted() {
+    this.initialize();
   }
 });
 
@@ -158,7 +234,7 @@ var render = function() {
     [
       _c(
         "v-card",
-        { attrs: { loading: "" } },
+        { attrs: { loading: _vm.loading, disabled: _vm.loading } },
         [
           _c(
             "v-toolbar",
@@ -219,11 +295,17 @@ var render = function() {
                     [
                       _c("v-spacer"),
                       _vm._v(" "),
-                      _c("v-btn", { attrs: { text: "" } }, [_vm._v("Annuler")]),
+                      _c(
+                        "v-btn",
+                        { attrs: { text: "" }, on: { click: _vm.initialize } },
+                        [_vm._v("Annuler")]
+                      ),
                       _vm._v(" "),
-                      _c("v-btn", { attrs: { color: "primary" } }, [
-                        _vm._v("mettre à jour")
-                      ])
+                      _c(
+                        "v-btn",
+                        { attrs: { color: "primary", type: "submit" } },
+                        [_vm._v("mettre à jour")]
+                      )
                     ],
                     1
                   )
@@ -308,7 +390,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("v-text-field", {
                     attrs: {
-                      "error-messages": _vm.errors.password.confirmation,
+                      "error-messages": _vm.errors.password.new_confirmation,
                       "append-icon": _vm.show2 ? "mdi-eye" : "mdi-eye-off",
                       type: _vm.show2 ? "text" : "password",
                       label: "Confirmation"
@@ -319,13 +401,29 @@ var render = function() {
                       }
                     },
                     model: {
-                      value: _vm.password.confirmation,
+                      value: _vm.password.new_confirmation,
                       callback: function($$v) {
-                        _vm.$set(_vm.password, "confirmation", $$v)
+                        _vm.$set(_vm.password, "new_confirmation", $$v)
                       },
-                      expression: "password.confirmation"
+                      expression: "password.new_confirmation"
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "v-card-actions",
+                    [
+                      _c("v-spacer"),
+                      _vm._v(" "),
+                      _c("v-btn", { attrs: { text: "" } }, [_vm._v("Annuler")]),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        { attrs: { color: "primary", type: "submit" } },
+                        [_vm._v("mettre à jour")]
+                      )
+                    ],
+                    1
+                  )
                 ],
                 1
               )

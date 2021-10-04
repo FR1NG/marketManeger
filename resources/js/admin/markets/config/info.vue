@@ -1,6 +1,11 @@
 <template>
   <v-form ref="form" @submit.prevent="handleSubmit">
-    <v-card flat :loading="getLoading" pt-4>
+    <v-card
+      flat
+      :loading="getLoading || loading"
+      :disabled="getLoading || loading"
+      pt-4
+    >
       <v-row>
         <v-col cols="12" md="6">
           <v-text-field
@@ -139,6 +144,7 @@ export default {
         service_order_date: null,
         deadline_date: null,
         manager: {
+          id: null,
           name: "",
           email: "",
         },
@@ -167,21 +173,14 @@ export default {
   methods: {
     ...mapActions({
       getData: "admin/marketsConfig/getInfo",
+      updateInfo: "admin/marketsConfig/updateInfo",
     }),
     handleSubmit() {
       if (!this.loading) {
         this.loading = true;
-        this.$store
-          .dispatch("admin/markets/store", { form: this.form })
+        this.updateInfo({ form: this.form })
           .then((response) => {
             this.loading = false;
-            this.resetForm();
-            this.$router.replace({
-              name: "adminMarketsEdit",
-              params: {
-                id: response.data.market_id,
-              },
-            });
           })
           .catch((error) => {
             this.loading = false;

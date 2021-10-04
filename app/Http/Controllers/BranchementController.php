@@ -38,6 +38,7 @@ class BranchementController extends Controller
     {
         $query = branchement::query();
         $query->where('market_id', '=', $this->market_id);
+        $query->with(['marketArticle:id,display_name', 'city:id,name']);
         if ($request->search) {
             $search = '%' . $request->search . '%';
             $columns = [
@@ -58,7 +59,7 @@ class BranchementController extends Controller
                 $query->orWhere($column, 'LIKE', $search);
             }
         }
-        $branchements = $query->paginate(10);
+        $branchements = $query->orderBy('created_at', 'DESC')->paginate(10);
         return response()->json(['branchements' => $branchements], 200);
     }
 

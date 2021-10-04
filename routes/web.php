@@ -4,6 +4,7 @@ use App\Http\Controllers\AchatController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\BranchementChargersController;
 use App\Http\Controllers\BranchementController;
+use App\Http\Controllers\BranchementImageController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeController;
@@ -15,6 +16,7 @@ use App\Http\Controllers\MarketCategoryController;
 use App\Http\Controllers\MarketCityController;
 use App\Http\Controllers\MarketController;
 use App\Http\Controllers\UnitController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\WarehouseController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
@@ -45,6 +47,11 @@ Route::middleware(['auth'])->group(function () {
             }
         });
     });
+    // user routes
+    Route::post('/user/update', [UserController::class, 'updateInfo']);
+    Route::post('/user/password/update', [UserController::class, 'updatePassword']);
+
+
     //fournisseur routes
     Route::post('/fournisseur/store', [FournisseurController::class, 'store']);
     Route::get('/fournisseur/get', [FournisseurController::class, 'getData']);
@@ -97,6 +104,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/branchements/create', [BranchementController::class, 'create']);
     Route::get('/branchements/getBranchementArticles', [BranchementController::class, 'getBranchementArticles']);
     Route::post('branchements/charges/store', [BranchementChargersController::class, 'store']);
+    Route::post('branchements/images/store', [BranchementImageController::class, 'store']);
+    Route::get('branchements/images/index', [BranchementImageController::class, 'index']);
+
 
     // warehouse routes
     Route::get('/warehouses/index', [WarehouseController::class, 'index']);
@@ -112,6 +122,9 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'role:admin']], fun
         Route::get('/', [MarketController::class, 'index']);
         Route::post('/store', [MarketController::class, 'store']);
         Route::get('/info', [MarketController::class, 'info']);
+        Route::patch('/update', [MarketController::class, 'update']);
+
+
         Route::post('/categories/store', [MarketCategoryController::class, 'store']);
         Route::get('/categories/getData', [MarketCategoryController::class, 'getData']);
         Route::post('/articles/store', [MarketArticleController::class, 'store']);

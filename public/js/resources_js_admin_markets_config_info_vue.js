@@ -147,6 +147,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -157,6 +162,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         service_order_date: null,
         deadline_date: null,
         manager: {
+          id: null,
           name: "",
           email: ""
         }
@@ -181,26 +187,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     info: "admin/marketsConfig/info"
   })),
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)({
-    getData: "admin/marketsConfig/getInfo"
+    getData: "admin/marketsConfig/getInfo",
+    updateInfo: "admin/marketsConfig/updateInfo"
   })), {}, {
     handleSubmit: function handleSubmit() {
       var _this = this;
 
       if (!this.loading) {
         this.loading = true;
-        this.$store.dispatch("admin/markets/store", {
+        this.updateInfo({
           form: this.form
         }).then(function (response) {
           _this.loading = false;
-
-          _this.resetForm();
-
-          _this.$router.replace({
-            name: "adminMarketsEdit",
-            params: {
-              id: response.data.market_id
-            }
-          });
         })["catch"](function (error) {
           _this.loading = false;
 
@@ -604,7 +602,14 @@ var render = function() {
     [
       _c(
         "v-card",
-        { attrs: { flat: "", loading: _vm.getLoading, "pt-4": "" } },
+        {
+          attrs: {
+            flat: "",
+            loading: _vm.getLoading || _vm.loading,
+            disabled: _vm.getLoading || _vm.loading,
+            "pt-4": ""
+          }
+        },
         [
           _c(
             "v-row",

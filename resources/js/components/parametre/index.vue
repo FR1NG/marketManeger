@@ -14,23 +14,23 @@
       </v-toolbar>
 
       <v-tabs-items v-model="tab">
-        <v-tab-item>
+        <!-- <v-tab-item>
           <v-card flat v-if="tab == 0">
             <v-card-text>afichage component</v-card-text>
           </v-card>
-        </v-tab-item>
+        </v-tab-item> -->
         <v-tab-item>
-          <v-card flat v-if="tab == 1">
+          <v-card flat v-if="tab == 0">
             <Article></Article>
           </v-card>
         </v-tab-item>
         <v-tab-item>
-          <v-card flat v-if="tab == 2">
+          <v-card flat v-if="tab == 1">
             <categories></categories>
           </v-card>
         </v-tab-item>
         <v-tab-item>
-          <v-card flat v-if="tab == 3">
+          <v-card flat v-if="tab == 2">
             <units></units>
           </v-card>
         </v-tab-item>
@@ -52,7 +52,7 @@ export default {
   data() {
     return {
       tab: null,
-      items: ["afichage", "articles", "Catégories", "Unités de mesure"],
+      items: ["articles", "Catégories", "Unités de mesure"],
     };
   },
 };

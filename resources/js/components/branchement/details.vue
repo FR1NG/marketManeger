@@ -1,9 +1,14 @@
 <template>
   <v-container>
+    <galery v-if="galeryDialog"></galery>
     <v-card :loading="detailsCardLoading">
       <v-toolbar flat color="primary  lighten-4">
         <v-toolbar-title> Details de branchement </v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
+        <v-spacer></v-spacer>
+        <v-btn icon @click="showGalery">
+          <v-icon>mdi-image-album</v-icon>
+        </v-btn>
       </v-toolbar>
 
       <v-card-text>
@@ -19,7 +24,7 @@
               <v-list-item-content>
                 <v-list-item-title
                   class="font-weight-medium"
-                  v-text="item.text"
+                  v-text="`${item.text} : `"
                 >
                 </v-list-item-title>
                 <v-list-item-subtitle
@@ -128,8 +133,9 @@ import { mapGetters } from "vuex";
 import AddArticle from "./partials/AddArticle.vue";
 import AddCharges from "./partials/AddCharges.vue";
 import AddEmployees from "./partials/AddEmployees.vue";
+import Galery from "./partials/galery.vue";
 export default {
-  components: { AddArticle, AddEmployees, AddCharges },
+  components: { AddArticle, AddEmployees, AddCharges, Galery },
   data() {
     return {
       loading: false,
@@ -145,6 +151,7 @@ export default {
       addEmployeesDialog: "branchement/addEmployeesDialog",
       addChargesDialog: "branchement/addChargesDialog",
       detailsCardLoading: "branchement/detailsCardLoading",
+      galeryDialog: "galery/galeryDialog",
     }),
   },
   methods: {
@@ -163,6 +170,9 @@ export default {
     },
     showAddCharges() {
       this.$store.commit("branchement/showAddCharges");
+    },
+    showGalery() {
+      this.$store.commit("galery/showGaleryDialog");
     },
   },
   created() {

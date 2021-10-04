@@ -41,7 +41,7 @@
       </template>
 
       <!-- BEGIN:action column -->
-      <template v-slot:item.actions="{ item }">
+      <template v-slot:item.actions="{ item }" v-if="$hasRole('admin')">
         <v-btn color="info" @click.stop="edit(item)" icon text small>
           <v-icon>mdi-pencil-outline</v-icon>
         </v-btn>
@@ -72,18 +72,20 @@ export default {
   data() {
     return {
       headers: [
-        { text: "№ contrt", value: "contract_number" },
-        { text: "Nom", value: "client_name" },
-        { text: "Adresse", value: "address" },
-        { text: "Intervention", value: "intervention" },
-        { text: "№ Devis", value: "estimate_number" },
-        { text: "№ Télephone", value: "phone" },
-        { text: "DN", value: "diameter" },
-        { text: "Calibre", value: "caliber" },
-        { text: "Nature", value: "nature" },
-        { text: "Date D'arriver", value: "arrival_date" },
-        { text: "Motifs", value: "motive" },
-        { text: "Actions", value: "actions" },
+        { text: "№ contrt", value: "contract_number", sortable: false },
+        { text: "Nom", value: "client_name", sortable: false },
+        { text: "Adresse", value: "address", sortable: false },
+        { text: "Ville", value: "city.name", sortable: false },
+        {
+          text: "Branchement",
+          value: "market_article.display_name",
+          sortable: false,
+        },
+        { text: "Intervention", value: "intervention", sortable: false },
+        { text: "№ Devis", value: "estimate_number", sortable: false },
+        { text: "№ Télephone", value: "phone", sortable: false },
+        { text: "Date D'arriver", value: "arrival_date", sortable: false },
+        { text: "Actions", value: "actions", sortable: false },
       ],
       searchLoading: false,
       loading: false,

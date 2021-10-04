@@ -27,11 +27,6 @@
             Villes
             <v-icon>mdi-home-city-outline</v-icon>
           </v-tab>
-
-          <v-tab link :to="{ name: 'adminMarketStatistics' }">
-            Statistiques
-            <v-icon>mdi-chart-line</v-icon>
-          </v-tab>
         </v-tabs>
 
         <v-tabs-items>

@@ -56,20 +56,17 @@ export const actions = {
                 page: context.state.currentPage,
             })
                 .then(response => {
-                    // test
-                    console.log(response);
                     // resolve
                     resolve(response);
                     // set data
                     context.commit('setData', response.data);
                 })
                 .catch(error => {
-                    // test
-                    console.log(error.response);
                     // reject
                     reject(error.response);
                 })
         })
-    }
+    },
+
 };
 
