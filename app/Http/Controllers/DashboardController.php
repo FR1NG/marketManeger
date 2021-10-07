@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\article;
 use App\Models\branchement;
+use App\Models\market;
 use App\Models\marketArticle;
 use App\Models\marketCity;
 use Carbon\Carbon;
@@ -69,7 +70,7 @@ class DashboardController extends Controller
             $dates->put($date, 0);
         }
 
-        // Get the post counts
+        // Get the branchements counts
         $query = branchement::query();
         if ($request->type) {
             $query->where('market_article_id', '=', $request->type);
@@ -120,5 +121,48 @@ class DashboardController extends Controller
             ->first();
         $data = [$article->branchements_count, ($article->quantity - $article->branchements_count)];
         return response()->json($data);
+    }
+
+    public function adminDash()
+    {
+        $byArticles = marketArticle::withCount(['branchements' => function ($q) {
+            $q->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()]);
+        }])
+            ->get();
+        $incom = 0;
+        $count = 0;
+        foreach ($byArticles as $item) {
+            $incom += ($item->unit_price * $item->branchements_count);
+            $count += $item->branchements_count;
+        }
+
+        // Build an array of the dates we want to show, oldest first
+        $dates = collect();
+        foreach (range(-6, 0) as $i) {
+            $date = Carbon::now()->addDays($i)->format('Y-m-d');
+            $dates->put($date, 0);
+        }
+
+        // Get the branchements counts
+        $query = branchement::query();
+        $weekBranchements = $query->where('created_at', '>=', $dates->keys()->first())
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get([
+                DB::raw('DATE( created_at ) as date'),
+                DB::raw('COUNT( * ) as "count"')
+            ])
+            ->pluck('count', 'date');
+
+        // branchements by market
+        $byMarket = market::select(['id', 'name'])->withCount('branchements')->get();
+        $response = [
+            'incom' => $incom,
+            'branchements_count' => $count,
+            'weekBranchements' => $weekBranchements,
+            'byMarket' => $byMarket
+        ];
+
+        return response()->json($response);
     }
 }

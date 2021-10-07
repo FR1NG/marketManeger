@@ -2055,7 +2055,11 @@ var render = function() {
                           _c("v-img", {
                             staticClass: "grey lighten-2",
                             attrs: {
-                              src: "/storage/uploads/" + image.name,
+                              src:
+                                "/storage/branchements/" +
+                                image.branchement_id +
+                                "/" +
+                                image.name,
                               "aspect-ratio": "1"
                             },
                             scopedSlots: _vm._u(

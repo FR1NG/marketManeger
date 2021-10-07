@@ -30,6 +30,11 @@ axios.interceptors.response.use(response => {
     if (error.response.status === 401 || error.response.status === 419) {
         window.location.reload();
     }
+    if (error.response.status === 404) {
+        router.replace({
+            name: 'not_found'
+        })
+    }
     return Promise.reject(error);
 });
 

@@ -61,7 +61,7 @@
               md="4"
             >
               <v-img
-                :src="`/storage/uploads/${image.name}`"
+                :src="`/storage/branchements/${image.branchement_id}/${image.name}`"
                 aspect-ratio="1"
                 class="grey lighten-2"
               >

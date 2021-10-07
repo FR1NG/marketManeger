@@ -29,4 +29,23 @@ class branchement extends Model
     {
         return $this->hasMany(branchementChargers::class, 'branchement_id');
     }
+    public function images()
+    {
+        return $this->hasMany(branchementImage::class, 'branchement_id');
+    }
+
+    // this is a recommended way to declare event handlers
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($branchement) { // before delete() method call this
+            $branchement->employees()->delete();
+            $branchement->charges()->delete();
+            $branchement->images()->delete();
+            // do the rest of the cleanup...
+            $dir = storage_path('app/public/branchements/' . $branchement->id);
+            system('rm -rf -- ' . escapeshellarg($dir), $retval);
+        });
+    }
 }

@@ -19,7 +19,9 @@ use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WarehouseController;
 use GuzzleHttp\Middleware;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,21 +34,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('test', function () {
+    $file = '1633348589_download.jpeg';
+    File::Delete('/storage/app/public/uploads/' . $file);
+    return 'hello';
+});
+
 Route::get('/', function () {
     return view('welcome');
     // return redirect()->route('home');
 });
 Route::middleware(['auth'])->group(function () {
-    Route::get('test', function () {
-        $this->middleware(function ($request, $next) {
-            // $this->projects = Auth::user()->projects;
-            // ==
-            if (Auth::user()->hasRole('manager')) {
-                return $request->id;
-                return $next($request);
-            }
-        });
-    });
     // user routes
     Route::post('/user/update', [UserController::class, 'updateInfo']);
     Route::post('/user/password/update', [UserController::class, 'updatePassword']);
@@ -131,6 +129,8 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'role:admin']], fun
         Route::post('/cities/store', [MarketCityController::class, 'store']);
         Route::get('/cities/get', [MarketCityController::class, 'get']);
     });
+    // dashboard
+    Route::get('/dashboard', [DashboardController::class, 'adminDash']);
 });
 // =============[admin routes:END]======================
 
@@ -189,6 +189,11 @@ Route::group(['prefix' => 'market/{market_id}', 'middleware' => ['auth', 'role:a
     Route::get('/branchements/create', [BranchementController::class, 'create']);
     Route::get('/branchements/getBranchementArticles', [BranchementController::class, 'getBranchementArticles']);
     Route::post('branchements/charges/store', [BranchementChargersController::class, 'store']);
+    Route::delete('/branchements/delete', [BranchementController::class, 'delete']);
+    Route::post('branchements/images/store', [BranchementImageController::class, 'store']);
+    Route::get('branchements/images/index', [BranchementImageController::class, 'index']);
+
+
 
 
 

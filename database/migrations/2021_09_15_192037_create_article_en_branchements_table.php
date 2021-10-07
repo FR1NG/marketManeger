@@ -16,6 +16,7 @@ class CreateArticleEnBranchementsTable extends Migration
         Schema::create('article_en_branchements', function (Blueprint $table) {
             $table->id();
             $table->foreignId('branchement_id');
+            $table->foreignId('warehouse_id');
             $table->foreignId('article_id');
             $table->double('price');
             $table->timestamps();

@@ -13,6 +13,13 @@ const router = new VueRouter({
             name: 'profile',
             path: '/profile',
         },
+
+        {
+            component: () => import('../components/extra/specialPages/404.vue'),
+            name: 'not_found',
+            path: '/not_found',
+        },
+
         // ======================================[admin:begin]===========================
         {
             path: '/',

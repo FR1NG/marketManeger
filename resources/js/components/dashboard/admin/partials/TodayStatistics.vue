@@ -5,8 +5,11 @@
       <v-card rounded min-height="140">
         <v-list-item three-line>
           <v-list-item-content>
-            <div class="overline mb-4">Branchement d'aujourd'hui</div>
-            <v-list-item-title class="headline mb-1"> 0</v-list-item-title>
+            <div class="overline mb-4">Branchement de ce mois</div>
+            <v-list-item-title
+              class="headline mb-1"
+              v-text="branchements_count"
+            ></v-list-item-title>
           </v-list-item-content>
           <v-list-item-avatar tile size="80" class="number-icon">
             <v-icon size="80" color="primary lighten-4">mdi-tools</v-icon>
@@ -22,8 +25,11 @@
       <v-card rounded min-height="140">
         <v-list-item three-line>
           <v-list-item-content>
-            <div class="overline mb-4">Chifre d'affaire</div>
-            <v-list-item-title class="headline mb-1"> 0.00</v-list-item-title>
+            <div class="overline mb-4">Chifre d'affaire de ce mois</div>
+            <v-list-item-title
+              class="headline mb-1"
+              v-text="incom"
+            ></v-list-item-title>
           </v-list-item-content>
           <v-list-item-avatar tile size="80" class="number-icon">
             <v-icon size="80" color="primary lighten-4"
@@ -58,7 +64,15 @@
 </template>
 
 <script>
-export default {};
+import { mapGetters } from "vuex";
+export default {
+  computed: {
+    ...mapGetters({
+      branchements_count: "admin/dashboard/branchements_count",
+      incom: "admin/dashboard/incom",
+    }),
+  },
+};
 </script>
 
 <style lang="scss" scopped>

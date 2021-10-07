@@ -25,7 +25,7 @@
                 <v-list-item-title>Fournisseur : </v-list-item-title>
               </v-list-item-content>
               <v-list-item-action>
-                {{ details.fournisseur.name }}
+                {{ details.fournisseur ? details.fournisseur.name : "---" }}
               </v-list-item-action>
             </v-list-item>
 

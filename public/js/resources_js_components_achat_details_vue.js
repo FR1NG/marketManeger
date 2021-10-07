@@ -1112,7 +1112,11 @@ var render = function() {
                           _c("v-list-item-action", [
                             _vm._v(
                               "\n              " +
-                                _vm._s(_vm.details.fournisseur.name) +
+                                _vm._s(
+                                  _vm.details.fournisseur
+                                    ? _vm.details.fournisseur.name
+                                    : "---"
+                                ) +
                                 "\n            "
                             )
                           ])

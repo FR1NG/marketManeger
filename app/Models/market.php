@@ -13,4 +13,9 @@ class market extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function branchements()
+    {
+        return $this->hasMany(branchement::class, 'market_id');
+    }
 }

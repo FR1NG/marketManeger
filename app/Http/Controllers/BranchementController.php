@@ -114,6 +114,10 @@ class BranchementController extends Controller
             ->where('market_id', '=', $this->market_id)
             ->with(['items:id,price,article_id,branchement_id', 'items.article:id,name', 'employees.employe:id,name,quality', 'city:id,name', 'marketArticle:id,display_name,unit_price', 'charges'])
             ->first();
+        if (!$branchement) {
+            // return response()->json(['message' => 'Branchement inrouvable'], 404);
+            return abort(404);
+        }
         return response()->json(['branchement' => $branchement], 200);
     }
 
@@ -149,6 +153,7 @@ class BranchementController extends Controller
                     $itemInBranchement->branchement_id = $request->branchement_id;
                     $itemInBranchement->article_id = $item['id'];
                     $itemInBranchement->price = $warehouse->price;
+                    $itemInBranchement->warehouse_id = $warehouse->id;
                     $saving = $itemInBranchement->save();
                     if ($saving) {
                         $warehouse->quantity -= 1;
@@ -222,5 +227,22 @@ class BranchementController extends Controller
             ->select(['id', 'display_name'])
             ->get();
         return response()->json(['articles' => $articles]);
+    }
+
+    public function delete(Request $request)
+    {
+        $branchement = branchement::findOrFail($request->id);
+        $branchement->delete();
+
+        if ($request->change_warehouse) {
+            $articles = articleEnBranchement::where('branchement_id', '=', $request->id)->get();
+            foreach ($articles as $article) {
+                $warehouse = warehouse::where('id', '=', $article->warehouse_id)->first();
+                $article->delete();
+                $warehouse->quantity += 1;
+                $warehouse->update();
+            }
+        }
+        return response()->json(['message' => 'Branchement a été supprimé avec succès']);
     }
 }

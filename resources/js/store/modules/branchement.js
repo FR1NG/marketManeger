@@ -18,6 +18,7 @@ export const state = {
     addArticlesDialog: false,
     addEmployeesDialog: false,
     addChargesDialog: false,
+    branchementToDeleteId: null,
 };
 
 export const getters = {
@@ -38,6 +39,7 @@ export const getters = {
     addArticlesDialog: state => state.addArticlesDialog,
     addEmployeesDialog: state => state.addEmployeesDialog,
     addChargesDialog: state => state.addChargesDialog,
+    deleteDialog: state => state.branchementToDeleteId !== null,
 };
 
 export const mutations = {
@@ -107,6 +109,12 @@ export const mutations = {
     setBranchementArticles(state, data) {
         state.branchementArticles = data.articles;
     },
+    setIdToDelete(state, data) {
+        state.branchementToDeleteId = data.id;
+    },
+    endDelete(state, data) {
+        state.branchementToDeleteId = null;
+    }
 };
 
 export const actions = {
@@ -342,4 +350,27 @@ export const actions = {
                 })
         })
     },
+
+    delete(context, payload) {
+        return new Promise((resolve, reject) => {
+            axios.delete('branchements/delete', {
+                data: {
+                    ...payload,
+                    id: context.state.branchementToDeleteId
+                }
+            }).then(response => {
+                // reslve 
+                resolve(response);
+                // refetch data
+                context.dispatch('getData');
+                // alert
+                context.dispatch('alert/show', { text: response.data.message, type: 'success' }, { root: true });
+            }).catch(error => {
+                // reject
+                reject(error);
+                // alert
+                context.dispatch('alert/show', { text: error.response.data.message, type: 'error' }, { root: true });
+            });
+        })
+    }
 };

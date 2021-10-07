@@ -149,7 +149,7 @@ export default {
       }, 500); // delay
     },
     remove(id) {
-      alert("not setted yet");
+      this.$store.commit("branchement/setIdToDelete", { id });
     },
     edit(fournisseur) {
       alert("not setted yet");

@@ -24,12 +24,10 @@ class BranchementImageController extends Controller
 
         if ($request->file()) {
             $file_name = time() . '_' . $request->file->getClientOriginalName();
-            // $file_path = 
-            $request->file('file')->storeAs('uploads', $file_name, 'public');
+            $request->file('file')->storeAs('branchements/' . $request->branchement_id, $file_name, 'public');
 
             $fileUpload->name = time() . '_' . $request->file->getClientOriginalName();
             $fileUpload->branchement_id = $request->branchement_id;
-            // $fileUpload->path = '/storage/' . $file_path;
             $fileUpload->save();
 
             return response()->json(['success' => 'File uploaded successfully.']);
