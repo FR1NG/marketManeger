@@ -331,6 +331,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -949,7 +956,23 @@ var render = function() {
                                   ) +
                                   "\n              "
                               )
-                            ])
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "my-4" },
+                              [
+                                _c("v-progress-linear", {
+                                  attrs: {
+                                    value:
+                                      (article.branchements_count /
+                                        article.quantity) *
+                                      100
+                                  }
+                                })
+                              ],
+                              1
+                            )
                           ])
                         ],
                         2

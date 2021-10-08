@@ -46,7 +46,9 @@ class MarketCategoryController extends Controller
     public function getData(Request $request)
     {
         $categories  = marketCategory::where('market_id', '=', $this->market_id)
-            ->with('articles')
+            ->with(['articles' => function ($q) {
+                $q->withCount('branchements');
+            }])
             ->get();
         return response()->json(['articles' => $categories]);
     }

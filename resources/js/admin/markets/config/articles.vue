@@ -68,6 +68,13 @@
                   <span class="font-weight-bold">Montant :</span> :
                   {{ locString(article.unit_price * article.quantity) }}
                 </div>
+                <div class="my-4">
+                  <v-progress-linear
+                    :value="
+                      (article.branchements_count / article.quantity) * 100
+                    "
+                  ></v-progress-linear>
+                </div>
               </v-card-text>
             </v-card>
           </v-col>
