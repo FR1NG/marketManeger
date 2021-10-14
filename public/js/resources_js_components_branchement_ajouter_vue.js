@@ -231,9 +231,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         intervention: "",
         phone: "",
         estimate_number: "",
-        diameter: "",
-        caliber: "",
-        nature: "",
         arrival_date: "",
         motive: ""
       },
@@ -247,14 +244,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         intervention: [],
         phone: [],
         estimate_number: [],
-        diameter: [],
-        caliber: [],
-        nature: [],
         arrival_date: [],
         motive: []
-      },
-      dns: ["21*32", "26*40", "33*50", "26*40*2", "33*5*2", "DEP"],
-      natures: ["3éme CPT", "2éme CPT", "3éme CPT", "2éme et 3éme CPT", "NBN"]
+      }
     };
   },
   watch: {
@@ -273,37 +265,36 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     handleSubmit: function handleSubmit() {
       var _this = this;
 
-      this.loading = true;
-      this.$store.dispatch("branchement/store", {
-        form: this.form
-      }).then(function (response) {
-        // stop loading
-        _this.loading = false; //   reset errors
-        //   this.resetErrors();
-        //   succeed functions
+      if (!this.loading) {
+        this.resetErrors();
+        this.loading = true;
+        this.$store.dispatch("branchement/store", {
+          form: this.form
+        }).then(function (response) {
+          // stop loading
+          _this.loading = false; //   reset errors
+          //   this.resetErrors();
+          //   succeed functions
 
-        _this.storeSucceed(response);
-      })["catch"](function (error) {
-        console.log(error); // stop loading
+          _this.storeSucceed(response);
+        })["catch"](function (error) {
+          // stop loading
+          _this.loading = false; // push errors
+          //   this.pushErrors(error);
 
-        _this.loading = false; // push errors
-        //   this.pushErrors(error);
-
-        error.data.errors.market_article_id ? _this.errors.market_article_id = error.data.errors.market_article_id : null;
-        error.data.errors.type ? _this.errors.type = error.data.errors.type : null;
-        error.data.errors.city ? _this.errors.city = error.data.errors.city : null;
-        error.data.errors.contract_number ? _this.errors.contract_number = error.data.errors.contract_number : _this.errors.contract_number = [];
-        error.data.errors.client_name ? _this.errors.client_name = error.data.errors.client_name : _this.errors.client_name = [];
-        error.data.errors.address ? _this.errors.address = error.data.errors.address : _this.errors.address = [];
-        error.data.errors.intervention ? _this.errors.intervention = error.data.errors.intervention : _this.errors.intervention = [];
-        error.data.errors.estimate_number ? _this.errors.estimate_number = error.data.errors.estimate_number : _this.errors.estimate_number = [];
-        error.data.errors.phone ? _this.errors.phone = error.data.errors.phone : _this.errors.phone = [];
-        error.data.errors.diameter ? _this.errors.diameter = error.data.errors.diameter : _this.errors.diameter = [];
-        error.data.errors.caliber ? _this.errors.caliber = error.data.errors.caliber : _this.errors.caliber = [];
-        error.data.errors.nature ? _this.errors.nature = error.data.errors.nature : _this.errors.nature = [];
-        error.data.errors.arrival_date ? _this.errors.arrival_date = error.data.errors.arrival_date : _this.errors.arrival_date = [];
-        error.data.errors.motive ? _this.errors.motive = error.data.errors.motive : _this.errors.motive = [];
-      });
+          error.data.errors.market_article_id ? _this.errors.market_article_id = error.data.errors.market_article_id : null;
+          error.data.errors.type ? _this.errors.type = error.data.errors.type : null;
+          error.data.errors.city ? _this.errors.city = error.data.errors.city : null;
+          error.data.errors.contract_number ? _this.errors.contract_number = error.data.errors.contract_number : _this.errors.contract_number = [];
+          error.data.errors.client_name ? _this.errors.client_name = error.data.errors.client_name : _this.errors.client_name = [];
+          error.data.errors.address ? _this.errors.address = error.data.errors.address : _this.errors.address = [];
+          error.data.errors.intervention ? _this.errors.intervention = error.data.errors.intervention : _this.errors.intervention = [];
+          error.data.errors.estimate_number ? _this.errors.estimate_number = error.data.errors.estimate_number : _this.errors.estimate_number = [];
+          error.data.errors.phone ? _this.errors.phone = error.data.errors.phone : _this.errors.phone = [];
+          error.data.errors.arrival_date ? _this.errors.arrival_date = error.data.errors.arrival_date : _this.errors.arrival_date = [];
+          error.data.errors.motive ? _this.errors.motive = error.data.errors.motive : _this.errors.motive = [];
+        });
+      }
     },
     pushErrors: function pushErrors(error) {
       console.log("push errors");
@@ -318,9 +309,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         intervention: [],
         phone: [],
         estimate_number: [],
-        diameter: [],
-        caliber: [],
-        nature: [],
         arrival_date: [],
         motive: []
       };
@@ -720,7 +708,10 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "v-card",
-    { staticClass: "ma-4 pa-4" },
+    {
+      staticClass: "ma-4 pa-4",
+      attrs: { disabled: _vm.loading, loading: _vm.loading }
+    },
     [
       _c(
         "v-toolbar",
@@ -916,27 +907,6 @@ var render = function() {
                 [
                   _c("v-text-field", {
                     attrs: {
-                      label: "Intervention",
-                      "error-messages": _vm.errors.intervention[0]
-                    },
-                    model: {
-                      value: _vm.form.intervention,
-                      callback: function($$v) {
-                        _vm.$set(_vm.form, "intervention", $$v)
-                      },
-                      expression: "form.intervention"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "12", md: "6" } },
-                [
-                  _c("v-text-field", {
-                    attrs: {
                       label: "№ Devis",
                       "error-messages": _vm.errors.estimate_number[0]
                     },
@@ -967,71 +937,6 @@ var render = function() {
                         _vm.$set(_vm.form, "phone", $$v)
                       },
                       expression: "form.phone"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "12", md: "6" } },
-                [
-                  _c("v-select", {
-                    attrs: {
-                      items: _vm.dns,
-                      label: "DN",
-                      "error-messages": _vm.errors.diameter[0]
-                    },
-                    model: {
-                      value: _vm.form.diameter,
-                      callback: function($$v) {
-                        _vm.$set(_vm.form, "diameter", $$v)
-                      },
-                      expression: "form.diameter"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "12", md: "6" } },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      label: "Calibre",
-                      "error-messages": _vm.errors.caliber[0]
-                    },
-                    model: {
-                      value: _vm.form.caliber,
-                      callback: function($$v) {
-                        _vm.$set(_vm.form, "caliber", $$v)
-                      },
-                      expression: "form.caliber"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "12", md: "6" } },
-                [
-                  _c("v-select", {
-                    attrs: {
-                      items: _vm.natures,
-                      label: "Nature",
-                      "error-messages": _vm.errors.nature[0]
-                    },
-                    model: {
-                      value: _vm.form.nature,
-                      callback: function($$v) {
-                        _vm.$set(_vm.form, "nature", $$v)
-                      },
-                      expression: "form.nature"
                     }
                   })
                 ],

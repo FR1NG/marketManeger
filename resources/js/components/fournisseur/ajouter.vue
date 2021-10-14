@@ -1,5 +1,5 @@
 <template>
-  <v-card class="ma-4 pa-4">
+  <v-card class="ma-4 pa-4" :disabled="loading" :loading="loading">
     <v-toolbar flat>
       <v-toolbar-title>Ajouter Fournisseur</v-toolbar-title>
       <v-divider class="mx-4" inset vertical></v-divider>
@@ -49,7 +49,7 @@
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn outlined class="mr-4">Annuler</v-btn>
+        <v-btn outlined class="mr-4" @click="resetForm">Annuler</v-btn>
         <v-btn color="success" class="mr-4" type="submit" :loading="loading"
           >Ajouter
         </v-btn>
@@ -81,47 +81,56 @@ export default {
   },
   methods: {
     handleSubmit() {
-      this.loading = true;
-      this.$store
-        .dispatch("fournisseur/store", { form: this.form })
-        .then((response) => {
-          this.loading = false;
-          console.log(this.errors);
-          this.form = {
-            name: "",
-            phone: null,
-            email: "",
-            address: "",
-            note: "",
-          };
-          this.errors = {
-            name: [],
-            phone: [],
-            email: [],
-            address: [],
-            note: [],
-          };
-        })
-        .catch((error) => {
-          this.loading = false;
-          if (error.data) {
-            error.data.errors.name
-              ? (this.errors.name = error.data.errors.name)
-              : (this.errors.name = []);
-            error.data.errors.phone
-              ? (this.errors.phone = error.data.errors.phone)
-              : (this.errors.phone = []);
-            error.data.errors.email
-              ? (this.errors.email = error.data.errors.email)
-              : (this.errors.email = []);
-            error.data.errors.address
-              ? (this.errors.address = error.data.errors.address)
-              : (this.errors.address = []);
-            error.data.errors.note
-              ? (this.errors.note = error.data.errors.note)
-              : (this.errors.note = []);
-          }
-        });
+      if (!this.loading) {
+        this.resetErrors();
+        this.loading = true;
+        this.$store
+          .dispatch("fournisseur/store", { form: this.form })
+          .then((response) => {
+            this.loading = false;
+            this.resetForm();
+            this.resetErrors();
+          })
+          .catch((error) => {
+            this.loading = false;
+            if (error.data) {
+              error.data.errors.name
+                ? (this.errors.name = error.data.errors.name)
+                : (this.errors.name = []);
+              error.data.errors.phone
+                ? (this.errors.phone = error.data.errors.phone)
+                : (this.errors.phone = []);
+              error.data.errors.email
+                ? (this.errors.email = error.data.errors.email)
+                : (this.errors.email = []);
+              error.data.errors.address
+                ? (this.errors.address = error.data.errors.address)
+                : (this.errors.address = []);
+              error.data.errors.note
+                ? (this.errors.note = error.data.errors.note)
+                : (this.errors.note = []);
+            }
+          });
+      }
+    },
+    resetErrors() {
+      this.errors = {
+        name: [],
+        phone: [],
+        email: [],
+        address: [],
+        note: [],
+      };
+    },
+    resetForm() {
+      this.resetErrors();
+      this.form = {
+        name: "",
+        phone: null,
+        email: "",
+        address: "",
+        note: "",
+      };
     },
   },
 };

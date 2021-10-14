@@ -60,7 +60,7 @@
           ></v-text-field>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn text>Annuler</v-btn>
+            <v-btn text @click="resetPasswordForm">Annuler</v-btn>
             <v-btn color="primary" type="submit">mettre à jour</v-btn>
           </v-card-actions>
         </v-form>
@@ -141,11 +141,7 @@ export default {
           .dispatch("user/updatePassword", { form: this.password })
           .then(() => {
             this.loading = false;
-            this.password = {
-              old: "",
-              new: "",
-              new_confirmation: "",
-            };
+            this.resetPasswordForm();
           })
           .catch((error) => {
             this.loading = false;
@@ -162,6 +158,14 @@ export default {
             }
           });
       }
+    },
+    resetPasswordForm() {
+      this.resetErrors();
+      this.password = {
+        old: "",
+        new: "",
+        new_confirmation: "",
+      };
     },
   },
   mounted() {

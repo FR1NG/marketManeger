@@ -1,5 +1,11 @@
 <template>
   <v-container>
+    <!-- update dialog :START -->
+    <edit-article v-if="editDialog"></edit-article>
+    <!-- update dialog :END -->
+    <!-- delete:BEGIN -->
+    <delete-article v-if="deleteDialog"></delete-article>
+    <!-- delete:END -->
     <!-- create artice:BEGIN -->
     <create-article v-if="createArticleDialog"></create-article>
     <!-- create artice:END -->
@@ -63,13 +69,16 @@
 import Categories from "../categories/categories.vue";
 import Units from "../units/units.vue";
 import CreateArticle from "./CreateArticle.vue";
+import DeleteArticle from "./DeleteArticle.vue";
+import EditArticle from "./EditArticle.vue";
 // import Delete from "./delete.vue";
 export default {
   components: {
     Categories,
     Units,
     CreateArticle,
-    // Delete,
+    DeleteArticle,
+    EditArticle,
   },
   data() {
     return {
@@ -94,6 +103,12 @@ export default {
     },
   },
   computed: {
+    editDialog() {
+      return this.$store.getters["article/editArticleDialog"];
+    },
+    deleteDialog() {
+      return this.$store.getters["article/articleDeleteDialog"];
+    },
     items() {
       return this.$store.getters["article/articles"];
     },
@@ -149,16 +164,12 @@ export default {
       this.$store.commit("article/showCreateArticleDialog");
     },
     remove(id) {
-      this.$store.commit("employe/setDelete", { id: id });
+      this.$store.commit("article/setArticleDelete", { id: id });
     },
-    edit(employe) {
-      // this.$router.replace({
-      //   name: "modifierEmploye",
-      //   params: {
-      //     id: employe.id,
-      //   },
-      // });
-      alert("Not setted yet");
+    edit(article) {
+      this.$store.commit("article/showEditArticleDialog", {
+        article: article,
+      });
     },
   },
   created() {

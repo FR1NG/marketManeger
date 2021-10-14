@@ -1,5 +1,5 @@
 <template>
-  <v-card class="ma-4 pa-4">
+  <v-card class="ma-4 pa-4" :disabled="loading" :loading="loading">
     <v-toolbar flat>
       <v-toolbar-title>Nouveau Branchement</v-toolbar-title>
       <v-divider class="mx-4" inset vertical></v-divider>
@@ -78,13 +78,13 @@
           ></v-text-field>
         </v-col>
 
-        <v-col cols="12" md="6">
+        <!-- <v-col cols="12" md="6">
           <v-text-field
             v-model="form.intervention"
             label="Intervention"
             :error-messages="errors.intervention[0]"
           ></v-text-field>
-        </v-col>
+        </v-col> -->
 
         <v-col cols="12" md="6">
           <v-text-field
@@ -102,23 +102,23 @@
           ></v-text-field>
         </v-col>
 
-        <v-col cols="12" md="6">
+        <!-- <v-col cols="12" md="6">
           <v-select
             :items="dns"
             v-model="form.diameter"
             label="DN"
             :error-messages="errors.diameter[0]"
           ></v-select>
-        </v-col>
+        </v-col> -->
 
-        <v-col cols="12" md="6">
+        <!-- <v-col cols="12" md="6">
           <v-text-field
             v-model="form.caliber"
             label="Calibre"
             :error-messages="errors.caliber[0]"
           ></v-text-field>
-        </v-col>
-
+        </v-col> -->
+        <!-- 
         <v-col cols="12" md="6">
           <v-select
             :items="natures"
@@ -126,7 +126,7 @@
             label="Nature"
             :error-messages="errors.nature[0]"
           ></v-select>
-        </v-col>
+        </v-col> -->
 
         <v-col cols="12" md="6">
           <v-dialog
@@ -212,9 +212,7 @@ export default {
         intervention: "",
         phone: "",
         estimate_number: "",
-        diameter: "",
-        caliber: "",
-        nature: "",
+
         arrival_date: "",
         motive: "",
       },
@@ -228,14 +226,9 @@ export default {
         intervention: [],
         phone: [],
         estimate_number: [],
-        diameter: [],
-        caliber: [],
-        nature: [],
         arrival_date: [],
         motive: [],
       },
-      dns: ["21*32", "26*40", "33*50", "26*40*2", "33*5*2", "DEP"],
-      natures: ["3éme CPT", "2éme CPT", "3éme CPT", "2éme et 3éme CPT", "NBN"],
     };
   },
   watch: {
@@ -252,67 +245,62 @@ export default {
   },
   methods: {
     handleSubmit() {
-      this.loading = true;
-      this.$store
-        .dispatch("branchement/store", { form: this.form })
-        .then((response) => {
-          // stop loading
-          this.loading = false;
-          //   reset errors
-          //   this.resetErrors();
-          //   succeed functions
-          this.storeSucceed(response);
-        })
-        .catch((error) => {
-          console.log(error);
-          // stop loading
-          this.loading = false;
-          // push errors
-          //   this.pushErrors(error);
-          error.data.errors.market_article_id
-            ? (this.errors.market_article_id =
-                error.data.errors.market_article_id)
-            : null;
-          error.data.errors.type
-            ? (this.errors.type = error.data.errors.type)
-            : null;
-          error.data.errors.city
-            ? (this.errors.city = error.data.errors.city)
-            : null;
-          error.data.errors.contract_number
-            ? (this.errors.contract_number = error.data.errors.contract_number)
-            : (this.errors.contract_number = []);
-          error.data.errors.client_name
-            ? (this.errors.client_name = error.data.errors.client_name)
-            : (this.errors.client_name = []);
-          error.data.errors.address
-            ? (this.errors.address = error.data.errors.address)
-            : (this.errors.address = []);
-          error.data.errors.intervention
-            ? (this.errors.intervention = error.data.errors.intervention)
-            : (this.errors.intervention = []);
-          error.data.errors.estimate_number
-            ? (this.errors.estimate_number = error.data.errors.estimate_number)
-            : (this.errors.estimate_number = []);
-          error.data.errors.phone
-            ? (this.errors.phone = error.data.errors.phone)
-            : (this.errors.phone = []);
-          error.data.errors.diameter
-            ? (this.errors.diameter = error.data.errors.diameter)
-            : (this.errors.diameter = []);
-          error.data.errors.caliber
-            ? (this.errors.caliber = error.data.errors.caliber)
-            : (this.errors.caliber = []);
-          error.data.errors.nature
-            ? (this.errors.nature = error.data.errors.nature)
-            : (this.errors.nature = []);
-          error.data.errors.arrival_date
-            ? (this.errors.arrival_date = error.data.errors.arrival_date)
-            : (this.errors.arrival_date = []);
-          error.data.errors.motive
-            ? (this.errors.motive = error.data.errors.motive)
-            : (this.errors.motive = []);
-        });
+      if (!this.loading) {
+        this.resetErrors();
+        this.loading = true;
+        this.$store
+          .dispatch("branchement/store", { form: this.form })
+          .then((response) => {
+            // stop loading
+            this.loading = false;
+            //   reset errors
+            //   this.resetErrors();
+            //   succeed functions
+            this.storeSucceed(response);
+          })
+          .catch((error) => {
+            // stop loading
+            this.loading = false;
+            // push errors
+            //   this.pushErrors(error);
+            error.data.errors.market_article_id
+              ? (this.errors.market_article_id =
+                  error.data.errors.market_article_id)
+              : null;
+            error.data.errors.type
+              ? (this.errors.type = error.data.errors.type)
+              : null;
+            error.data.errors.city
+              ? (this.errors.city = error.data.errors.city)
+              : null;
+            error.data.errors.contract_number
+              ? (this.errors.contract_number =
+                  error.data.errors.contract_number)
+              : (this.errors.contract_number = []);
+            error.data.errors.client_name
+              ? (this.errors.client_name = error.data.errors.client_name)
+              : (this.errors.client_name = []);
+            error.data.errors.address
+              ? (this.errors.address = error.data.errors.address)
+              : (this.errors.address = []);
+            error.data.errors.intervention
+              ? (this.errors.intervention = error.data.errors.intervention)
+              : (this.errors.intervention = []);
+            error.data.errors.estimate_number
+              ? (this.errors.estimate_number =
+                  error.data.errors.estimate_number)
+              : (this.errors.estimate_number = []);
+            error.data.errors.phone
+              ? (this.errors.phone = error.data.errors.phone)
+              : (this.errors.phone = []);
+            error.data.errors.arrival_date
+              ? (this.errors.arrival_date = error.data.errors.arrival_date)
+              : (this.errors.arrival_date = []);
+            error.data.errors.motive
+              ? (this.errors.motive = error.data.errors.motive)
+              : (this.errors.motive = []);
+          });
+      }
     },
     pushErrors(error) {
       console.log("push errors");
@@ -327,9 +315,6 @@ export default {
         intervention: [],
         phone: [],
         estimate_number: [],
-        diameter: [],
-        caliber: [],
-        nature: [],
         arrival_date: [],
         motive: [],
       };

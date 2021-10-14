@@ -95,37 +95,48 @@ __webpack_require__.r(__webpack_exports__);
     handleSubmit: function handleSubmit() {
       var _this = this;
 
-      this.loading = true;
-      this.$store.dispatch("fournisseur/store", {
-        form: this.form
-      }).then(function (response) {
-        _this.loading = false;
-        console.log(_this.errors);
-        _this.form = {
-          name: "",
-          phone: null,
-          email: "",
-          address: "",
-          note: ""
-        };
-        _this.errors = {
-          name: [],
-          phone: [],
-          email: [],
-          address: [],
-          note: []
-        };
-      })["catch"](function (error) {
-        _this.loading = false;
+      if (!this.loading) {
+        this.resetErrors();
+        this.loading = true;
+        this.$store.dispatch("fournisseur/store", {
+          form: this.form
+        }).then(function (response) {
+          _this.loading = false;
 
-        if (error.data) {
-          error.data.errors.name ? _this.errors.name = error.data.errors.name : _this.errors.name = [];
-          error.data.errors.phone ? _this.errors.phone = error.data.errors.phone : _this.errors.phone = [];
-          error.data.errors.email ? _this.errors.email = error.data.errors.email : _this.errors.email = [];
-          error.data.errors.address ? _this.errors.address = error.data.errors.address : _this.errors.address = [];
-          error.data.errors.note ? _this.errors.note = error.data.errors.note : _this.errors.note = [];
-        }
-      });
+          _this.resetForm();
+
+          _this.resetErrors();
+        })["catch"](function (error) {
+          _this.loading = false;
+
+          if (error.data) {
+            error.data.errors.name ? _this.errors.name = error.data.errors.name : _this.errors.name = [];
+            error.data.errors.phone ? _this.errors.phone = error.data.errors.phone : _this.errors.phone = [];
+            error.data.errors.email ? _this.errors.email = error.data.errors.email : _this.errors.email = [];
+            error.data.errors.address ? _this.errors.address = error.data.errors.address : _this.errors.address = [];
+            error.data.errors.note ? _this.errors.note = error.data.errors.note : _this.errors.note = [];
+          }
+        });
+      }
+    },
+    resetErrors: function resetErrors() {
+      this.errors = {
+        name: [],
+        phone: [],
+        email: [],
+        address: [],
+        note: []
+      };
+    },
+    resetForm: function resetForm() {
+      this.resetErrors();
+      this.form = {
+        name: "",
+        phone: null,
+        email: "",
+        address: "",
+        note: ""
+      };
     }
   }
 });
@@ -232,7 +243,10 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "v-card",
-    { staticClass: "ma-4 pa-4" },
+    {
+      staticClass: "ma-4 pa-4",
+      attrs: { disabled: _vm.loading, loading: _vm.loading }
+    },
     [
       _c(
         "v-toolbar",
@@ -342,9 +356,15 @@ var render = function() {
             [
               _c("v-spacer"),
               _vm._v(" "),
-              _c("v-btn", { staticClass: "mr-4", attrs: { outlined: "" } }, [
-                _vm._v("Annuler")
-              ]),
+              _c(
+                "v-btn",
+                {
+                  staticClass: "mr-4",
+                  attrs: { outlined: "" },
+                  on: { click: _vm.resetForm }
+                },
+                [_vm._v("Annuler")]
+              ),
               _vm._v(" "),
               _c(
                 "v-btn",

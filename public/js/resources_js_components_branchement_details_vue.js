@@ -285,15 +285,17 @@ __webpack_require__.r(__webpack_exports__);
     handleSubmit: function handleSubmit() {
       var _this2 = this;
 
-      this.submitLoading = true;
-      this.$store.dispatch("branchement/addArticles", {
-        items: this.selectedItems,
-        branchement_id: this.$route.params.id
-      }).then(function () {
-        _this2.submitLoading = false;
-      })["catch"](function (error) {
-        _this2.submitLoading = false;
-      });
+      if (!this.submitLoading) {
+        this.submitLoading = true;
+        this.$store.dispatch("branchement/addArticles", {
+          items: this.selectedItems,
+          branchement_id: this.$route.params.id
+        }).then(function () {
+          _this2.submitLoading = false;
+        })["catch"](function (error) {
+          _this2.submitLoading = false;
+        });
+      }
     },
     hideDialog: function hideDialog() {
       this.$store.commit("branchement/hideAddArticles");
@@ -380,6 +382,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       if (!this.submitLoading) {
+        this.resetErrors();
         this.submitLoading = true;
         this.$store.dispatch("branchement/addCharges", {
           form: this.form,
@@ -402,6 +405,12 @@ __webpack_require__.r(__webpack_exports__);
     },
     hideDialog: function hideDialog() {
       this.$store.commit("branchement/hideAddCharges");
+    },
+    resetErrors: function resetErrors() {
+      this.errors = {
+        nature: [],
+        amount: []
+      };
     }
   }
 });
@@ -482,15 +491,17 @@ __webpack_require__.r(__webpack_exports__);
     handleSubmit: function handleSubmit() {
       var _this2 = this;
 
-      this.submitLoading = true;
-      this.$store.dispatch("branchement/addEmployees", {
-        employe_id: this.selectedEmployee,
-        branchement_id: this.$route.params.id
-      }).then(function () {
-        _this2.submitLoading = false;
-      })["catch"](function (error) {
-        _this2.submitLoading = false;
-      });
+      if (!this.submitLoading) {
+        this.submitLoading = true;
+        this.$store.dispatch("branchement/addEmployees", {
+          employe_id: this.selectedEmployee,
+          branchement_id: this.$route.params.id
+        }).then(function () {
+          _this2.submitLoading = false;
+        })["catch"](function (error) {
+          _this2.submitLoading = false;
+        });
+      }
     },
     hideDialog: function hideDialog() {
       this.$store.commit("branchement/hideAddEmployees");
@@ -513,6 +524,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
 //
 //
 //
@@ -1118,7 +1134,12 @@ var render = function() {
       _vm._v(" "),
       _c(
         "v-card",
-        { attrs: { loading: _vm.detailsCardLoading } },
+        {
+          attrs: {
+            loading: _vm.detailsCardLoading,
+            disabled: _vm.detailsCardLoading
+          }
+        },
         [
           _c(
             "v-toolbar",
@@ -1386,11 +1407,11 @@ var render = function() {
                                 _c("thead", [
                                   _c("tr", [
                                     _c("th", { staticClass: "text-left" }, [
-                                      _vm._v("Nom")
+                                      _vm._v("Nature")
                                     ]),
                                     _vm._v(" "),
                                     _c("th", { staticClass: "text-left" }, [
-                                      _vm._v("Qualité")
+                                      _vm._v("Montant")
                                     ])
                                   ])
                                 ]),
@@ -1472,6 +1493,7 @@ var render = function() {
     [
       _c(
         "v-card",
+        { attrs: { loading: _vm.submitLoading, disabled: _vm.submitLoading } },
         [
           _c("v-card-title", [_vm._v(" Sélectionner des pièces ")]),
           _vm._v(" "),
@@ -1599,6 +1621,7 @@ var render = function() {
     [
       _c(
         "v-card",
+        { attrs: { loading: _vm.submitLoading, disabled: _vm.submitLoading } },
         [
           _c("v-card-title", [_vm._v(" Ajouter les Charges")]),
           _vm._v(" "),
@@ -1742,6 +1765,7 @@ var render = function() {
     [
       _c(
         "v-card",
+        { attrs: { loading: _vm.submitLoading, disabled: _vm.submitLoading } },
         [
           _c("v-card-title", [_vm._v(" Sélectionner des employés")]),
           _vm._v(" "),
@@ -1871,7 +1895,13 @@ var render = function() {
         [
           _c(
             "v-card",
-            { attrs: { tile: "" } },
+            {
+              attrs: {
+                tile: "",
+                loading: _vm.uploadLoading,
+                disabled: _vm.uploadLoading
+              }
+            },
             [
               _c(
                 "v-toolbar",
@@ -2104,6 +2134,8 @@ var render = function() {
                   ),
                   _vm._v(" "),
                   _c("v-pagination", {
+                    staticClass: "py-4",
+                    attrs: { length: _vm.lastPage, "total-visible": 8 },
                     model: {
                       value: _vm.currentPage,
                       callback: function($$v) {

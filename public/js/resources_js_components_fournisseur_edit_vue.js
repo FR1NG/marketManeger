@@ -76,7 +76,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -102,29 +101,31 @@ __webpack_require__.r(__webpack_exports__);
     handleSubmit: function handleSubmit() {
       var _this = this;
 
-      this.loading = true;
-      this.$store.dispatch("fournisseur/update", {
-        form: this.form
-      }).then(function (response) {
-        _this.loading = false;
-        _this.errors = {
-          name: [],
-          phone: [],
-          email: [],
-          address: [],
-          note: []
-        };
-      })["catch"](function (error) {
-        _this.loading = false;
+      if (!this.loading) {
+        this.loading = true;
+        this.$store.dispatch("fournisseur/update", {
+          form: this.form
+        }).then(function (response) {
+          _this.loading = false;
+          _this.errors = {
+            name: [],
+            phone: [],
+            email: [],
+            address: [],
+            note: []
+          };
+        })["catch"](function (error) {
+          _this.loading = false;
 
-        if (error.data) {
-          error.data.errors.name ? _this.errors.name = error.data.errors.name : _this.errors.name = [];
-          error.data.errors.phone ? _this.errors.phone = error.data.errors.phone : _this.errors.phone = [];
-          error.data.errors.email ? _this.errors.email = error.data.errors.email : _this.errors.email = [];
-          error.data.errors.address ? _this.errors.address = error.data.errors.address : _this.errors.address = [];
-          error.data.errors.note ? _this.errors.note = error.data.errors.note : _this.errors.note = [];
-        }
-      });
+          if (error.data) {
+            error.data.errors.name ? _this.errors.name = error.data.errors.name : _this.errors.name = [];
+            error.data.errors.phone ? _this.errors.phone = error.data.errors.phone : _this.errors.phone = [];
+            error.data.errors.email ? _this.errors.email = error.data.errors.email : _this.errors.email = [];
+            error.data.errors.address ? _this.errors.address = error.data.errors.address : _this.errors.address = [];
+            error.data.errors.note ? _this.errors.note = error.data.errors.note : _this.errors.note = [];
+          }
+        });
+      }
     },
     getProvider: function getProvider() {
       var _this2 = this;
@@ -133,6 +134,7 @@ __webpack_require__.r(__webpack_exports__);
       this.$store.dispatch("fournisseur/getProvider", {
         id: this.$route.params.id
       }).then(function (response) {
+        console.log(response);
         var provider = response.data;
         _this2.form.id = provider.id;
         _this2.form.name = provider.name;
@@ -147,7 +149,6 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    console.log(this.$route.params);
     this.getProvider();
   }
 });
@@ -288,7 +289,7 @@ var render = function() {
                 link: "",
                 color: "primary",
                 dark: "",
-                to: { name: "fournisseur" }
+                to: { name: "fournisseurs" }
               }
             },
             [_vm._v("\n      List\n    ")]

@@ -31,7 +31,7 @@ class MarketCityController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|min:2|max:100'
+            "name" => "required|min:2|max:255|unique:market_cities,name,NULL,id,market_id," . $this->market_id,
         ]);
 
         $city = new marketCity();
@@ -48,5 +48,18 @@ class MarketCityController extends Controller
             ->withCount('branchements')
             ->get();
         return response()->json(['cities' => $cities]);
+    }
+
+    public function delete(Request $request)
+    {
+        $city = marketCity::where('id', '=', $request->id)->withCount('branchements')->first();
+        if ($city) {
+            if ($city->branchements_count > 0) {
+                return response()->json(['message' => 'Vous pouvez pas supprimer cette ville'], 500);
+            }
+            $city->delete();
+            return response()->json(['message' => 'La ville a été supprimée'], 200);
+        }
+        return response()->json(['message' => 'Ville intouvable'], 404);
     }
 }

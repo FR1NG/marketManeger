@@ -6,7 +6,7 @@
     :disabled="loading"
     :loading="loading"
   >
-    <v-card>
+    <v-card :disabled="loading" :loading="loading">
       <v-card-title class="text-h5">
         êtes-vous sûr de vouloir supprimer ce branchement?
       </v-card-title>
@@ -54,19 +54,21 @@ export default {
       this.$store.commit("branchement/endDelete");
     },
     confirmDelete() {
-      this.loading = true;
-      this.$store
-        .dispatch("branchement/delete", {
-          change_warehouse: this.changeWarehouse,
-        })
-        .then(() => {
-          this.loading = false;
-          this.endDelete();
-        })
-        .catch(() => {
-          this.loading = false;
-          this.endDelete();
-        });
+      if (!this.loading) {
+        this.loading = true;
+        this.$store
+          .dispatch("branchement/delete", {
+            change_warehouse: this.changeWarehouse,
+          })
+          .then(() => {
+            this.loading = false;
+            this.endDelete();
+          })
+          .catch(() => {
+            this.loading = false;
+            this.endDelete();
+          });
+      }
     },
   },
 };

@@ -75,9 +75,11 @@ export default {
   },
   methods: {
     logout() {
-      axios.post("logout").then((response) => {
-        window.location.href = "login";
-      });
+      axios({ method: "post", baseURL: "/", url: "logout" }).then(
+        (response) => {
+          window.location.href = "login";
+        }
+      );
     },
     toggleDrawer() {
       console.log("clicked");

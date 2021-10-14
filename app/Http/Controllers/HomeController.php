@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\market;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -52,7 +53,11 @@ class HomeController extends Controller
 
     public function market(Request $request)
     {
-        $market_id = $request->market_id;
-        return view('market', compact('market_id'));
+        $market = market::findOrFail($request->market_id);
+        if ($market) {
+            return view('market', compact('market'));
+        } else {
+            abort(404);
+        }
     }
 }

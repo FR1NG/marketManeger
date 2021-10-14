@@ -7,7 +7,7 @@
       transition="dialog-bottom-transition"
       scrollable
     >
-      <v-card tile>
+      <v-card tile :loading="uploadLoading" :disabled="uploadLoading">
         <v-toolbar flat dark color="primary">
           <v-btn icon dark @click="hideDialog">
             <v-icon>mdi-close</v-icon>
@@ -80,7 +80,12 @@
               </v-img>
             </v-col>
           </v-row>
-          <v-pagination v-model="currentPage"></v-pagination>
+          <v-pagination
+            v-model="currentPage"
+            class="py-4"
+            :length="lastPage"
+            :total-visible="8"
+          ></v-pagination>
         </v-card-text>
         <div style="flex: 1 1 auto"></div>
       </v-card>

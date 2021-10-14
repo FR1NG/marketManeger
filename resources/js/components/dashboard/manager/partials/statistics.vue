@@ -49,11 +49,22 @@
 
       <!-- BEGIN:today -->
       <v-col cols="12" md="4">
-        <v-card rounded min-height="140">
+        <v-card
+          rounded
+          min-height="140"
+          class="cursor-pointer"
+          link
+          :to="{ name: 'depot' }"
+        >
           <v-list-item three-line>
             <v-list-item-content>
               <div class="overline mb-4">Rupture de stock</div>
-              <v-list-item-title class="headline mb-1"> 0</v-list-item-title>
+              <v-list-item-title
+                class="headline mb-1 red--text"
+                v-text="statistics.shortage_count"
+              >
+                0</v-list-item-title
+              >
             </v-list-item-content>
             <v-list-item-avatar tile size="80" class="number-icon">
               <v-icon size="80" color="primary lighten-4"

@@ -6,7 +6,7 @@
     max-width="500px"
     transition="dialog-transition"
   >
-    <v-card class="pa-4">
+    <v-card class="pa-4" :loading="loading" :disabled="loading">
       <v-card-title>Créer catégorie </v-card-title>
       <v-form @submit.prevent="handleSubmit">
         <v-text-field

@@ -17,11 +17,17 @@
           <template v-for="item in cities">
             <v-divider :key="item.id + 0.5"></v-divider>
             <v-list-item :key="item.id">
-              <v-divider></v-divider>
-              <v-list-item-title v-text="item.name"></v-list-item-title>
-              <v-list-item-action
-                v-text="item.branchements_count"
-              ></v-list-item-action>
+              <v-list-item-content>
+                <v-list-item-title v-text="item.name"></v-list-item-title>
+                <v-list-item-subtitle
+                  v-text="`Nombre de branchements : ${item.branchements_count}`"
+                ></v-list-item-subtitle>
+              </v-list-item-content>
+              <v-list-item-action>
+                <v-btn icon :loading="item.removeLoading" @click="remove(item)">
+                  <v-icon color="red"> mdi-close-circle-outline </v-icon>
+                </v-btn>
+              </v-list-item-action>
             </v-list-item>
           </template>
         </v-list>
@@ -32,7 +38,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 export default {
   data() {
     return {
@@ -50,9 +56,14 @@ export default {
     }),
   },
   methods: {
+    ...mapMutations({
+      setRemoveCityLoading: "admin/marketsConfig/setRemoveCityLoading",
+      endRemoveCityLoading: "admin/marketsConfig/endRemoveCityLoading",
+    }),
     ...mapActions({
       store: "admin/marketsConfig/storeCity",
       getData: "admin/marketsConfig/getCities",
+      deleteCity: "admin/marketsConfig/deleteCity",
     }),
     handleSubmit() {
       if (!this.submitLoading) {
@@ -70,6 +81,12 @@ export default {
               ? (this.errors.name = error.response.data.errors.name)
               : null;
           });
+      }
+    },
+    remove(item) {
+      if (!item.removeLoading) {
+        this.setRemoveCityLoading({ id: item.id });
+        this.deleteCity({ id: item.id, market_id: this.$route.params.id });
       }
     },
   },

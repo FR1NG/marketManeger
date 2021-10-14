@@ -6,7 +6,6 @@
         :search="search"
         :items="items"
         :loading="loading"
-        hide-default-footer
       >
         <template v-slot:top>
           <v-toolbar flat>
@@ -32,17 +31,20 @@
           <div v-if="!item.quantity">
             <v-icon class="red--text"> mdi-alert-outline </v-icon>
           </div>
-          <div v-else>{{ item.quantity }}</div>
+          <div
+            v-else
+            :class="
+              item.quantity <= item.notification_quantity
+                ? 'red--text font-weight-bold'
+                : null
+            "
+          >
+            {{ item.quantity }}
+          </div>
         </template>
         <!-- END:action column -->
       </v-data-table>
       <!-- BEGIN:pagination -->
-      <v-pagination
-        v-model="currentPage"
-        class="py-4"
-        :length="lastPage"
-        :total-visible="8"
-      ></v-pagination>
       <!-- END:pagination -->
     </v-card>
   </v-container>

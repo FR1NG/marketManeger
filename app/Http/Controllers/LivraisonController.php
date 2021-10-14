@@ -36,11 +36,11 @@ class LivraisonController extends Controller
         $request->validate([
             'achat_id' => 'required',
             'dilevery_note_number' => 'required|max:255',
-            'date' => 'required|date',
+            'date' => 'required|date|after:yesterday',
             'delivery_man' => 'max:60',
-            'delivery_cost' => 'numeric',
+            'delivery_cost' => 'numeric|min:0',
             'items.*.article_id' => 'required',
-            'items.*.quantity' => 'required',
+            'items.*.quantity' => 'required|min:0',
         ]);
 
         $livraison = new livraison();

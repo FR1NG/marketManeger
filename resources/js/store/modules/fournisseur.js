@@ -58,24 +58,24 @@ export const actions = {
                 });
         });
     },
-    getProvider(context,payload){
-        return new Promise((resolve,reject)=> {
-            axios.get('fournisseur/details',{
-                params : {
-                    id : payload.id,
+    getProvider(context, payload) {
+        return new Promise((resolve, reject) => {
+            axios.get('fournisseur/details', {
+                params: {
+                    fournisseur_id: payload.id,
                 }
             })
-            .then(response => {
-                // resolve Promise
-                resolve(response);
-            })
-            .catch(error => {
-                // reject Promise
-                reject(error.response);
+                .then(response => {
+                    // resolve Promise
+                    resolve(response);
+                })
+                .catch(error => {
+                    // reject Promise
+                    reject(error.response);
 
-                // alert
-                context.dispatch('alert/show',{text : error.response.data.message,type : 'error'},{root : true});
-            })
+                    // alert
+                    context.dispatch('alert/show', { text: error.response.data.message, type: 'error' }, { root: true });
+                })
         });
     },
     store(context, payload) {
@@ -147,34 +147,34 @@ export const actions = {
                 });
         });
     },
-    update(context,payload){
+    update(context, payload) {
         const provider = payload.form;
-        return new Promise((resolve,reject)=> {
-            axios.patch('fournisseur/update',{
-                id : provider.id,
-                name : provider.name,
-                phone : provider.phone,
-                email : provider.email,
-                address : provider.address,
-                note : provider.note,
+        return new Promise((resolve, reject) => {
+            axios.patch('fournisseur/update', {
+                id: provider.id,
+                name: provider.name,
+                phone: provider.phone,
+                email: provider.email,
+                address: provider.address,
+                note: provider.note,
             })
-            .then(response => {
+                .then(response => {
 
-                // resolve promise
-                resolve(response);
+                    // resolve promise
+                    resolve(response);
 
-                // alert
-                context.dispatch('alert/show',{text : response.data.message,type : 'success'},{root : true});
-            })
-            .catch(error => {
+                    // alert
+                    context.dispatch('alert/show', { text: response.data.message, type: 'success' }, { root: true });
+                })
+                .catch(error => {
 
-                // reject Promise
-                reject(error.response);
+                    // reject Promise
+                    reject(error.response);
 
-                // alert
-                context.dispatch('alert/show',{text : error.response.data.message,type : 'error'},{root : true});
+                    // alert
+                    context.dispatch('alert/show', { text: error.response.data.message, type: 'error' }, { root: true });
 
-            })
+                })
         })
     }
 };

@@ -33,6 +33,7 @@ class AchatController extends Controller
         $achats = achat::withCount('items')
             ->where('market_id', '=', $this->market_id)
             ->with(['fournisseur:id,name'])
+            ->orderBy('created_at', 'DESC')
             ->paginate(10);
         return response()->json(['achats' => $achats]);
     }
@@ -55,15 +56,15 @@ class AchatController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'ndbc' => 'required|max:255',
+            'ndbc' => 'required|max:255|unique:achats,ndbc,NULL,id,market_id,' . $this->market_id,
             'fournisseur' => 'required|numeric',
             'payment_mode' => 'required',
-            'deadline' => 'required|date',
-            'amount' => 'required|numeric',
+            'deadline' => 'required|date|after:yesterday',
+            'amount' => 'required|numeric|min:0',
             'items' => 'required',
             'items.*.article_id' => 'required',
-            'items.*.price' => 'required|numeric',
-            'items.*.quantity' => 'required|numeric'
+            'items.*.price' => 'required|numeric|min:0',
+            'items.*.quantity' => 'required|numeric|min:0'
         ]);
 
         $achat = new achat();

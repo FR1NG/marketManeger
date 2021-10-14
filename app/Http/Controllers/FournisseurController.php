@@ -48,7 +48,7 @@ class FournisseurController extends Controller
                 $query->orWhere($column, 'LIKE', $search);
             }
         }
-        $fournisseurs = $query->paginate(10);
+        $fournisseurs = $query->withCount('achats')->paginate(10);
         return $fournisseurs;
     }
 
@@ -104,7 +104,7 @@ class FournisseurController extends Controller
     */
     public function details(Request $request)
     {
-        $fournisseur = fournisseur::where('id', '=', $request->id)->where('market_id', '=', $this->market_id);
+        $fournisseur = fournisseur::where('id', '=', $request->fournisseur_id)->where('market_id', '=', $this->market_id)->first();
         if ($fournisseur) {
             return response()->json($fournisseur);
         } else {

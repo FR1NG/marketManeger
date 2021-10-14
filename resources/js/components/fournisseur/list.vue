@@ -75,11 +75,11 @@ export default {
         { text: "Email", value: "email" },
         { text: "Address", value: "address" },
         { text: "Tele", value: "phone" },
-        { text: "Nbr d'operation", value: "nbrdop" },
+        { text: "Nbr d'operation", value: "achats_count" },
         { text: "Actions", value: "actions" },
       ],
       searchLoading: false,
-      loading : false,
+      loading: false,
     };
   },
   watch: {
@@ -117,13 +117,14 @@ export default {
   methods: {
     getData() {
       this.loading = true;
-      this.$store.dispatch("fournisseur/getData")
-      .then(()=>{
-        this.loading = false;
-      })
-      .catch(()=>{
-        this.loading = false;
-      });
+      this.$store
+        .dispatch("fournisseur/getData")
+        .then(() => {
+          this.loading = false;
+        })
+        .catch(() => {
+          this.loading = false;
+        });
     },
     handleSearch() {
       this.searchLoading = true;
@@ -139,18 +140,20 @@ export default {
       }, 500); // delay
     },
     remove(id) {
-      this.$store.commit('fournisseur/setDelete',{id : id});
+      this.$store.commit("fournisseur/setDelete", { id: id });
     },
-    edit(fournisseur){
-      this.$store.commit('fournisseur/setSelected',{fournisseur : fournisseur})
+    edit(fournisseur) {
+      this.$store.commit("fournisseur/setSelected", {
+        fournisseur: fournisseur,
+      });
       this.$router.replace({
-        name : 'modifierFournisseur',
-        params : {
-          id : fournisseur.id
-        }
-      })
+        name: "modifierFournisseur",
+        params: {
+          id: fournisseur.id,
+        },
+      });
       console.log(fournisseur);
-    }
+    },
   },
   created() {
     this.getData();

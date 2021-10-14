@@ -1,22 +1,20 @@
 <template>
-  <v-card class="ma-4 pa-4">
+  <v-card
+    class="ma-4 pa-4"
+    :disabled="loading || overlay"
+    :loading="loading || overlay"
+  >
     <!-- loader:BEGIN -->
-    <v-overlay :value="overlay">
+    <!-- <v-overlay :value="overlay">
       <v-progress-circular indeterminate size="64"></v-progress-circular>
-    </v-overlay>
+    </v-overlay> -->
     <!-- loader:END -->
     <v-toolbar flat>
       <v-toolbar-title>Modifier Employe</v-toolbar-title>
       <v-divider class="mx-4" inset vertical></v-divider>
       <v-spacer></v-spacer>
 
-      <v-btn
-        link
-        color="primary"
-        dark
-        class="mb-2"
-        :to="{ name: 'employe' }"
-      >
+      <v-btn link color="primary" dark class="mb-2" :to="{ name: 'employe' }">
         List
       </v-btn>
     </v-toolbar>
@@ -119,52 +117,54 @@ export default {
   },
   methods: {
     handleSubmit() {
-      this.loading = true;
-      this.$store
-        .dispatch("employe/update", { form: this.form })
-        .then((response) => {
-          this.loading = false;
-        })
-        .catch((error) => {
-          this.loading = false;
-          if (error.data) {
-            error.data.errors.name
-              ? (this.errors.name = error.data.errors.name)
-              : (this.errors.name = []);
+      if (!this.loading) {
+        this.loading = true;
+        this.$store
+          .dispatch("employe/update", { form: this.form })
+          .then((response) => {
+            this.loading = false;
+          })
+          .catch((error) => {
+            this.loading = false;
+            if (error.data) {
+              error.data.errors.name
+                ? (this.errors.name = error.data.errors.name)
+                : (this.errors.name = []);
 
-            error.data.errors.cin
-              ? (this.errors.cin = error.data.errors.cin)
-              : (this.errors.cin = []);
+              error.data.errors.cin
+                ? (this.errors.cin = error.data.errors.cin)
+                : (this.errors.cin = []);
 
-            error.data.errors.cnss
-              ? (this.errors.cnss = error.data.errors.cnss)
-              : (this.errors.cnss = []);
+              error.data.errors.cnss
+                ? (this.errors.cnss = error.data.errors.cnss)
+                : (this.errors.cnss = []);
 
-            error.data.errors.phone
-              ? (this.errors.phone = error.data.errors.phone)
-              : (this.errors.phone = []);
+              error.data.errors.phone
+                ? (this.errors.phone = error.data.errors.phone)
+                : (this.errors.phone = []);
 
-            error.data.errors.email
-              ? (this.errors.email = error.data.errors.email)
-              : (this.errors.email = []);
+              error.data.errors.email
+                ? (this.errors.email = error.data.errors.email)
+                : (this.errors.email = []);
 
-            error.data.errors.address
-              ? (this.errors.address = error.data.errors.address)
-              : (this.errors.address = []);
+              error.data.errors.address
+                ? (this.errors.address = error.data.errors.address)
+                : (this.errors.address = []);
 
-            error.data.errors.salery
-              ? (this.errors.salery = error.data.errors.salery)
-              : (this.errors.salery = []);
+              error.data.errors.salery
+                ? (this.errors.salery = error.data.errors.salery)
+                : (this.errors.salery = []);
 
-            error.data.errors.quality
-              ? (this.errors.quality = error.data.errors.quality)
-              : (this.errors.quality = []);
+              error.data.errors.quality
+                ? (this.errors.quality = error.data.errors.quality)
+                : (this.errors.quality = []);
 
-            error.data.errors.note
-              ? (this.errors.note = error.data.errors.note)
-              : (this.errors.note = []);
-          }
-        });
+              error.data.errors.note
+                ? (this.errors.note = error.data.errors.note)
+                : (this.errors.note = []);
+            }
+          });
+      }
     },
     getProvider() {
       this.overlay = true;

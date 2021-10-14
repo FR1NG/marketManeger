@@ -38,7 +38,7 @@ class WarehouseController extends Controller
                     'quantity'          => $article->itemsInWarehouse->sum('quantity'),
                     'notification_quantity'           => $article->notification_quantity,
                 ];
-            });;
+            });
 
         return response()->json(['items' => $warehouse]);
     }

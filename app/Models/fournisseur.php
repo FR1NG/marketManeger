@@ -15,4 +15,9 @@ class fournisseur extends Model
         'address',
         'note',
     ];
+
+    public function achats()
+    {
+        return $this->hasMany(achat::class, 'fournisseur_id');
+    }
 }

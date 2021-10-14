@@ -6,7 +6,7 @@
     max-width="500px"
     transition="dialog-transition"
   >
-    <v-card>
+    <v-card :loading="submitLoading" :disabled="submitLoading">
       <v-card-title> Sélectionner des pièces </v-card-title>
       <v-form @submit.prevent="handleSubmit">
         <v-card-text>
@@ -60,18 +60,20 @@ export default {
       });
     },
     handleSubmit() {
-      this.submitLoading = true;
-      this.$store
-        .dispatch("branchement/addArticles", {
-          items: this.selectedItems,
-          branchement_id: this.$route.params.id,
-        })
-        .then(() => {
-          this.submitLoading = false;
-        })
-        .catch((error) => {
-          this.submitLoading = false;
-        });
+      if (!this.submitLoading) {
+        this.submitLoading = true;
+        this.$store
+          .dispatch("branchement/addArticles", {
+            items: this.selectedItems,
+            branchement_id: this.$route.params.id,
+          })
+          .then(() => {
+            this.submitLoading = false;
+          })
+          .catch((error) => {
+            this.submitLoading = false;
+          });
+      }
     },
     hideDialog() {
       this.$store.commit("branchement/hideAddArticles");

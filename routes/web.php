@@ -75,11 +75,6 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/units/delete', [UnitController::class, 'delete']);
 
 
-    // articles routes
-    Route::get('articles/index', [ArticleController::class, 'index']);
-    Route::post('articles/store', [ArticleController::class, 'store']);
-
-
     // achats routes
     Route::get('/achats/index', [AchatController::class, 'index']);
     Route::get('/achats/create', [AchatController::class, 'create']);
@@ -101,6 +96,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/branchements/getItemPrice', [BranchementController::class, 'getItemPrice']);
     Route::get('/branchements/create', [BranchementController::class, 'create']);
     Route::get('/branchements/getBranchementArticles', [BranchementController::class, 'getBranchementArticles']);
+    Route::get('branchements/filter', [BranchementController::class, 'filter']);
     Route::post('branchements/charges/store', [BranchementChargersController::class, 'store']);
     Route::post('branchements/images/store', [BranchementImageController::class, 'store']);
     Route::get('branchements/images/index', [BranchementImageController::class, 'index']);
@@ -113,6 +109,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard/index', [DashboardController::class, 'index']);
     Route::get('/dashboard/getAccomlishment', [DashboardController::class, 'getAccomlishment']);
 });
+//  =============[MANAGER routes:END]======================
+// 
+// 
+// 
 // =============[admin routes:BEGIN]======================
 Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'role:admin']], function () {
     // markets routes
@@ -121,22 +121,44 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'role:admin']], fun
         Route::post('/store', [MarketController::class, 'store']);
         Route::get('/info', [MarketController::class, 'info']);
         Route::patch('/update', [MarketController::class, 'update']);
+        Route::delete('/delete', [MarketController::class, 'delete']);
 
 
         Route::post('/categories/store', [MarketCategoryController::class, 'store']);
         Route::get('/categories/getData', [MarketCategoryController::class, 'getData']);
+        Route::delete('/categories/delete', [MarketCategoryController::class, 'delete']);
+
+
         Route::post('/articles/store', [MarketArticleController::class, 'store']);
+
         Route::post('/cities/store', [MarketCityController::class, 'store']);
         Route::get('/cities/get', [MarketCityController::class, 'get']);
-    });
+        Route::delete('/cities/delete', [MarketCityController::class, 'delete']);
+    }); // end of market groupe
+
+
     // dashboard
     Route::get('/dashboard', [DashboardController::class, 'adminDash']);
-});
-// =============[admin routes:END]======================
 
+    // articles routes
+    Route::get('articles/index', [ArticleController::class, 'index']);
+    Route::post('articles/store', [ArticleController::class, 'store']);
+    Route::delete('articles/delete', [ArticleController::class, 'delete']);
+    Route::patch('articles/update', [ArticleController::class, 'update']);
+});
+// =============[admin routes:END]=======================================================
+// 
+// 
+// 
+// =============[MARKET routes:END]=======================================================
 Route::group(['prefix' => 'market/{market_id}', 'middleware' => ['auth', 'role:admin']], function () {
     Route::get('/', [HomeController::class, 'market']);
-    // >>>>>>>>>>test:START
+    //    ========={START normal routes for market}
+    // user routes
+    Route::post('/user/update', [UserController::class, 'updateInfo']);
+    Route::post('/user/password/update', [UserController::class, 'updatePassword']);
+
+
     //fournisseur routes
     Route::post('/fournisseur/store', [FournisseurController::class, 'store']);
     Route::get('/fournisseur/get', [FournisseurController::class, 'getData']);
@@ -162,11 +184,6 @@ Route::group(['prefix' => 'market/{market_id}', 'middleware' => ['auth', 'role:a
     Route::delete('/units/delete', [UnitController::class, 'delete']);
 
 
-    // articles routes
-    Route::get('articles/index', [ArticleController::class, 'index']);
-    Route::post('articles/store', [ArticleController::class, 'store']);
-
-
     // achats routes
     Route::get('/achats/index', [AchatController::class, 'index']);
     Route::get('/achats/create', [AchatController::class, 'create']);
@@ -188,13 +205,10 @@ Route::group(['prefix' => 'market/{market_id}', 'middleware' => ['auth', 'role:a
     Route::get('/branchements/getItemPrice', [BranchementController::class, 'getItemPrice']);
     Route::get('/branchements/create', [BranchementController::class, 'create']);
     Route::get('/branchements/getBranchementArticles', [BranchementController::class, 'getBranchementArticles']);
+    Route::get('branchements/filter', [BranchementController::class, 'filter']);
     Route::post('branchements/charges/store', [BranchementChargersController::class, 'store']);
-    Route::delete('/branchements/delete', [BranchementController::class, 'delete']);
     Route::post('branchements/images/store', [BranchementImageController::class, 'store']);
     Route::get('branchements/images/index', [BranchementImageController::class, 'index']);
-
-
-
 
 
     // warehouse routes
@@ -203,8 +217,7 @@ Route::group(['prefix' => 'market/{market_id}', 'middleware' => ['auth', 'role:a
     // dashboard routes
     Route::get('/dashboard/index', [DashboardController::class, 'index']);
     Route::get('/dashboard/getAccomlishment', [DashboardController::class, 'getAccomlishment']);
-    // >>>>>>>>>>test:END
-
+    //    ========={END normal routes for market}
 });
 
 Auth::routes(['register' => false]);

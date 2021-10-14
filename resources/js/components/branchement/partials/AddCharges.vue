@@ -6,7 +6,7 @@
     max-width="500px"
     transition="dialog-transition"
   >
-    <v-card>
+    <v-card :loading="submitLoading" :disabled="submitLoading">
       <v-card-title> Ajouter les Charges</v-card-title>
       <v-form @submit.prevent="handleSubmit">
         <v-card-text>
@@ -61,6 +61,7 @@ export default {
   methods: {
     handleSubmit() {
       if (!this.submitLoading) {
+        this.resetErrors();
         this.submitLoading = true;
         this.$store
           .dispatch("branchement/addCharges", {
@@ -85,6 +86,12 @@ export default {
     },
     hideDialog() {
       this.$store.commit("branchement/hideAddCharges");
+    },
+    resetErrors() {
+      this.errors = {
+        nature: [],
+        amount: [],
+      };
     },
   },
 };

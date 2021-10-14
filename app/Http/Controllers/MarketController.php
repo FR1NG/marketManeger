@@ -6,6 +6,7 @@ use App\Models\market;
 use App\Models\User;
 use App\Notifications\MarketCreated;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -90,5 +91,16 @@ class MarketController extends Controller
         $user->email = $request->manager["email"];
         $user->update();
         return response()->json(['message' => 'Les informations du marché ont été mises à jour']);
+    }
+
+    public function delete(Request $request)
+    {
+        if (Hash::check($request->password, Auth::user()->password) && Auth::user()->hasRole('admin')) {
+            $market =  market::findOrFail($request->id);
+            $market->delete();
+            return response()->json(['message' => 'Le marché a été supprimé']);
+        } else {
+            return response()->json(['message' => 'Mot de passe incorrect'], 403);
+        }
     }
 }

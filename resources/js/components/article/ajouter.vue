@@ -5,13 +5,7 @@
       <v-divider class="mx-4" inset vertical></v-divider>
       <v-spacer></v-spacer>
 
-      <v-btn
-        link
-        color="primary"
-        dark
-        class="mb-2"
-        :to="{ name: 'articles' }"
-      >
+      <v-btn link color="primary" dark class="mb-2" :to="{ name: 'articles' }">
         List
       </v-btn>
     </v-toolbar>
@@ -74,9 +68,9 @@
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn outlined class="mr-4">Annuler</v-btn>
+        <v-btn outlined class="mr-4" @click="resetForm">Annuler</v-btn>
         <v-btn color="success" class="mr-4" type="submit" :loading="loading"
-          >Ajouter
+          >Enregistrer
         </v-btn>
       </v-card-actions>
     </v-form>
@@ -108,79 +102,88 @@ export default {
         quality: [],
         note: [],
       },
-        loading: false,
+      loading: false,
     };
   },
   methods: {
     handleSubmit() {
-      this.loading = true;
-      this.$store
-        .dispatch("employe/store", { form: this.form })
-        .then((response) => {
-          this.loading = false;
-          console.log(this.errors);
-          this.form = {
-            name: "",
-            cin: "",
-            cnss: "",
-            phone: null,
-            email: "",
-            salery: null,
-            quality: "",
-            note: "",
-          };
-          this.errors = {
-            name: [],
-            cin: [],
-            cnss: [],
-            phone: [],
-            email: [],
-            address: [],
-            salery: [],
-            quality: [],
-            note: [],
-          };
-        })
-        .catch((error) => {
-          this.loading = false;
-          if (error.data) {
-            error.data.errors.name
-              ? (this.errors.name = error.data.errors.name)
-              : (this.errors.name = []);
+      if (!this.loading) {
+        this.resetErrors();
+        this.loading = true;
+        this.$store
+          .dispatch("employe/store", { form: this.form })
+          .then((response) => {
+            this.loading = false;
+            this.resetForm();
+            this.resetErrors();
+          })
+          .catch((error) => {
+            this.loading = false;
+            if (error.data) {
+              error.data.errors.name
+                ? (this.errors.name = error.data.errors.name)
+                : (this.errors.name = []);
 
-            error.data.errors.cin
-              ? (this.errors.cin = error.data.errors.cin)
-              : (this.errors.cin = []);
+              error.data.errors.cin
+                ? (this.errors.cin = error.data.errors.cin)
+                : (this.errors.cin = []);
 
-            error.data.errors.cnss
-              ? (this.errors.cnss = error.data.errors.cnss)
-              : (this.errors.cnss = []);
+              error.data.errors.cnss
+                ? (this.errors.cnss = error.data.errors.cnss)
+                : (this.errors.cnss = []);
 
-            error.data.errors.phone
-              ? (this.errors.phone = error.data.errors.phone)
-              : (this.errors.phone = []);
+              error.data.errors.phone
+                ? (this.errors.phone = error.data.errors.phone)
+                : (this.errors.phone = []);
 
-            error.data.errors.email
-              ? (this.errors.email = error.data.errors.email)
-              : (this.errors.email = []);
+              error.data.errors.email
+                ? (this.errors.email = error.data.errors.email)
+                : (this.errors.email = []);
 
-            error.data.errors.address
-              ? (this.errors.address = error.data.errors.address)
-              : (this.errors.address = []);
+              error.data.errors.address
+                ? (this.errors.address = error.data.errors.address)
+                : (this.errors.address = []);
 
-            error.data.errors.salery
-              ? (this.errors.salery = error.data.errors.salery)
-              : (this.errors.salery = []);
+              error.data.errors.salery
+                ? (this.errors.salery = error.data.errors.salery)
+                : (this.errors.salery = []);
 
-            error.data.errors.quality
-              ? (this.errors.quality = error.data.errors.quality)
-              : (this.errors.quality = []);
+              error.data.errors.quality
+                ? (this.errors.quality = error.data.errors.quality)
+                : (this.errors.quality = []);
 
-            error.data.errors.note
-              ? (this.errors.note = error.data.errors.note)
-              : (this.errors.note = []);
-          }
-        });
+              error.data.errors.note
+                ? (this.errors.note = error.data.errors.note)
+                : (this.errors.note = []);
+            }
+          });
+      }
+    },
+    resetErrors() {
+      this.errors = {
+        name: [],
+        cin: [],
+        cnss: [],
+        phone: [],
+        email: [],
+        address: [],
+        salery: [],
+        quality: [],
+        note: [],
+      };
+    },
+    resetForm() {
+      this.resetErrors();
+      this.form = {
+        name: "",
+        cin: "",
+        cnss: "",
+        phone: null,
+        email: "",
+        salery: null,
+        quality: "",
+        note: "",
+      };
     },
   },
 };

@@ -5,6 +5,7 @@ export const state = {
     lastPage: null,
     currentPage: null,
     search: null,
+    toDelete: null,
 };
 
 export const getters = {
@@ -12,6 +13,8 @@ export const getters = {
     lastPage: state => state.lastPage,
     currentPage: state => state.currentPage,
     search: state => state.search,
+    toDelete: state => state.toDelete,
+    deleteDialog: state => state.toDelete != null,
 };
 
 export const mutations = {
@@ -25,6 +28,12 @@ export const mutations = {
     },
     setCurrentPage(state, data) {
         state.currentPage = data.page;
+    },
+    setDelete(state, data) {
+        state.toDelete = data;
+    },
+    endDelete(state) {
+        state.toDelete = null;
     }
 };
 
@@ -67,6 +76,26 @@ export const actions = {
                 })
         })
     },
+    delete(context, payload) {
+        return new Promise((resolve, reject) => {
+            axios.delete('admin/markets/delete', {
+                data: {
+                    id: context.getters.toDelete.id,
+                    password: payload.password,
+                }
+            }).then(response => {
+                // resolve
+                resolve(response);
+                // alert
+                context.dispatch('alert/show', { text: response.data.message, type: 'success' }, { root: true });
+            }).catch(error => {
+                // reject
+                reject(error);
+                // alert
+                context.dispatch('alert/show', { text: error.response.data.message, type: 'error' }, { root: true });
 
+            })
+        })
+    }
 };
 

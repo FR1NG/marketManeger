@@ -48,13 +48,13 @@
       <!-- END:action column -->
       <!-- BEGIN:action column -->
       <template v-slot:item.actions="{ item }">
-        <v-btn color="info" @click.stop="edit(item)" icon text small>
+        <!-- <v-btn color="info" @click.stop="edit(item)" icon text small>
           <v-icon>mdi-pencil-outline</v-icon>
-        </v-btn>
+        </v-btn> -->
 
-        <v-btn color="error" @click.stop="remove(item.id)" icon text small>
+        <!-- <v-btn color="error" @click.stop="remove(item.id)" icon text small>
           <v-icon>mdi-delete-outline</v-icon>
-        </v-btn>
+        </v-btn> -->
       </template>
       <!-- END:action column -->
     </v-data-table>
@@ -78,13 +78,13 @@ export default {
   data() {
     return {
       headers: [
-        { text: "№ de bon de commande", value: "ndbc" },
-        { text: "Fournisseur", value: "fournisseur.name" },
-        { text: "Mode de payment", value: "payment_mode" },
-        { text: "№ de chéque", value: "check_number" },
-        { text: "Montant", value: "amount" },
-        { text: "Échéance", value: "deadline" },
-        { text: "Nbr d'article", value: "items_count" },
+        { text: "№ de bon de commande", value: "ndbc", sortable: false },
+        { text: "Fournisseur", value: "fournisseur.name", sortable: false },
+        { text: "Mode de payment", value: "payment_mode", sortable: false },
+        { text: "№ de chéque", value: "check_number", sortable: false },
+        { text: "Montant", value: "amount", sortable: false },
+        { text: "Échéance", value: "deadline", sortable: false },
+        { text: "Nbr d'article", value: "items_count", sortable: false },
         { text: "Actions", value: "actions" },
       ],
       searchLoading: false,
@@ -151,11 +151,11 @@ export default {
     remove(id) {
       this.$store.commit("employe/setDelete", { id: id });
     },
-    edit(employe) {
+    edit(item) {
       this.$router.replace({
-        name: "modifierEmploye",
+        name: "modifierAchat",
         params: {
-          id: employe.id,
+          id: item.id,
         },
       });
     },

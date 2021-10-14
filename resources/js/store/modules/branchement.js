@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export const state = {
+    loading: false,
     detailsCardLoading: false,
     branchementCategories: [],
     branchementArticles: [],
@@ -19,9 +20,13 @@ export const state = {
     addEmployeesDialog: false,
     addChargesDialog: false,
     branchementToDeleteId: null,
+    filterDialog: false,
+    filter: null,
+
 };
 
 export const getters = {
+    loading: state => state.loading,
     detailsCardLoading: state => state.detailsCardLoading,
     branchementCategories: state => state.branchementCategories,
     branchementArticles: state => state.branchementArticles,
@@ -40,6 +45,8 @@ export const getters = {
     addEmployeesDialog: state => state.addEmployeesDialog,
     addChargesDialog: state => state.addChargesDialog,
     deleteDialog: state => state.branchementToDeleteId !== null,
+    filterDialog: state => state.filterDialog,
+    filter: state => state.filter,
 };
 
 export const mutations = {
@@ -61,9 +68,6 @@ export const mutations = {
             { text: "Intervention", value: branchement.intervention },
             { text: "№ Devis", value: branchement.estimate_number },
             { text: "№ Télephone", value: branchement.phone },
-            { text: "DN", value: branchement.diameter },
-            { text: "Calibre", value: branchement.caliber },
-            { text: "Nature", value: branchement.nature },
             { text: "Date D'arriver", value: branchement.arrival_date },
             { text: "Motifs", value: branchement.motive },
         ];
@@ -93,8 +97,8 @@ export const mutations = {
     },
     setData(state, data) {
         state.branchements = data.branchements.data;
-        state.currentPage = data.current_page;
-        state.lastPage = data.last_page;
+        state.currentPage = data.branchements.current_page;
+        state.lastPage = data.branchements.last_page;
     },
     setCurrentPage(state, data) {
         state.currentPage = data.page;
@@ -114,6 +118,16 @@ export const mutations = {
     },
     endDelete(state, data) {
         state.branchementToDeleteId = null;
+    },
+    showFilter(state) {
+        state.filterDialog = true;
+    },
+    hideFilter(state) {
+        state.filterDialog = false;
+        state.filter = [];
+    },
+    setFilter(state, data) {
+        state.filter = data.filter;
     }
 };
 
@@ -293,17 +307,21 @@ export const actions = {
         })
     },
     getData(context, payload) {
+        context.state.loading = true;
         return new Promise((resolve, reject) => {
             axios
                 .get("branchements/index", {
                     params: {
-                        page: context.state.currentPage,
-                        search: context.state.search
+                        page: context.getters.currentPage,
+                        search: context.getters.search,
+                        filter: context.getters.filter,
                     }
                 })
                 .then(response => {
                     // resolve promise
                     resolve(response);
+                    // stop loading
+                    context.state.loading = false;
                     // set response data
                     context.commit("setData", response.data);
                 })
@@ -372,5 +390,17 @@ export const actions = {
                 context.dispatch('alert/show', { text: error.response.data.message, type: 'error' }, { root: true });
             });
         })
+    },
+    getFilterData(context, payload) {
+        return new Promise((resolve, reject) => {
+            axios.get('branchements/filter')
+                .then(response => {
+                    console.log(response);
+                    resolve(response);
+                })
+                .catch(error => {
+                    reject(error);
+                });
+        });
     }
 };

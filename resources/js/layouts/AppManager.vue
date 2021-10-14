@@ -24,6 +24,13 @@
       </v-fade-transition>
       <!-- main:END -->
     </v-main>
+    <v-footer padless>
+      <v-col class="text-center" cols="12">
+        {{ new Date().getFullYear() }} — <strong>Meediaty</strong> pour plus
+        d'informations contactez le
+        <a target="_blank" href="https://meediaty.com/contact">développeur</a>
+      </v-col>
+    </v-footer>
   </v-app>
 </template>
 

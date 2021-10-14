@@ -32,7 +32,7 @@ class MarketCategoryController extends Controller
     {
         $request->validate([
             'market_id' => 'required|numeric',
-            'name' => 'required|unique:market_categories|min:3|max:255',
+            "name" => "required|min:3|max:255|unique:market_categories,name,NULL,id,market_id," . $this->market_id,
         ]);
 
         $category = new marketCategory();
@@ -51,5 +51,18 @@ class MarketCategoryController extends Controller
             }])
             ->get();
         return response()->json(['articles' => $categories]);
+    }
+
+    public function delete(Request $request)
+    {
+        $category = marketCategory::where('id', '=', $request->id)->withCount('articles')->first();
+        if ($category) {
+            if ($category->articles_count > 0) {
+                return response()->json(['message' => 'Vous pouvez pas supprimer cette catégorie'], 500);
+            }
+            $category->delete();
+            return response()->json(['message' => 'La catégorie a été supprimée']);
+        }
+        return response()->json(['message' => 'Catégorie introuvable'], 404);
     }
 }

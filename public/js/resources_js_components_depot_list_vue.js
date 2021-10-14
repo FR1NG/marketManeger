@@ -61,6 +61,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -238,29 +240,6 @@ ___CSS_LOADER_EXPORT___.push([module.id, ".theme--light.v-data-table {\n  backgr
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-15[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-15[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-15[0].rules[0].use[3]!./node_modules/vuetify/src/components/VPagination/VPagination.sass":
-/*!****************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-15[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-15[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-15[0].rules[0].use[3]!./node_modules/vuetify/src/components/VPagination/VPagination.sass ***!
-  \****************************************************************************************************************************************************************************************************************************************************************************************************************/
-/***/ ((module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-/* harmony import */ var _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
-// Imports
-
-var ___CSS_LOADER_EXPORT___ = _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
-// Module
-___CSS_LOADER_EXPORT___.push([module.id, ".theme--light.v-pagination .v-pagination__item {\n  background: #FFFFFF;\n  color: rgba(0, 0, 0, 0.87);\n}\n.theme--light.v-pagination .v-pagination__item--active {\n  color: #FFFFFF;\n}\n.theme--light.v-pagination .v-pagination__navigation {\n  background: #FFFFFF;\n}\n\n.theme--dark.v-pagination .v-pagination__item {\n  background: #1E1E1E;\n  color: #FFFFFF;\n}\n.theme--dark.v-pagination .v-pagination__item--active {\n  color: #FFFFFF;\n}\n.theme--dark.v-pagination .v-pagination__navigation {\n  background: #1E1E1E;\n}\n\n.v-pagination {\n  align-items: center;\n  display: inline-flex;\n  list-style-type: none;\n  justify-content: center;\n  margin: 0;\n  max-width: 100%;\n  width: 100%;\n}\n.v-pagination.v-pagination {\n  padding-left: 0;\n}\n.v-pagination > li {\n  align-items: center;\n  display: flex;\n}\n.v-pagination--circle .v-pagination__item,\n.v-pagination--circle .v-pagination__more,\n.v-pagination--circle .v-pagination__navigation {\n  border-radius: 50%;\n}\n.v-pagination--disabled {\n  pointer-events: none;\n  opacity: 0.6;\n}\n.v-pagination__item {\n  background: transparent;\n  border-radius: 4px;\n  font-size: 1rem;\n  height: 34px;\n  margin: 0.3rem;\n  min-width: 34px;\n  padding: 0 5px;\n  text-decoration: none;\n  transition: 0.3s cubic-bezier(0, 0, 0.2, 1);\n  width: auto;\n  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);\n}\n.v-pagination__item--active {\n  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);\n}\n.v-pagination__navigation {\n  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);\n  border-radius: 4px;\n  display: inline-flex;\n  justify-content: center;\n  align-items: center;\n  text-decoration: none;\n  height: 32px;\n  width: 32px;\n  margin: 0.3rem 10px;\n}\n.v-pagination__navigation .v-icon {\n  transition: 0.2s cubic-bezier(0.4, 0, 0.6, 1);\n  vertical-align: middle;\n}\n.v-pagination__navigation--disabled {\n  opacity: 0.6;\n  pointer-events: none;\n}\n.v-pagination__more {\n  margin: 0.3rem;\n  display: inline-flex;\n  align-items: flex-end;\n  justify-content: center;\n  height: 32px;\n  width: 32px;\n}", ""]);
-// Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
-
-
-/***/ }),
-
 /***/ "./node_modules/vuetify/src/components/VDataIterator/VDataFooter.sass":
 /*!****************************************************************************!*\
   !*** ./node_modules/vuetify/src/components/VDataIterator/VDataFooter.sass ***!
@@ -377,35 +356,6 @@ var update = _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMP
 
 /***/ }),
 
-/***/ "./node_modules/vuetify/src/components/VPagination/VPagination.sass":
-/*!**************************************************************************!*\
-  !*** ./node_modules/vuetify/src/components/VPagination/VPagination.sass ***!
-  \**************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-/* harmony import */ var _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _css_loader_dist_cjs_js_clonedRuleSet_15_0_rules_0_use_1_postcss_loader_dist_cjs_js_clonedRuleSet_15_0_rules_0_use_2_sass_loader_dist_cjs_js_clonedRuleSet_15_0_rules_0_use_3_VPagination_sass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../css-loader/dist/cjs.js??clonedRuleSet-15[0].rules[0].use[1]!../../../../postcss-loader/dist/cjs.js??clonedRuleSet-15[0].rules[0].use[2]!../../../../sass-loader/dist/cjs.js??clonedRuleSet-15[0].rules[0].use[3]!./VPagination.sass */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-15[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-15[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-15[0].rules[0].use[3]!./node_modules/vuetify/src/components/VPagination/VPagination.sass");
-
-            
-
-var options = {};
-
-options.insert = "head";
-options.singleton = false;
-
-var update = _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_css_loader_dist_cjs_js_clonedRuleSet_15_0_rules_0_use_1_postcss_loader_dist_cjs_js_clonedRuleSet_15_0_rules_0_use_2_sass_loader_dist_cjs_js_clonedRuleSet_15_0_rules_0_use_3_VPagination_sass__WEBPACK_IMPORTED_MODULE_1__.default, options);
-
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_css_loader_dist_cjs_js_clonedRuleSet_15_0_rules_0_use_1_postcss_loader_dist_cjs_js_clonedRuleSet_15_0_rules_0_use_2_sass_loader_dist_cjs_js_clonedRuleSet_15_0_rules_0_use_3_VPagination_sass__WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
-
-/***/ }),
-
 /***/ "./resources/js/components/depot/list.vue?vue&type=script&lang=js&":
 /*!*************************************************************************!*\
   !*** ./resources/js/components/depot/list.vue?vue&type=script&lang=js& ***!
@@ -463,8 +413,7 @@ var render = function() {
               headers: _vm.headers,
               search: _vm.search,
               items: _vm.items,
-              loading: _vm.loading,
-              "hide-default-footer": ""
+              loading: _vm.loading
             },
             scopedSlots: _vm._u([
               {
@@ -528,23 +477,26 @@ var render = function() {
                           ],
                           1
                         )
-                      : _c("div", [_vm._v(_vm._s(item.quantity))])
+                      : _c(
+                          "div",
+                          {
+                            class:
+                              item.quantity <= item.notification_quantity
+                                ? "red--text font-weight-bold"
+                                : null
+                          },
+                          [
+                            _vm._v(
+                              "\n          " +
+                                _vm._s(item.quantity) +
+                                "\n        "
+                            )
+                          ]
+                        )
                   ]
                 }
               }
             ])
-          }),
-          _vm._v(" "),
-          _c("v-pagination", {
-            staticClass: "py-4",
-            attrs: { length: _vm.lastPage, "total-visible": 8 },
-            model: {
-              value: _vm.currentPage,
-              callback: function($$v) {
-                _vm.currentPage = $$v
-              },
-              expression: "currentPage"
-            }
           })
         ],
         1
@@ -581,11 +533,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuetify_lib_components_VDataTable__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vuetify/lib/components/VDataTable */ "./node_modules/vuetify/lib/components/VDataTable/VDataTable.js");
 /* harmony import */ var vuetify_lib_components_VDivider__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vuetify/lib/components/VDivider */ "./node_modules/vuetify/lib/components/VDivider/VDivider.js");
 /* harmony import */ var vuetify_lib_components_VIcon__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vuetify/lib/components/VIcon */ "./node_modules/vuetify/lib/components/VIcon/VIcon.js");
-/* harmony import */ var vuetify_lib_components_VPagination__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vuetify/lib/components/VPagination */ "./node_modules/vuetify/lib/components/VPagination/VPagination.js");
-/* harmony import */ var vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! vuetify/lib/components/VGrid */ "./node_modules/vuetify/lib/components/VGrid/VSpacer.js");
-/* harmony import */ var vuetify_lib_components_VTextField__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! vuetify/lib/components/VTextField */ "./node_modules/vuetify/lib/components/VTextField/VTextField.js");
-/* harmony import */ var vuetify_lib_components_VToolbar__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! vuetify/lib/components/VToolbar */ "./node_modules/vuetify/lib/components/VToolbar/VToolbar.js");
-/* harmony import */ var vuetify_lib_components_VToolbar__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! vuetify/lib/components/VToolbar */ "./node_modules/vuetify/lib/components/VToolbar/index.js");
+/* harmony import */ var vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vuetify/lib/components/VGrid */ "./node_modules/vuetify/lib/components/VGrid/VSpacer.js");
+/* harmony import */ var vuetify_lib_components_VTextField__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! vuetify/lib/components/VTextField */ "./node_modules/vuetify/lib/components/VTextField/VTextField.js");
+/* harmony import */ var vuetify_lib_components_VToolbar__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! vuetify/lib/components/VToolbar */ "./node_modules/vuetify/lib/components/VToolbar/VToolbar.js");
+/* harmony import */ var vuetify_lib_components_VToolbar__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! vuetify/lib/components/VToolbar */ "./node_modules/vuetify/lib/components/VToolbar/index.js");
 
 
 
@@ -616,8 +567,7 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 
 
 
-
-_node_modules_vuetify_loader_lib_runtime_installComponents_js__WEBPACK_IMPORTED_MODULE_3___default()(component, {VCard: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_4__.default,VCardTitle: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_5__.VCardTitle,VContainer: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_6__.default,VDataTable: vuetify_lib_components_VDataTable__WEBPACK_IMPORTED_MODULE_7__.default,VDivider: vuetify_lib_components_VDivider__WEBPACK_IMPORTED_MODULE_8__.default,VIcon: vuetify_lib_components_VIcon__WEBPACK_IMPORTED_MODULE_9__.default,VPagination: vuetify_lib_components_VPagination__WEBPACK_IMPORTED_MODULE_10__.default,VSpacer: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_11__.default,VTextField: vuetify_lib_components_VTextField__WEBPACK_IMPORTED_MODULE_12__.default,VToolbar: vuetify_lib_components_VToolbar__WEBPACK_IMPORTED_MODULE_13__.default,VToolbarTitle: vuetify_lib_components_VToolbar__WEBPACK_IMPORTED_MODULE_14__.VToolbarTitle})
+_node_modules_vuetify_loader_lib_runtime_installComponents_js__WEBPACK_IMPORTED_MODULE_3___default()(component, {VCard: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_4__.default,VCardTitle: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_5__.VCardTitle,VContainer: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_6__.default,VDataTable: vuetify_lib_components_VDataTable__WEBPACK_IMPORTED_MODULE_7__.default,VDivider: vuetify_lib_components_VDivider__WEBPACK_IMPORTED_MODULE_8__.default,VIcon: vuetify_lib_components_VIcon__WEBPACK_IMPORTED_MODULE_9__.default,VSpacer: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_10__.default,VTextField: vuetify_lib_components_VTextField__WEBPACK_IMPORTED_MODULE_11__.default,VToolbar: vuetify_lib_components_VToolbar__WEBPACK_IMPORTED_MODULE_12__.default,VToolbarTitle: vuetify_lib_components_VToolbar__WEBPACK_IMPORTED_MODULE_13__.VToolbarTitle})
 
 
 /* hot reload */
@@ -643,451 +593,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_VBtn__WEBPACK_IMPORTED_MODULE_0__.default);
 //# sourceMappingURL=index.js.map
-
-/***/ }),
-
-/***/ "./node_modules/vuetify/lib/components/VData/VData.js":
-/*!************************************************************!*\
-  !*** ./node_modules/vuetify/lib/components/VData/VData.js ***!
-  \************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _util_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util/helpers */ "./node_modules/vuetify/lib/util/helpers.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-// Helpers
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (vue__WEBPACK_IMPORTED_MODULE_0__.default.extend({
-  name: 'v-data',
-  inheritAttrs: false,
-  props: {
-    items: {
-      type: Array,
-      default: () => []
-    },
-    options: {
-      type: Object,
-      default: () => ({})
-    },
-    sortBy: {
-      type: [String, Array],
-      default: () => []
-    },
-    sortDesc: {
-      type: [Boolean, Array],
-      default: () => []
-    },
-    customSort: {
-      type: Function,
-      default: _util_helpers__WEBPACK_IMPORTED_MODULE_1__.sortItems
-    },
-    mustSort: Boolean,
-    multiSort: Boolean,
-    page: {
-      type: Number,
-      default: 1
-    },
-    itemsPerPage: {
-      type: Number,
-      default: 10
-    },
-    groupBy: {
-      type: [String, Array],
-      default: () => []
-    },
-    groupDesc: {
-      type: [Boolean, Array],
-      default: () => []
-    },
-    customGroup: {
-      type: Function,
-      default: _util_helpers__WEBPACK_IMPORTED_MODULE_1__.groupItems
-    },
-    locale: {
-      type: String,
-      default: 'en-US'
-    },
-    disableSort: Boolean,
-    disablePagination: Boolean,
-    disableFiltering: Boolean,
-    search: String,
-    customFilter: {
-      type: Function,
-      default: _util_helpers__WEBPACK_IMPORTED_MODULE_1__.searchItems
-    },
-    serverItemsLength: {
-      type: Number,
-      default: -1
-    }
-  },
-
-  data() {
-    let internalOptions = {
-      page: this.page,
-      itemsPerPage: this.itemsPerPage,
-      sortBy: (0,_util_helpers__WEBPACK_IMPORTED_MODULE_1__.wrapInArray)(this.sortBy),
-      sortDesc: (0,_util_helpers__WEBPACK_IMPORTED_MODULE_1__.wrapInArray)(this.sortDesc),
-      groupBy: (0,_util_helpers__WEBPACK_IMPORTED_MODULE_1__.wrapInArray)(this.groupBy),
-      groupDesc: (0,_util_helpers__WEBPACK_IMPORTED_MODULE_1__.wrapInArray)(this.groupDesc),
-      mustSort: this.mustSort,
-      multiSort: this.multiSort
-    };
-
-    if (this.options) {
-      internalOptions = Object.assign(internalOptions, this.options);
-    }
-
-    const {
-      sortBy,
-      sortDesc,
-      groupBy,
-      groupDesc
-    } = internalOptions;
-    const sortDiff = sortBy.length - sortDesc.length;
-    const groupDiff = groupBy.length - groupDesc.length;
-
-    if (sortDiff > 0) {
-      internalOptions.sortDesc.push(...(0,_util_helpers__WEBPACK_IMPORTED_MODULE_1__.fillArray)(sortDiff, false));
-    }
-
-    if (groupDiff > 0) {
-      internalOptions.groupDesc.push(...(0,_util_helpers__WEBPACK_IMPORTED_MODULE_1__.fillArray)(groupDiff, false));
-    }
-
-    return {
-      internalOptions
-    };
-  },
-
-  computed: {
-    itemsLength() {
-      return this.serverItemsLength >= 0 ? this.serverItemsLength : this.filteredItems.length;
-    },
-
-    pageCount() {
-      return this.internalOptions.itemsPerPage <= 0 ? 1 : Math.ceil(this.itemsLength / this.internalOptions.itemsPerPage);
-    },
-
-    pageStart() {
-      if (this.internalOptions.itemsPerPage === -1 || !this.items.length) return 0;
-      return (this.internalOptions.page - 1) * this.internalOptions.itemsPerPage;
-    },
-
-    pageStop() {
-      if (this.internalOptions.itemsPerPage === -1) return this.itemsLength;
-      if (!this.items.length) return 0;
-      return Math.min(this.itemsLength, this.internalOptions.page * this.internalOptions.itemsPerPage);
-    },
-
-    isGrouped() {
-      return !!this.internalOptions.groupBy.length;
-    },
-
-    pagination() {
-      return {
-        page: this.internalOptions.page,
-        itemsPerPage: this.internalOptions.itemsPerPage,
-        pageStart: this.pageStart,
-        pageStop: this.pageStop,
-        pageCount: this.pageCount,
-        itemsLength: this.itemsLength
-      };
-    },
-
-    filteredItems() {
-      let items = this.items.slice();
-
-      if (!this.disableFiltering && this.serverItemsLength <= 0) {
-        items = this.customFilter(items, this.search);
-      }
-
-      return items;
-    },
-
-    computedItems() {
-      let items = this.filteredItems.slice();
-
-      if ((!this.disableSort || this.internalOptions.groupBy.length) && this.serverItemsLength <= 0) {
-        items = this.sortItems(items);
-      }
-
-      if (!this.disablePagination && this.serverItemsLength <= 0) {
-        items = this.paginateItems(items);
-      }
-
-      return items;
-    },
-
-    groupedItems() {
-      return this.isGrouped ? this.groupItems(this.computedItems) : null;
-    },
-
-    scopedProps() {
-      return {
-        sort: this.sort,
-        sortArray: this.sortArray,
-        group: this.group,
-        items: this.computedItems,
-        options: this.internalOptions,
-        updateOptions: this.updateOptions,
-        pagination: this.pagination,
-        groupedItems: this.groupedItems,
-        originalItemsLength: this.items.length
-      };
-    },
-
-    computedOptions() {
-      return { ...this.options
-      };
-    }
-
-  },
-  watch: {
-    computedOptions: {
-      handler(options, old) {
-        if ((0,_util_helpers__WEBPACK_IMPORTED_MODULE_1__.deepEqual)(options, old)) return;
-        this.updateOptions(options);
-      },
-
-      deep: true,
-      immediate: true
-    },
-    internalOptions: {
-      handler(options, old) {
-        if ((0,_util_helpers__WEBPACK_IMPORTED_MODULE_1__.deepEqual)(options, old)) return;
-        this.$emit('update:options', options);
-      },
-
-      deep: true,
-      immediate: true
-    },
-
-    page(page) {
-      this.updateOptions({
-        page
-      });
-    },
-
-    'internalOptions.page'(page) {
-      this.$emit('update:page', page);
-    },
-
-    itemsPerPage(itemsPerPage) {
-      this.updateOptions({
-        itemsPerPage
-      });
-    },
-
-    'internalOptions.itemsPerPage'(itemsPerPage) {
-      this.$emit('update:items-per-page', itemsPerPage);
-    },
-
-    sortBy(sortBy) {
-      this.updateOptions({
-        sortBy: (0,_util_helpers__WEBPACK_IMPORTED_MODULE_1__.wrapInArray)(sortBy)
-      });
-    },
-
-    'internalOptions.sortBy'(sortBy, old) {
-      !(0,_util_helpers__WEBPACK_IMPORTED_MODULE_1__.deepEqual)(sortBy, old) && this.$emit('update:sort-by', Array.isArray(this.sortBy) ? sortBy : sortBy[0]);
-    },
-
-    sortDesc(sortDesc) {
-      this.updateOptions({
-        sortDesc: (0,_util_helpers__WEBPACK_IMPORTED_MODULE_1__.wrapInArray)(sortDesc)
-      });
-    },
-
-    'internalOptions.sortDesc'(sortDesc, old) {
-      !(0,_util_helpers__WEBPACK_IMPORTED_MODULE_1__.deepEqual)(sortDesc, old) && this.$emit('update:sort-desc', Array.isArray(this.sortDesc) ? sortDesc : sortDesc[0]);
-    },
-
-    groupBy(groupBy) {
-      this.updateOptions({
-        groupBy: (0,_util_helpers__WEBPACK_IMPORTED_MODULE_1__.wrapInArray)(groupBy)
-      });
-    },
-
-    'internalOptions.groupBy'(groupBy, old) {
-      !(0,_util_helpers__WEBPACK_IMPORTED_MODULE_1__.deepEqual)(groupBy, old) && this.$emit('update:group-by', Array.isArray(this.groupBy) ? groupBy : groupBy[0]);
-    },
-
-    groupDesc(groupDesc) {
-      this.updateOptions({
-        groupDesc: (0,_util_helpers__WEBPACK_IMPORTED_MODULE_1__.wrapInArray)(groupDesc)
-      });
-    },
-
-    'internalOptions.groupDesc'(groupDesc, old) {
-      !(0,_util_helpers__WEBPACK_IMPORTED_MODULE_1__.deepEqual)(groupDesc, old) && this.$emit('update:group-desc', Array.isArray(this.groupDesc) ? groupDesc : groupDesc[0]);
-    },
-
-    multiSort(multiSort) {
-      this.updateOptions({
-        multiSort
-      });
-    },
-
-    'internalOptions.multiSort'(multiSort) {
-      this.$emit('update:multi-sort', multiSort);
-    },
-
-    mustSort(mustSort) {
-      this.updateOptions({
-        mustSort
-      });
-    },
-
-    'internalOptions.mustSort'(mustSort) {
-      this.$emit('update:must-sort', mustSort);
-    },
-
-    pageCount: {
-      handler(pageCount) {
-        this.$emit('page-count', pageCount);
-      },
-
-      immediate: true
-    },
-    computedItems: {
-      handler(computedItems) {
-        this.$emit('current-items', computedItems);
-      },
-
-      immediate: true
-    },
-    pagination: {
-      handler(pagination, old) {
-        if ((0,_util_helpers__WEBPACK_IMPORTED_MODULE_1__.deepEqual)(pagination, old)) return;
-        this.$emit('pagination', this.pagination);
-      },
-
-      immediate: true
-    }
-  },
-  methods: {
-    toggle(key, oldBy, oldDesc, page, mustSort, multiSort) {
-      let by = oldBy.slice();
-      let desc = oldDesc.slice();
-      const byIndex = by.findIndex(k => k === key);
-
-      if (byIndex < 0) {
-        if (!multiSort) {
-          by = [];
-          desc = [];
-        }
-
-        by.push(key);
-        desc.push(false);
-      } else if (byIndex >= 0 && !desc[byIndex]) {
-        desc[byIndex] = true;
-      } else if (!mustSort) {
-        by.splice(byIndex, 1);
-        desc.splice(byIndex, 1);
-      } else {
-        desc[byIndex] = false;
-      } // Reset page to 1 if sortBy or sortDesc have changed
-
-
-      if (!(0,_util_helpers__WEBPACK_IMPORTED_MODULE_1__.deepEqual)(by, oldBy) || !(0,_util_helpers__WEBPACK_IMPORTED_MODULE_1__.deepEqual)(desc, oldDesc)) {
-        page = 1;
-      }
-
-      return {
-        by,
-        desc,
-        page
-      };
-    },
-
-    group(key) {
-      const {
-        by: groupBy,
-        desc: groupDesc,
-        page
-      } = this.toggle(key, this.internalOptions.groupBy, this.internalOptions.groupDesc, this.internalOptions.page, true, false);
-      this.updateOptions({
-        groupBy,
-        groupDesc,
-        page
-      });
-    },
-
-    sort(key) {
-      if (Array.isArray(key)) return this.sortArray(key);
-      const {
-        by: sortBy,
-        desc: sortDesc,
-        page
-      } = this.toggle(key, this.internalOptions.sortBy, this.internalOptions.sortDesc, this.internalOptions.page, this.internalOptions.mustSort, this.internalOptions.multiSort);
-      this.updateOptions({
-        sortBy,
-        sortDesc,
-        page
-      });
-    },
-
-    sortArray(sortBy) {
-      const sortDesc = sortBy.map(s => {
-        const i = this.internalOptions.sortBy.findIndex(k => k === s);
-        return i > -1 ? this.internalOptions.sortDesc[i] : false;
-      });
-      this.updateOptions({
-        sortBy,
-        sortDesc
-      });
-    },
-
-    updateOptions(options) {
-      this.internalOptions = { ...this.internalOptions,
-        ...options,
-        page: this.serverItemsLength < 0 ? Math.max(1, Math.min(options.page || this.internalOptions.page, this.pageCount)) : options.page || this.internalOptions.page
-      };
-    },
-
-    sortItems(items) {
-      let sortBy = [];
-      let sortDesc = [];
-
-      if (!this.disableSort) {
-        sortBy = this.internalOptions.sortBy;
-        sortDesc = this.internalOptions.sortDesc;
-      }
-
-      if (this.internalOptions.groupBy.length) {
-        sortBy = [...this.internalOptions.groupBy, ...sortBy];
-        sortDesc = [...this.internalOptions.groupDesc, ...sortDesc];
-      }
-
-      return this.customSort(items, sortBy, sortDesc, this.locale);
-    },
-
-    groupItems(items) {
-      return this.customGroup(items, this.internalOptions.groupBy, this.internalOptions.groupDesc);
-    },
-
-    paginateItems(items) {
-      // Make sure we don't try to display non-existant page if items suddenly change
-      // TODO: Could possibly move this to pageStart/pageStop?
-      if (this.serverItemsLength === -1 && items.length <= this.pageStart) {
-        this.internalOptions.page = Math.max(1, Math.ceil(items.length / this.internalOptions.itemsPerPage)) || 1; // Prevent NaN
-      }
-
-      return items.slice(this.pageStart, this.pageStop);
-    }
-
-  },
-
-  render() {
-    return this.$scopedSlots.default && this.$scopedSlots.default(this.scopedProps);
-  }
-
-}));
-//# sourceMappingURL=VData.js.map
 
 /***/ }),
 
@@ -3001,260 +2506,448 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/vuetify/lib/components/VPagination/VPagination.js":
-/*!************************************************************************!*\
-  !*** ./node_modules/vuetify/lib/components/VPagination/VPagination.js ***!
-  \************************************************************************/
+/***/ "./node_modules/vuetify/lib/components/VData/VData.js":
+/*!************************************************************!*\
+  !*** ./node_modules/vuetify/lib/components/VData/VData.js ***!
+  \************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _src_components_VPagination_VPagination_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../src/components/VPagination/VPagination.sass */ "./node_modules/vuetify/src/components/VPagination/VPagination.sass");
-/* harmony import */ var _VIcon__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../VIcon */ "./node_modules/vuetify/lib/components/VIcon/index.js");
-/* harmony import */ var _directives_resize__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../directives/resize */ "./node_modules/vuetify/lib/directives/resize/index.js");
-/* harmony import */ var _mixins_colorable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../mixins/colorable */ "./node_modules/vuetify/lib/mixins/colorable/index.js");
-/* harmony import */ var _mixins_intersectable__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../mixins/intersectable */ "./node_modules/vuetify/lib/mixins/intersectable/index.js");
-/* harmony import */ var _mixins_themeable__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../mixins/themeable */ "./node_modules/vuetify/lib/mixins/themeable/index.js");
-/* harmony import */ var _util_mixins__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util/mixins */ "./node_modules/vuetify/lib/util/mixins.js");
-
- // Directives
-
- // Mixins
+/* harmony import */ var _util_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util/helpers */ "./node_modules/vuetify/lib/util/helpers.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+// Helpers
 
 
-
- // Utilities
-
-
-/* @vue/component */
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_util_mixins__WEBPACK_IMPORTED_MODULE_1__.default)(_mixins_colorable__WEBPACK_IMPORTED_MODULE_2__.default, (0,_mixins_intersectable__WEBPACK_IMPORTED_MODULE_3__.default)({
-  onVisible: ['init']
-}), _mixins_themeable__WEBPACK_IMPORTED_MODULE_4__.default).extend({
-  name: 'v-pagination',
-  directives: {
-    Resize: _directives_resize__WEBPACK_IMPORTED_MODULE_5__.default
-  },
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (vue__WEBPACK_IMPORTED_MODULE_0__.default.extend({
+  name: 'v-data',
+  inheritAttrs: false,
   props: {
-    circle: Boolean,
-    disabled: Boolean,
-    length: {
+    items: {
+      type: Array,
+      default: () => []
+    },
+    options: {
+      type: Object,
+      default: () => ({})
+    },
+    sortBy: {
+      type: [String, Array],
+      default: () => []
+    },
+    sortDesc: {
+      type: [Boolean, Array],
+      default: () => []
+    },
+    customSort: {
+      type: Function,
+      default: _util_helpers__WEBPACK_IMPORTED_MODULE_1__.sortItems
+    },
+    mustSort: Boolean,
+    multiSort: Boolean,
+    page: {
       type: Number,
-      default: 0,
-      validator: val => val % 1 === 0
+      default: 1
     },
-    nextIcon: {
-      type: String,
-      default: '$next'
-    },
-    prevIcon: {
-      type: String,
-      default: '$prev'
-    },
-    totalVisible: [Number, String],
-    value: {
+    itemsPerPage: {
       type: Number,
-      default: 0
+      default: 10
     },
-    pageAriaLabel: {
-      type: String,
-      default: '$vuetify.pagination.ariaLabel.page'
+    groupBy: {
+      type: [String, Array],
+      default: () => []
     },
-    currentPageAriaLabel: {
-      type: String,
-      default: '$vuetify.pagination.ariaLabel.currentPage'
+    groupDesc: {
+      type: [Boolean, Array],
+      default: () => []
     },
-    previousAriaLabel: {
-      type: String,
-      default: '$vuetify.pagination.ariaLabel.previous'
+    customGroup: {
+      type: Function,
+      default: _util_helpers__WEBPACK_IMPORTED_MODULE_1__.groupItems
     },
-    nextAriaLabel: {
+    locale: {
       type: String,
-      default: '$vuetify.pagination.ariaLabel.next'
+      default: 'en-US'
     },
-    wrapperAriaLabel: {
-      type: String,
-      default: '$vuetify.pagination.ariaLabel.wrapper'
+    disableSort: Boolean,
+    disablePagination: Boolean,
+    disableFiltering: Boolean,
+    search: String,
+    customFilter: {
+      type: Function,
+      default: _util_helpers__WEBPACK_IMPORTED_MODULE_1__.searchItems
+    },
+    serverItemsLength: {
+      type: Number,
+      default: -1
     }
   },
 
   data() {
+    let internalOptions = {
+      page: this.page,
+      itemsPerPage: this.itemsPerPage,
+      sortBy: (0,_util_helpers__WEBPACK_IMPORTED_MODULE_1__.wrapInArray)(this.sortBy),
+      sortDesc: (0,_util_helpers__WEBPACK_IMPORTED_MODULE_1__.wrapInArray)(this.sortDesc),
+      groupBy: (0,_util_helpers__WEBPACK_IMPORTED_MODULE_1__.wrapInArray)(this.groupBy),
+      groupDesc: (0,_util_helpers__WEBPACK_IMPORTED_MODULE_1__.wrapInArray)(this.groupDesc),
+      mustSort: this.mustSort,
+      multiSort: this.multiSort
+    };
+
+    if (this.options) {
+      internalOptions = Object.assign(internalOptions, this.options);
+    }
+
+    const {
+      sortBy,
+      sortDesc,
+      groupBy,
+      groupDesc
+    } = internalOptions;
+    const sortDiff = sortBy.length - sortDesc.length;
+    const groupDiff = groupBy.length - groupDesc.length;
+
+    if (sortDiff > 0) {
+      internalOptions.sortDesc.push(...(0,_util_helpers__WEBPACK_IMPORTED_MODULE_1__.fillArray)(sortDiff, false));
+    }
+
+    if (groupDiff > 0) {
+      internalOptions.groupDesc.push(...(0,_util_helpers__WEBPACK_IMPORTED_MODULE_1__.fillArray)(groupDiff, false));
+    }
+
     return {
-      maxButtons: 0,
-      selected: null
+      internalOptions
     };
   },
 
   computed: {
-    classes() {
+    itemsLength() {
+      return this.serverItemsLength >= 0 ? this.serverItemsLength : this.filteredItems.length;
+    },
+
+    pageCount() {
+      return this.internalOptions.itemsPerPage <= 0 ? 1 : Math.ceil(this.itemsLength / this.internalOptions.itemsPerPage);
+    },
+
+    pageStart() {
+      if (this.internalOptions.itemsPerPage === -1 || !this.items.length) return 0;
+      return (this.internalOptions.page - 1) * this.internalOptions.itemsPerPage;
+    },
+
+    pageStop() {
+      if (this.internalOptions.itemsPerPage === -1) return this.itemsLength;
+      if (!this.items.length) return 0;
+      return Math.min(this.itemsLength, this.internalOptions.page * this.internalOptions.itemsPerPage);
+    },
+
+    isGrouped() {
+      return !!this.internalOptions.groupBy.length;
+    },
+
+    pagination() {
       return {
-        'v-pagination': true,
-        'v-pagination--circle': this.circle,
-        'v-pagination--disabled': this.disabled,
-        ...this.themeClasses
+        page: this.internalOptions.page,
+        itemsPerPage: this.internalOptions.itemsPerPage,
+        pageStart: this.pageStart,
+        pageStop: this.pageStop,
+        pageCount: this.pageCount,
+        itemsLength: this.itemsLength
       };
     },
 
-    items() {
-      const totalVisible = parseInt(this.totalVisible, 10);
+    filteredItems() {
+      let items = this.items.slice();
 
-      if (totalVisible === 0) {
-        return [];
+      if (!this.disableFiltering && this.serverItemsLength <= 0) {
+        items = this.customFilter(items, this.search);
       }
 
-      const maxLength = Math.min(Math.max(0, totalVisible) || this.length, Math.max(0, this.maxButtons) || this.length, this.length);
+      return items;
+    },
 
-      if (this.length <= maxLength) {
-        return this.range(1, this.length);
+    computedItems() {
+      let items = this.filteredItems.slice();
+
+      if ((!this.disableSort || this.internalOptions.groupBy.length) && this.serverItemsLength <= 0) {
+        items = this.sortItems(items);
       }
 
-      const even = maxLength % 2 === 0 ? 1 : 0;
-      const left = Math.floor(maxLength / 2);
-      const right = this.length - left + 1 + even;
-
-      if (this.value > left && this.value < right) {
-        const firstItem = 1;
-        const lastItem = this.length;
-        const start = this.value - left + 2;
-        const end = this.value + left - 2 - even;
-        const secondItem = start - 1 === firstItem + 1 ? 2 : '...';
-        const beforeLastItem = end + 1 === lastItem - 1 ? end + 1 : '...';
-        return [1, secondItem, ...this.range(start, end), beforeLastItem, this.length];
-      } else if (this.value === left) {
-        const end = this.value + left - 1 - even;
-        return [...this.range(1, end), '...', this.length];
-      } else if (this.value === right) {
-        const start = this.value - left + 1;
-        return [1, '...', ...this.range(start, this.length)];
-      } else {
-        return [...this.range(1, left), '...', ...this.range(right, this.length)];
+      if (!this.disablePagination && this.serverItemsLength <= 0) {
+        items = this.paginateItems(items);
       }
+
+      return items;
+    },
+
+    groupedItems() {
+      return this.isGrouped ? this.groupItems(this.computedItems) : null;
+    },
+
+    scopedProps() {
+      return {
+        sort: this.sort,
+        sortArray: this.sortArray,
+        group: this.group,
+        items: this.computedItems,
+        options: this.internalOptions,
+        updateOptions: this.updateOptions,
+        pagination: this.pagination,
+        groupedItems: this.groupedItems,
+        originalItemsLength: this.items.length
+      };
+    },
+
+    computedOptions() {
+      return { ...this.options
+      };
     }
 
   },
   watch: {
-    value() {
-      this.init();
-    }
+    computedOptions: {
+      handler(options, old) {
+        if ((0,_util_helpers__WEBPACK_IMPORTED_MODULE_1__.deepEqual)(options, old)) return;
+        this.updateOptions(options);
+      },
 
-  },
+      deep: true,
+      immediate: true
+    },
+    internalOptions: {
+      handler(options, old) {
+        if ((0,_util_helpers__WEBPACK_IMPORTED_MODULE_1__.deepEqual)(options, old)) return;
+        this.$emit('update:options', options);
+      },
 
-  mounted() {
-    this.init();
-  },
-
-  methods: {
-    init() {
-      this.selected = null;
-      this.$nextTick(this.onResize); // TODO: Change this (f75dee3a, cbdf7caa)
-
-      setTimeout(() => this.selected = this.value, 100);
+      deep: true,
+      immediate: true
     },
 
-    onResize() {
-      const width = this.$el && this.$el.parentElement ? this.$el.parentElement.clientWidth : window.innerWidth;
-      this.maxButtons = Math.floor((width - 96) / 42);
-    },
-
-    next(e) {
-      e.preventDefault();
-      this.$emit('input', this.value + 1);
-      this.$emit('next');
-    },
-
-    previous(e) {
-      e.preventDefault();
-      this.$emit('input', this.value - 1);
-      this.$emit('previous');
-    },
-
-    range(from, to) {
-      const range = [];
-      from = from > 0 ? from : 1;
-
-      for (let i = from; i <= to; i++) {
-        range.push(i);
-      }
-
-      return range;
-    },
-
-    genIcon(h, icon, disabled, fn, label) {
-      return h('li', [h('button', {
-        staticClass: 'v-pagination__navigation',
-        class: {
-          'v-pagination__navigation--disabled': disabled
-        },
-        attrs: {
-          disabled,
-          type: 'button',
-          'aria-label': label
-        },
-        on: disabled ? {} : {
-          click: fn
-        }
-      }, [h(_VIcon__WEBPACK_IMPORTED_MODULE_6__.default, [icon])])]);
-    },
-
-    genItem(h, i) {
-      const color = i === this.value && (this.color || 'primary');
-      const isCurrentPage = i === this.value;
-      const ariaLabel = isCurrentPage ? this.currentPageAriaLabel : this.pageAriaLabel;
-      return h('button', this.setBackgroundColor(color, {
-        staticClass: 'v-pagination__item',
-        class: {
-          'v-pagination__item--active': i === this.value
-        },
-        attrs: {
-          type: 'button',
-          'aria-current': isCurrentPage,
-          'aria-label': this.$vuetify.lang.t(ariaLabel, i)
-        },
-        on: {
-          click: () => this.$emit('input', i)
-        }
-      }), [i.toString()]);
-    },
-
-    genItems(h) {
-      return this.items.map((i, index) => {
-        return h('li', {
-          key: index
-        }, [isNaN(Number(i)) ? h('span', {
-          class: 'v-pagination__more'
-        }, [i.toString()]) : this.genItem(h, i)]);
+    page(page) {
+      this.updateOptions({
+        page
       });
     },
 
-    genList(h, children) {
-      return h('ul', {
-        directives: [{
-          modifiers: {
-            quiet: true
-          },
-          name: 'resize',
-          value: this.onResize
-        }],
-        class: this.classes
-      }, children);
+    'internalOptions.page'(page) {
+      this.$emit('update:page', page);
+    },
+
+    itemsPerPage(itemsPerPage) {
+      this.updateOptions({
+        itemsPerPage
+      });
+    },
+
+    'internalOptions.itemsPerPage'(itemsPerPage) {
+      this.$emit('update:items-per-page', itemsPerPage);
+    },
+
+    sortBy(sortBy) {
+      this.updateOptions({
+        sortBy: (0,_util_helpers__WEBPACK_IMPORTED_MODULE_1__.wrapInArray)(sortBy)
+      });
+    },
+
+    'internalOptions.sortBy'(sortBy, old) {
+      !(0,_util_helpers__WEBPACK_IMPORTED_MODULE_1__.deepEqual)(sortBy, old) && this.$emit('update:sort-by', Array.isArray(this.sortBy) ? sortBy : sortBy[0]);
+    },
+
+    sortDesc(sortDesc) {
+      this.updateOptions({
+        sortDesc: (0,_util_helpers__WEBPACK_IMPORTED_MODULE_1__.wrapInArray)(sortDesc)
+      });
+    },
+
+    'internalOptions.sortDesc'(sortDesc, old) {
+      !(0,_util_helpers__WEBPACK_IMPORTED_MODULE_1__.deepEqual)(sortDesc, old) && this.$emit('update:sort-desc', Array.isArray(this.sortDesc) ? sortDesc : sortDesc[0]);
+    },
+
+    groupBy(groupBy) {
+      this.updateOptions({
+        groupBy: (0,_util_helpers__WEBPACK_IMPORTED_MODULE_1__.wrapInArray)(groupBy)
+      });
+    },
+
+    'internalOptions.groupBy'(groupBy, old) {
+      !(0,_util_helpers__WEBPACK_IMPORTED_MODULE_1__.deepEqual)(groupBy, old) && this.$emit('update:group-by', Array.isArray(this.groupBy) ? groupBy : groupBy[0]);
+    },
+
+    groupDesc(groupDesc) {
+      this.updateOptions({
+        groupDesc: (0,_util_helpers__WEBPACK_IMPORTED_MODULE_1__.wrapInArray)(groupDesc)
+      });
+    },
+
+    'internalOptions.groupDesc'(groupDesc, old) {
+      !(0,_util_helpers__WEBPACK_IMPORTED_MODULE_1__.deepEqual)(groupDesc, old) && this.$emit('update:group-desc', Array.isArray(this.groupDesc) ? groupDesc : groupDesc[0]);
+    },
+
+    multiSort(multiSort) {
+      this.updateOptions({
+        multiSort
+      });
+    },
+
+    'internalOptions.multiSort'(multiSort) {
+      this.$emit('update:multi-sort', multiSort);
+    },
+
+    mustSort(mustSort) {
+      this.updateOptions({
+        mustSort
+      });
+    },
+
+    'internalOptions.mustSort'(mustSort) {
+      this.$emit('update:must-sort', mustSort);
+    },
+
+    pageCount: {
+      handler(pageCount) {
+        this.$emit('page-count', pageCount);
+      },
+
+      immediate: true
+    },
+    computedItems: {
+      handler(computedItems) {
+        this.$emit('current-items', computedItems);
+      },
+
+      immediate: true
+    },
+    pagination: {
+      handler(pagination, old) {
+        if ((0,_util_helpers__WEBPACK_IMPORTED_MODULE_1__.deepEqual)(pagination, old)) return;
+        this.$emit('pagination', this.pagination);
+      },
+
+      immediate: true
+    }
+  },
+  methods: {
+    toggle(key, oldBy, oldDesc, page, mustSort, multiSort) {
+      let by = oldBy.slice();
+      let desc = oldDesc.slice();
+      const byIndex = by.findIndex(k => k === key);
+
+      if (byIndex < 0) {
+        if (!multiSort) {
+          by = [];
+          desc = [];
+        }
+
+        by.push(key);
+        desc.push(false);
+      } else if (byIndex >= 0 && !desc[byIndex]) {
+        desc[byIndex] = true;
+      } else if (!mustSort) {
+        by.splice(byIndex, 1);
+        desc.splice(byIndex, 1);
+      } else {
+        desc[byIndex] = false;
+      } // Reset page to 1 if sortBy or sortDesc have changed
+
+
+      if (!(0,_util_helpers__WEBPACK_IMPORTED_MODULE_1__.deepEqual)(by, oldBy) || !(0,_util_helpers__WEBPACK_IMPORTED_MODULE_1__.deepEqual)(desc, oldDesc)) {
+        page = 1;
+      }
+
+      return {
+        by,
+        desc,
+        page
+      };
+    },
+
+    group(key) {
+      const {
+        by: groupBy,
+        desc: groupDesc,
+        page
+      } = this.toggle(key, this.internalOptions.groupBy, this.internalOptions.groupDesc, this.internalOptions.page, true, false);
+      this.updateOptions({
+        groupBy,
+        groupDesc,
+        page
+      });
+    },
+
+    sort(key) {
+      if (Array.isArray(key)) return this.sortArray(key);
+      const {
+        by: sortBy,
+        desc: sortDesc,
+        page
+      } = this.toggle(key, this.internalOptions.sortBy, this.internalOptions.sortDesc, this.internalOptions.page, this.internalOptions.mustSort, this.internalOptions.multiSort);
+      this.updateOptions({
+        sortBy,
+        sortDesc,
+        page
+      });
+    },
+
+    sortArray(sortBy) {
+      const sortDesc = sortBy.map(s => {
+        const i = this.internalOptions.sortBy.findIndex(k => k === s);
+        return i > -1 ? this.internalOptions.sortDesc[i] : false;
+      });
+      this.updateOptions({
+        sortBy,
+        sortDesc
+      });
+    },
+
+    updateOptions(options) {
+      this.internalOptions = { ...this.internalOptions,
+        ...options,
+        page: this.serverItemsLength < 0 ? Math.max(1, Math.min(options.page || this.internalOptions.page, this.pageCount)) : options.page || this.internalOptions.page
+      };
+    },
+
+    sortItems(items) {
+      let sortBy = [];
+      let sortDesc = [];
+
+      if (!this.disableSort) {
+        sortBy = this.internalOptions.sortBy;
+        sortDesc = this.internalOptions.sortDesc;
+      }
+
+      if (this.internalOptions.groupBy.length) {
+        sortBy = [...this.internalOptions.groupBy, ...sortBy];
+        sortDesc = [...this.internalOptions.groupDesc, ...sortDesc];
+      }
+
+      return this.customSort(items, sortBy, sortDesc, this.locale);
+    },
+
+    groupItems(items) {
+      return this.customGroup(items, this.internalOptions.groupBy, this.internalOptions.groupDesc);
+    },
+
+    paginateItems(items) {
+      // Make sure we don't try to display non-existant page if items suddenly change
+      // TODO: Could possibly move this to pageStart/pageStop?
+      if (this.serverItemsLength === -1 && items.length <= this.pageStart) {
+        this.internalOptions.page = Math.max(1, Math.ceil(items.length / this.internalOptions.itemsPerPage)) || 1; // Prevent NaN
+      }
+
+      return items.slice(this.pageStart, this.pageStop);
     }
 
   },
 
-  render(h) {
-    const children = [this.genIcon(h, this.$vuetify.rtl ? this.nextIcon : this.prevIcon, this.value <= 1, this.previous, this.$vuetify.lang.t(this.previousAriaLabel)), this.genItems(h), this.genIcon(h, this.$vuetify.rtl ? this.prevIcon : this.nextIcon, this.value >= this.length, this.next, this.$vuetify.lang.t(this.nextAriaLabel))];
-    return h('nav', {
-      attrs: {
-        role: 'navigation',
-        'aria-label': this.$vuetify.lang.t(this.wrapperAriaLabel)
-      }
-    }, [this.genList(h, children)]);
+  render() {
+    return this.$scopedSlots.default && this.$scopedSlots.default(this.scopedProps);
   }
 
 }));
-//# sourceMappingURL=VPagination.js.map
+//# sourceMappingURL=VData.js.map
 
 /***/ }),
 

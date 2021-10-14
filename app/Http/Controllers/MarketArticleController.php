@@ -13,8 +13,8 @@ class MarketArticleController extends Controller
         $request->validate([
             "market_id" => "required|numeric",
             "market_category_id" => "required|numeric",
-            "name" => "required|min:3|max:255|unique:market_articles",
-            "display_name" => "required|min:3|max:255|unique:market_articles",
+            "name" => "required|min:3|max:255|unique:market_articles,name,NULL,id,market_id," . $request->market_id,
+            "display_name" => "required|min:3|max:255|unique:market_articles,display_name,NULL,id,market_id," . $request->market_id,
             "unit" => "required|max:50",
             "quantity" => "required|numeric",
             "unit_price" => "required|numeric",

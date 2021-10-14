@@ -51,7 +51,7 @@ class ArticleController extends Controller
             'name' => 'required|max:50|unique:articles',
             'category_id' => 'required|numeric',
             'unit_id' => 'required|numeric',
-            'notification_quantity' => 'numeric',
+            'notification_quantity' => 'required|numeric',
         ]);
         $article->name = $request->name;
         $article->category_id = $request->category_id;
@@ -63,5 +63,39 @@ class ArticleController extends Controller
         } else {
             return response()->json(['message' => 'L\'article n\'a pas été créé'], 500);
         }
+    }
+
+    public function update(Request $request)
+    {
+        $article = article::findOrFail($request->id);
+
+        // validation
+        $request->validate([
+            'name' => 'required|max:50|unique:articles,name,' . $request->id,
+            'category' => 'required|numeric',
+            'unit' => 'required|numeric',
+            'notificationQuantity' => 'required|numeric',
+        ]);
+
+        $article->name = $request->name;
+        $article->category_id = $request->category;
+        $article->unit_id = $request->unit;
+        $article->notification_quantity = $request->notificationQuantity;
+        $article->update();
+
+        return response()->json(['message' => 'L\'article a été mise à jour avec succès'], 200);
+    }
+
+    public function delete(Request $request)
+    {
+        $article = article::where('id', '=', $request->id)->withCount(['achats', 'branchements'])->first();
+        if ($article) {
+            if ($article->branchements_count > 0 || $article->achats_count > 0) {
+                return response()->json(['message' => 'Vous pouvez pas supprimer ce article'], 500);
+            }
+            $article->delete();
+            return response()->json(['message' => 'Article éte supprimé'], 200);
+        }
+        return response()->json(['message' => 'Article introuvable'], 400);
     }
 }

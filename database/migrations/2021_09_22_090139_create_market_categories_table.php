@@ -16,7 +16,7 @@ class CreateMarketCategoriesTable extends Migration
         Schema::create('market_categories', function (Blueprint $table) {
             $table->id();
             $table->foreignId('market_id');
-            $table->string('name')->unique();
+            $table->string('name');
             $table->timestamps();
         });
     }

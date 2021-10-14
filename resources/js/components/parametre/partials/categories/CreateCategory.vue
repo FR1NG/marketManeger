@@ -1,6 +1,6 @@
 <template>
   <v-dialog :value="true" persistent max-width="400px">
-    <v-card>
+    <v-card :loading="loading" :disabled="loading">
       <v-form @submit.prevent="handleSubmit">
         <v-card-title>
           <span class="text-h5">Nouvelle Catégorie</span>
@@ -47,25 +47,27 @@ export default {
       this.$store.commit("article/hideCreateCategoryDialog");
     },
     handleSubmit() {
-      this.loading = true;
-      this.$store
-        .dispatch("article/storeCategory", { name: this.name })
-        .then(() => {
-          // stop loading
-          this.loading = false;
-          // hide dialog
-          this.closeDialog();
-        })
-        .catch((error) => {
-          // push errors
-          if (error) {
-            error.data.errors.name
-              ? (this.errors.name = error.data.errors.name)
-              : (this.errors.name = []);
-          }
-          // stop loading
-          this.loading = false;
-        });
+      if (!this.loading) {
+        this.loading = true;
+        this.$store
+          .dispatch("article/storeCategory", { name: this.name })
+          .then(() => {
+            // stop loading
+            this.loading = false;
+            // hide dialog
+            this.closeDialog();
+          })
+          .catch((error) => {
+            // push errors
+            if (error) {
+              error.data.errors.name
+                ? (this.errors.name = error.data.errors.name)
+                : (this.errors.name = []);
+            }
+            // stop loading
+            this.loading = false;
+          });
+      }
     },
   },
 };

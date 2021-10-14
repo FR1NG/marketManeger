@@ -3,6 +3,7 @@
     <!-- delete dialog:BEGIN -->
     <delete></delete>
     <!-- delete dialog:END -->
+
     <v-data-table
       :headers="headers"
       :search="search"
@@ -16,7 +17,15 @@
           <v-toolbar-title>List Des Branchements</v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
-
+          <v-btn
+            icon
+            color="info"
+            class="mb-2"
+            @click="showFilter"
+            v-if="!filterDialog"
+          >
+            <v-icon>mdi-filter-outline</v-icon>
+          </v-btn>
           <v-btn
             link
             color="primary"
@@ -28,11 +37,19 @@
           </v-btn>
         </v-toolbar>
 
+        <!-- Filter:BEGIN -->
+        <v-expand-transition>
+          <filter-branchements
+            :getLoading="loading"
+            v-if="filterDialog"
+          ></filter-branchements>
+        </v-expand-transition>
+        <!-- Filter:END -->
         <v-card-title>
           <v-text-field
             v-model="search"
             append-icon="mdi-magnify"
-            label="Search"
+            label="Chercher"
             single-line
             hide-details
             :loading="searchLoading"
@@ -65,9 +82,11 @@
 
 <script>
 import Delete from "./delete.vue";
+import FilterBranchements from "./partials/FilterBranchements.vue";
 export default {
   components: {
     Delete,
+    FilterBranchements,
   },
   data() {
     return {
@@ -88,7 +107,6 @@ export default {
         { text: "Actions", value: "actions", sortable: false },
       ],
       searchLoading: false,
-      loading: false,
     };
   },
   watch: {
@@ -98,8 +116,17 @@ export default {
     search() {
       this.handleSearch();
     },
+    filter: {
+      handler() {
+        this.getData();
+      },
+      deep: true,
+    },
   },
   computed: {
+    loading() {
+      return this.$store.getters["branchement/loading"];
+    },
     items() {
       return this.$store.getters["branchement/branchements"];
     },
@@ -122,18 +149,16 @@ export default {
         this.$store.commit("branchement/setSearch", { search: value });
       },
     },
+    filterDialog() {
+      return this.$store.getters["branchement/filterDialog"];
+    },
+    filter() {
+      return this.$store.getters["branchement/filter"];
+    },
   },
   methods: {
     getData() {
-      this.loading = true;
-      this.$store
-        .dispatch("branchement/getData")
-        .then(() => {
-          this.loading = false;
-        })
-        .catch(() => {
-          this.loading = false;
-        });
+      this.$store.dispatch("branchement/getData");
     },
     handleSearch() {
       this.searchLoading = true;
@@ -161,6 +186,9 @@ export default {
           id: item.id,
         },
       });
+    },
+    showFilter() {
+      this.$store.commit("branchement/showFilter");
     },
   },
   created() {

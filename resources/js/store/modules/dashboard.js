@@ -16,7 +16,12 @@ export const state = initialState;
 
 export const getters = {
     statistics: state => state.statistics,
-    articles: state => state.articles,
+    articles: state => {
+        return [
+            { id: null, display_name: 'tout' },
+            ...state.articles
+        ]
+    },
     branchementType: state => state.branchementType,
     // accomplishment: state => state.accomplishment,
     accomplishement: state => state.statistics.accomplishement,
@@ -67,7 +72,6 @@ export const mutations = {
 
 export const actions = {
     getData(context, state) {
-        console.log(context.state.branchementType);
         return new Promise((resolve, reject) => {
             axios.get('/dashboard/index', {
                 params: {

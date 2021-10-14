@@ -1,5 +1,5 @@
 <template>
-  <v-card class="ma-4 pa-4">
+  <v-card class="ma-4 pa-4" :disabled="loading" :loading="loading">
     <v-toolbar flat>
       <v-toolbar-title>Ajouter Employé</v-toolbar-title>
       <v-divider class="mx-4" inset vertical></v-divider>
@@ -68,7 +68,7 @@
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn outlined class="mr-4">Annuler</v-btn>
+        <v-btn outlined class="mr-4" @click="resetForm">Annuler</v-btn>
         <v-btn color="success" class="mr-4" type="submit" :loading="loading"
           >Ajouter
         </v-btn>
@@ -107,74 +107,83 @@ export default {
   },
   methods: {
     handleSubmit() {
-      this.loading = true;
-      this.$store
-        .dispatch("employe/store", { form: this.form })
-        .then((response) => {
-          this.loading = false;
-          console.log(this.errors);
-          this.form = {
-            name: "",
-            cin: "",
-            cnss: "",
-            phone: null,
-            email: "",
-            salery: null,
-            quality: "",
-            note: "",
-          };
-          this.errors = {
-            name: [],
-            cin: [],
-            cnss: [],
-            phone: [],
-            email: [],
-            address: [],
-            salery: [],
-            quality: [],
-            note: [],
-          };
-        })
-        .catch((error) => {
-          this.loading = false;
-          if (error.data) {
-            error.data.errors.name
-              ? (this.errors.name = error.data.errors.name)
-              : (this.errors.name = []);
+      if (!this.loading) {
+        this.loading = true;
+        this.$store
+          .dispatch("employe/store", { form: this.form })
+          .then((response) => {
+            this.loading = false;
+            console.log(this.errors);
+            this.resetForm();
+            this.resetErrors();
+          })
+          .catch((error) => {
+            this.loading = false;
+            if (error.data) {
+              error.data.errors.name
+                ? (this.errors.name = error.data.errors.name)
+                : (this.errors.name = []);
 
-            error.data.errors.cin
-              ? (this.errors.cin = error.data.errors.cin)
-              : (this.errors.cin = []);
+              error.data.errors.cin
+                ? (this.errors.cin = error.data.errors.cin)
+                : (this.errors.cin = []);
 
-            error.data.errors.cnss
-              ? (this.errors.cnss = error.data.errors.cnss)
-              : (this.errors.cnss = []);
+              error.data.errors.cnss
+                ? (this.errors.cnss = error.data.errors.cnss)
+                : (this.errors.cnss = []);
 
-            error.data.errors.phone
-              ? (this.errors.phone = error.data.errors.phone)
-              : (this.errors.phone = []);
+              error.data.errors.phone
+                ? (this.errors.phone = error.data.errors.phone)
+                : (this.errors.phone = []);
 
-            error.data.errors.email
-              ? (this.errors.email = error.data.errors.email)
-              : (this.errors.email = []);
+              error.data.errors.email
+                ? (this.errors.email = error.data.errors.email)
+                : (this.errors.email = []);
 
-            error.data.errors.address
-              ? (this.errors.address = error.data.errors.address)
-              : (this.errors.address = []);
+              error.data.errors.address
+                ? (this.errors.address = error.data.errors.address)
+                : (this.errors.address = []);
 
-            error.data.errors.salery
-              ? (this.errors.salery = error.data.errors.salery)
-              : (this.errors.salery = []);
+              error.data.errors.salery
+                ? (this.errors.salery = error.data.errors.salery)
+                : (this.errors.salery = []);
 
-            error.data.errors.quality
-              ? (this.errors.quality = error.data.errors.quality)
-              : (this.errors.quality = []);
+              error.data.errors.quality
+                ? (this.errors.quality = error.data.errors.quality)
+                : (this.errors.quality = []);
 
-            error.data.errors.note
-              ? (this.errors.note = error.data.errors.note)
-              : (this.errors.note = []);
-          }
-        });
+              error.data.errors.note
+                ? (this.errors.note = error.data.errors.note)
+                : (this.errors.note = []);
+            }
+          });
+      }
+    },
+    resetErrors() {
+      this.errors = {
+        name: [],
+        cin: [],
+        cnss: [],
+        phone: [],
+        email: [],
+        address: [],
+        salery: [],
+        quality: [],
+        note: [],
+      };
+    },
+    resetForm() {
+      this.resetErrors();
+      this.form = {
+        name: "",
+        cin: "",
+        cnss: "",
+        phone: null,
+        email: "",
+        salery: null,
+        quality: "",
+        note: "",
+      };
     },
   },
 };

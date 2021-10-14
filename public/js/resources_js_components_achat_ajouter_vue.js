@@ -295,39 +295,49 @@ __webpack_require__.r(__webpack_exports__);
     handleSubmit: function handleSubmit() {
       var _this2 = this;
 
-      this.loading = true;
-      this.$store.dispatch("achat/store", {
-        form: this.form,
-        amount: this.total,
-        items: this.cartItems
-      }).then(function () {
-        _this2.loading = false;
-        _this2.form = {
-          ndbc: "",
-          fournisseur: "",
-          paymentMode: "",
-          checkNumber: "",
-          deadline: null
-        };
-        _this2.errors = {
-          ndbc: [],
-          fournisseur: [],
-          paymentMode: [],
-          checkNumber: [],
-          deadline: []
-        };
-        _this2.cartItems = [];
-      })["catch"](function (error) {
-        console.log(error);
-        _this2.loading = false;
+      if (!this.loading) {
+        this.resetErrors();
+        this.loading = true;
+        this.$store.dispatch("achat/store", {
+          form: this.form,
+          amount: this.total,
+          items: this.cartItems
+        }).then(function () {
+          _this2.loading = false;
 
-        if (error.data) {
-          error.data.errors.ndbc ? _this2.errors.ndbc = error.data.errors.ndbc : _this2.errors.ndbc = [];
-          error.data.errors.fournisseur ? _this2.errors.fournisseur = error.data.errors.fournisseur : _this2.errors.fournisseur = [];
-          error.data.errors.payment_mode ? _this2.errors.paymentMode = error.data.errors.payment_mode : _this2.errors.paymentMode = [];
-          error.data.errors.deadline ? _this2.errors.deadline = error.data.errors.deadline : _this2.errors.deadline = [];
-        }
-      });
+          _this2.resetForm();
+        })["catch"](function (error) {
+          console.log(error);
+          _this2.loading = false;
+
+          if (error.data) {
+            error.data.errors.ndbc ? _this2.errors.ndbc = error.data.errors.ndbc : _this2.errors.ndbc = [];
+            error.data.errors.fournisseur ? _this2.errors.fournisseur = error.data.errors.fournisseur : _this2.errors.fournisseur = [];
+            error.data.errors.payment_mode ? _this2.errors.paymentMode = error.data.errors.payment_mode : _this2.errors.paymentMode = [];
+            error.data.errors.deadline ? _this2.errors.deadline = error.data.errors.deadline : _this2.errors.deadline = [];
+          }
+        });
+      }
+    },
+    resetErrors: function resetErrors() {
+      this.errors = {
+        ndbc: [],
+        fournisseur: [],
+        paymentMode: [],
+        checkNumber: [],
+        deadline: []
+      };
+    },
+    resetForm: function resetForm() {
+      this.cartItems = [];
+      this.resetErrors();
+      this.form = {
+        ndbc: "",
+        fournisseur: "",
+        paymentMode: "",
+        checkNumber: "",
+        deadline: null
+      };
     },
     getData: function getData() {
       var _this3 = this;
@@ -708,7 +718,10 @@ var render = function() {
     [
       _c(
         "v-card",
-        { staticClass: "pa-4" },
+        {
+          staticClass: "pa-4",
+          attrs: { disabled: _vm.loading, loading: _vm.loading }
+        },
         [
           _c(
             "v-toolbar",
@@ -1158,7 +1171,11 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-btn",
-                    { staticClass: "mr-4", attrs: { outlined: "" } },
+                    {
+                      staticClass: "mr-4",
+                      attrs: { outlined: "" },
+                      on: { click: _vm.resetForm }
+                    },
                     [_vm._v("Annuler")]
                   ),
                   _vm._v(" "),
@@ -1172,7 +1189,7 @@ var render = function() {
                         loading: _vm.loading
                       }
                     },
-                    [_vm._v("Ajouter\n        ")]
+                    [_vm._v("Enregistrer\n        ")]
                   )
                 ],
                 1

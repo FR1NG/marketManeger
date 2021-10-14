@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <galery v-if="galeryDialog"></galery>
-    <v-card :loading="detailsCardLoading">
+    <v-card :loading="detailsCardLoading" :disabled="detailsCardLoading">
       <v-toolbar flat color="primary  lighten-4">
         <v-toolbar-title> Details de branchement </v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
@@ -109,8 +109,8 @@
               <template v-slot:default>
                 <thead>
                   <tr>
-                    <th class="text-left">Nom</th>
-                    <th class="text-left">Qualité</th>
+                    <th class="text-left">Nature</th>
+                    <th class="text-left">Montant</th>
                   </tr>
                 </thead>
                 <tbody>

@@ -15,7 +15,7 @@
         color="primary"
         dark
         class="mb-2"
-        :to="{ name: 'fournisseur' }"
+        :to="{ name: 'fournisseurs' }"
       >
         List
       </v-btn>
@@ -64,7 +64,6 @@
 </template>
 
 <script>
-import { useRoute } from "vue-router";
 export default {
   data() {
     return {
@@ -88,45 +87,48 @@ export default {
   },
   methods: {
     handleSubmit() {
-      this.loading = true;
-      this.$store
-        .dispatch("fournisseur/update", { form: this.form })
-        .then((response) => {
-          this.loading = false;
-          this.errors = {
-            name: [],
-            phone: [],
-            email: [],
-            address: [],
-            note: [],
-          };
-        })
-        .catch((error) => {
-          this.loading = false;
-          if (error.data) {
-            error.data.errors.name
-              ? (this.errors.name = error.data.errors.name)
-              : (this.errors.name = []);
-            error.data.errors.phone
-              ? (this.errors.phone = error.data.errors.phone)
-              : (this.errors.phone = []);
-            error.data.errors.email
-              ? (this.errors.email = error.data.errors.email)
-              : (this.errors.email = []);
-            error.data.errors.address
-              ? (this.errors.address = error.data.errors.address)
-              : (this.errors.address = []);
-            error.data.errors.note
-              ? (this.errors.note = error.data.errors.note)
-              : (this.errors.note = []);
-          }
-        });
+      if (!this.loading) {
+        this.loading = true;
+        this.$store
+          .dispatch("fournisseur/update", { form: this.form })
+          .then((response) => {
+            this.loading = false;
+            this.errors = {
+              name: [],
+              phone: [],
+              email: [],
+              address: [],
+              note: [],
+            };
+          })
+          .catch((error) => {
+            this.loading = false;
+            if (error.data) {
+              error.data.errors.name
+                ? (this.errors.name = error.data.errors.name)
+                : (this.errors.name = []);
+              error.data.errors.phone
+                ? (this.errors.phone = error.data.errors.phone)
+                : (this.errors.phone = []);
+              error.data.errors.email
+                ? (this.errors.email = error.data.errors.email)
+                : (this.errors.email = []);
+              error.data.errors.address
+                ? (this.errors.address = error.data.errors.address)
+                : (this.errors.address = []);
+              error.data.errors.note
+                ? (this.errors.note = error.data.errors.note)
+                : (this.errors.note = []);
+            }
+          });
+      }
     },
     getProvider() {
       this.overlay = true;
       this.$store
         .dispatch("fournisseur/getProvider", { id: this.$route.params.id })
         .then((response) => {
+          console.log(response);
           const provider = response.data;
           this.form.id = provider.id;
           this.form.name = provider.name;
@@ -136,13 +138,12 @@ export default {
           this.form.note = provider.note;
           this.overlay = false;
         })
-        .catch(()=>{
-            this.overlay = false;
-        })
+        .catch(() => {
+          this.overlay = false;
+        });
     },
   },
   created() {
-    console.log(this.$route.params);
     this.getProvider();
   },
 };

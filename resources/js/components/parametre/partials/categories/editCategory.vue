@@ -1,6 +1,6 @@
 <template>
   <v-dialog :value="true" persistent max-width="400px">
-    <v-card>
+    <v-card :loading="loading" :disabled="loading">
       <v-form @submit.prevent="handleSubmit">
         <v-card-title>
           <span class="text-h5">Modifier Catégorie</span>

@@ -13,6 +13,7 @@ use App\Models\marketCity;
 use App\Models\warehouse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Ui\Presets\React;
 
 class BranchementController extends Controller
 {
@@ -39,6 +40,7 @@ class BranchementController extends Controller
         $query = branchement::query();
         $query->where('market_id', '=', $this->market_id);
         $query->with(['marketArticle:id,display_name', 'city:id,name']);
+        // search
         if ($request->search) {
             $search = '%' . $request->search . '%';
             $columns = [
@@ -48,15 +50,33 @@ class BranchementController extends Controller
                 'intervention',
                 'estimate_number',
                 'phone',
-                'diameter',
-                'caliber',
-                'nature',
                 'arrival_date',
                 'motive',
             ];
 
             foreach ($columns as $column) {
                 $query->orWhere($column, 'LIKE', $search);
+            }
+        }
+        // filtration
+        if ($request->filter) {
+            $filter = json_decode($request->filter);
+            if ($filter->branchement) {
+                $query->where('market_article_id', '=', $filter->branchement);
+            }
+            if ($filter->type) {
+                $query->where('type', '=', $filter->type);
+            }
+            if ($filter->city) {
+                $query->where('city_id', '=', $filter->city);
+            }
+            if ($filter->range) {
+                if (count($filter->range) == 2) {
+                    $query->whereBetween('created_at', [$filter->range[0], $filter->range[1]]);
+                }
+                if (count($filter->range) == 1) {
+                    $query->whereDate('created_at', '>', $filter->range[0]);
+                }
             }
         }
         $branchements = $query->orderBy('created_at', 'DESC')->paginate(10);
@@ -76,9 +96,6 @@ class BranchementController extends Controller
             'intervention' => 'max:100',
             'estimate_number' => 'required|max:100',
             'phone' => 'required|numeric|digits:10',
-            'diameter' => 'max:255',
-            'caliber' => 'max:255',
-            'nature' => 'max:255',
             'arrival_date' => 'date',
             'motive' => 'max:255',
         ]);
@@ -93,9 +110,6 @@ class BranchementController extends Controller
         $branchement->intervention = $request->intervention;
         $branchement->estimate_number = $request->estimate_number;
         $branchement->phone = $request->phone;
-        $branchement->diameter = $request->diameter;
-        $branchement->caliber = $request->caliber;
-        $branchement->nature = $request->nature;
         $branchement->arrival_date = $request->arrival_date;
         $branchement->motive = $request->motive;
 
@@ -161,7 +175,6 @@ class BranchementController extends Controller
                     }
                 }
             } else {
-                // return response()->json(['message' => 'Cet article n\'existe pas dans l\'entrepôt'], 500);
                 $errors++;
             }
         }
@@ -244,5 +257,16 @@ class BranchementController extends Controller
             }
         }
         return response()->json(['message' => 'Branchement a été supprimé avec succès']);
+    }
+
+    public function filter(Request $request)
+    {
+        $branchements = marketArticle::where('market_id', '=', $this->market_id)->select(['id', 'display_name'])->get();
+        $cities = marketCity::where('market_id', '=', $this->market_id)->select(['id', 'name'])->get();
+        $response = [
+            'branchements' => $branchements,
+            'cities' => $cities,
+        ];
+        return response()->json($response);
     }
 }

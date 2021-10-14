@@ -108,6 +108,7 @@ export const mutations = {
     },
     hideEditArticleDialog(state) {
         state.editArticleDialog = false;
+        state.articleToEdit = [];
     },
     setArticleDelete(state, data) {
         state.articleIdToDelete = data.id;
@@ -280,7 +281,7 @@ export const actions = {
     // articles Actions=======[BEGIN]=========
     storeArticle(context, payload) {
         return new Promise((resolve, reject) => {
-            axios.post('articles/store', {
+            axios.post('admin/articles/store', {
                 name: payload.name,
                 category_id: payload.category,
                 unit_id: payload.unit,
@@ -300,11 +301,8 @@ export const actions = {
     },
     updateArticle(context, payload) {
         return new Promise((resolve, reject) => {
-            axios.patch('articles/update', {
-                id: payload.id,
-                name: payload.name,
-                abr: payload.abr,
-                description: payload.description,
+            axios.patch('admin/articles/update', {
+                ...payload.form
             })
                 .then(response => {
                     // resolve promise
@@ -326,7 +324,7 @@ export const actions = {
     },
     deleteArticle(context, payload) {
         return new Promise((resolve, reject) => {
-            axios.delete('articles/delete', {
+            axios.delete('admin/articles/delete', {
                 data: {
                     id: context.state.articleIdToDelete
                 }
@@ -354,7 +352,7 @@ export const actions = {
 
     getData(context, payload) {
         return new Promise((resolve, reject) => {
-            axios.get('/articles/index', {
+            axios.get('admin/articles/index', {
                 params: {
                     page: context.state.currentPage,
                     search: context.state.search,

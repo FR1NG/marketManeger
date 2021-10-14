@@ -1,7 +1,7 @@
   <template>
   <v-card class="ma-4">
     <!-- delete dialog:BEGIN -->
-    <delete></delete>
+    <delete v-if="deleteDialog"></delete>
     <!-- delete dialog:END -->
     <v-data-table
       :headers="headers"
@@ -13,7 +13,7 @@
     >
       <template v-slot:top>
         <v-toolbar flat>
-          <v-toolbar-title>List Des Employé</v-toolbar-title>
+          <v-toolbar-title>List Des Marchés</v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
 
@@ -42,7 +42,7 @@
 
       <!-- BEGIN:action column -->
       <template v-slot:item.actions="{ item }">
-        <v-btn color="error" @click.stop="remove(item.id)" icon text small>
+        <v-btn color="error" @click.stop="remove(item)" icon text small>
           <v-icon>mdi-delete-outline</v-icon>
         </v-btn>
       </template>
@@ -61,6 +61,7 @@
 
 <script>
 import Delete from "./delete.vue";
+import { mapGetters } from "vuex";
 export default {
   components: {
     Delete,
@@ -88,26 +89,25 @@ export default {
     },
   },
   computed: {
-    items() {
-      return this.$store.getters["admin/markets/markets"];
-    },
-    lastPage() {
-      return this.$store.getters["employe/lastPage"];
-    },
+    ...mapGetters({
+      deleteDialog: "admin/markets/deleteDialog",
+      items: "admin/markets/markets",
+      lastPage: "admin/markets/lastPage",
+    }),
     currentPage: {
       get() {
-        return this.$store.getters["employe/currentPage"];
+        return this.$store.getters["admin/markets/currentPage"];
       },
       set(value) {
-        this.$store.commit("employe/setCurrentPage", { page: value });
+        this.$store.commit("admin/markets/setCurrentPage", { page: value });
       },
     },
     search: {
       get() {
-        return this.$store.getters["employe/search"];
+        return this.$store.getters["admin/markets/search"];
       },
       set(value) {
-        this.$store.commit("employe/setSearch", { search: value });
+        this.$store.commit("admin/markets/setSearch", { search: value });
       },
     },
   },
@@ -129,15 +129,18 @@ export default {
       this.timeout = setTimeout(() => {
         //action
         this.$store
-          .dispatch("employe/getData")
+          .dispatch("admin/markets/getData")
           // promis resolved
           .then(() => {
             this.searchLoading = false;
           });
       }, 500); // delay
     },
-    remove(id) {
-      this.$store.commit("employe/setDelete", { id: id });
+    remove(item) {
+      this.$store.commit("admin/markets/setDelete", {
+        id: item.id,
+        number: item.market_number,
+      });
     },
     handleRowClick({ id }) {
       this.$router.replace({

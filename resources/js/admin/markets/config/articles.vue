@@ -1,5 +1,8 @@
 <template>
   <v-card flat :loading="loading" class="pa-4">
+    <!-- delete category:BEGIN -->
+    <delete-category v-if="deleteCategoryDialog"></delete-category>
+    <!-- delete category:END -->
     <!-- create Category :BEGIN -->
     <create-category v-if="createCategoryDialog"></create-category>
     <!-- create Category :END -->
@@ -28,7 +31,7 @@
 
             <v-spacer></v-spacer>
 
-            <v-btn icon>
+            <v-btn icon @click="remove({ id: item.id })">
               <v-icon>mdi-trash-can-outline</v-icon>
             </v-btn>
           </v-toolbar>
@@ -88,8 +91,9 @@
 import CreateCategory from "./CreateCategory.vue";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import CrateArticle from "./CrateArticle.vue";
+import DeleteCategory from "./DeleteCategory.vue";
 export default {
-  components: { CreateCategory, CrateArticle },
+  components: { CreateCategory, CrateArticle, DeleteCategory },
   data() {
     return {};
   },
@@ -99,18 +103,23 @@ export default {
       createArticleDialog: "admin/marketsConfig/createArticleDialog",
       items: "admin/marketsConfig/articles",
       loading: "admin/marketsConfig/loading",
+      deleteCategoryDialog: "admin/marketsConfig/deleteCategoryDialog",
     }),
   },
   methods: {
     ...mapMutations({
       showCreateCategoryDialog: "admin/marketsConfig/showCreateCategoryDialog",
       showCreateArticleDialog: "admin/marketsConfig/showCreateArticleDialog",
+      setCategoryDelete: "admin/marketsConfig/setCategoryDelete",
     }),
     ...mapActions({
       getData: "admin/marketsConfig/gatArticles",
     }),
     locString(num) {
       return num.toLocaleString();
+    },
+    remove(item) {
+      this.setCategoryDelete({ id: item.id });
     },
   },
 

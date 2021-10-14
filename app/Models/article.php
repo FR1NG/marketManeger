@@ -21,4 +21,14 @@ class article extends Model
     {
         return $this->hasMany(warehouse::class, 'article_id');
     }
+
+    public function achats()
+    {
+        return $this->hasMany(articleEnAchat::class, 'article_id');
+    }
+
+    public function branchements()
+    {
+        return $this->hasMany(articleEnBranchement::class, 'article_id');
+    }
 }

@@ -24,5 +24,8 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+.cursor-pointer:hover {
+  cursor: pointer;
+}
 </style>

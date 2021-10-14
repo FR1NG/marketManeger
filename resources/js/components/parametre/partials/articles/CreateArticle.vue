@@ -1,6 +1,6 @@
 <template>
   <v-dialog :value="true" persistent max-width="400px">
-    <v-card>
+    <v-card :disabled="loading" :loading="loading">
       <v-form @submit.prevent="handleSubmit">
         <v-card-title>
           <span class="text-h5">Nouveau Article</span>
@@ -91,30 +91,32 @@ export default {
       this.$store.commit("article/hideCreateArticleDialog");
     },
     handleSubmit() {
-      this.loading = true;
-      this.$store
-        .dispatch("article/storeArticle", {
-          name: this.name,
-          category: this.category,
-          unit: this.unit,
-          notificationQuantity: this.notificationQuantity,
-        })
-        .then(() => {
-          // stop loading
-          this.loading = false;
-          // hide dialog
-          this.closeDialog();
-        })
-        .catch((error) => {
-          // push errors
-          if (error) {
-            error.data.errors.name
-              ? (this.errors.name = error.data.errors.name)
-              : (this.errors.name = []);
-          }
-          // stop loading
-          this.loading = false;
-        });
+      if (!this.loading) {
+        this.loading = true;
+        this.$store
+          .dispatch("article/storeArticle", {
+            name: this.name,
+            category: this.category,
+            unit: this.unit,
+            notificationQuantity: this.notificationQuantity,
+          })
+          .then(() => {
+            // stop loading
+            this.loading = false;
+            // hide dialog
+            this.closeDialog();
+          })
+          .catch((error) => {
+            // push errors
+            if (error) {
+              error.data.errors.name
+                ? (this.errors.name = error.data.errors.name)
+                : (this.errors.name = []);
+            }
+            // stop loading
+            this.loading = false;
+          });
+      }
     },
   },
 };

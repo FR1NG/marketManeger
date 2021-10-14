@@ -1,7 +1,7 @@
 <template>
   <v-row class="mt-4">
     <!-- BEGIN:to day  -->
-    <v-col cols="12" md="4">
+    <v-col cols="12" md="6">
       <v-card rounded min-height="140">
         <v-list-item three-line>
           <v-list-item-content>
@@ -21,7 +21,7 @@
     <!-- END:to day  -->
 
     <!-- BEGIN: -->
-    <v-col cols="12" md="4">
+    <v-col cols="12" md="6">
       <v-card rounded min-height="140">
         <v-list-item three-line>
           <v-list-item-content>
@@ -43,7 +43,7 @@
     <!-- END: -->
 
     <!-- BEGIN:today -->
-    <v-col cols="12" md="4">
+    <!-- <v-col cols="12" md="4">
       <v-card rounded min-height="140">
         <v-list-item three-line>
           <v-list-item-content>
@@ -57,7 +57,7 @@
           </v-list-item-avatar>
         </v-list-item>
       </v-card>
-    </v-col>
+    </v-col> -->
 
     <!-- END:today -->
   </v-row>

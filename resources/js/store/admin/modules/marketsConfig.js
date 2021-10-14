@@ -7,6 +7,7 @@ export const state = {
     loading: false,
     createCategoryDialog: false,
     categoryToCreateOnId: null,
+    categoryIdToDelete: null,
 };
 
 export const getters = {
@@ -17,6 +18,9 @@ export const getters = {
     createCategoryDialog: state => state.createCategoryDialog,
     createArticleDialog: state => state.categoryToCreateOnId != null,
     categoryToCreateOnId: state => state.categoryToCreateOnId,
+    categoryIdToDelete: state => state.categoryIdToDelete,
+    deleteCategoryDialog: state => state.categoryIdToDelete !== null,
+
 };
 
 export const mutations = {
@@ -47,7 +51,29 @@ export const mutations = {
     },
     setCities(state, data) {
         state.cities = data.cities;
-    }
+    },
+    setCategoryDelete(state, data) {
+        state.categoryIdToDelete = data.id;
+    },
+    endCategoryDelete(state) {
+        state.categoryIdToDelete = null;
+    },
+    setRemoveCityLoading(state, data) {
+        state.cities = state.cities.map(el => {
+            if (el.id == data.id) {
+                el.removeLoading = true;
+            }
+            return el;
+        });
+    },
+    endRemoveCityLoading(state, data) {
+        state.cities = state.cities.map(el => {
+            if (el.id == data.id) {
+                el.removeLoading = false;
+            }
+            return el;
+        });
+    },
 };
 
 export const actions = {
@@ -203,6 +229,54 @@ export const actions = {
                 console.log(error.response);
                 // reject
                 reject(error);
+                // alert
+                context.dispatch('alert/show', { text: error.response.data.message, type: 'error' }, { root: true });
+            });
+        });
+    },
+    deleteCategory(context, payload) {
+        return new Promise((resolve, reject) => {
+            axios.delete('admin/markets/categories/delete', {
+                data: {
+                    id: context.getters.categoryIdToDelete,
+                }
+            }).then(response => {
+                // resolve
+                resolve(response);
+                // alert
+                context.dispatch('alert/show', { text: response.data.message, type: 'success' }, { root: true });
+                // end delete 
+                context.commit('endCategoryDelete');
+                // refetsh data
+                context.dispatch('gatArticles', { market_id: payload.market_id });
+            }).catch(error => {
+                // reject
+                reject(error);
+                // alert
+                context.dispatch('alert/show', { text: error.response.data.message, type: 'error' }, { root: true });
+            });
+        });
+    },
+    deleteCity(context, payload) {
+        return new Promise((resolve, reject) => {
+            axios.delete('admin/markets/cities/delete', {
+                data: {
+                    id: payload.id
+                }
+            }).then(response => {
+                // resolve
+                resolve(response);
+                // stop loading
+                context.commit('endRemoveCityLoading', { id: payload.id });
+                // alert
+                context.dispatch('alert/show', { text: response.data.message, type: 'success' }, { root: true });
+                // refetsh data
+                context.dispatch('getCities', { market_id: payload.market_id });
+            }).catch(error => {
+                // reject
+                reject(error);
+                // stop loading
+                context.commit('endRemoveCityLoading', { id: payload.id });
                 // alert
                 context.dispatch('alert/show', { text: error.response.data.message, type: 'error' }, { root: true });
             });

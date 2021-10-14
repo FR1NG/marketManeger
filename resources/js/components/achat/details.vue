@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-card class="pa-4" :loading="loading">
+    <v-card class="pa-4" :disabled="loading" :loading="loading">
       <v-toolbar flat color="primary  lighten-4">
         <v-toolbar-title>Details</v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>

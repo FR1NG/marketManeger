@@ -124,6 +124,14 @@ const router = new VueRouter({
                 role: 'manager'
             },
         },
+        {
+            component: () => import('../components/achat/edit'),
+            name: "modifierAchat",
+            path: "/manager/achats/:id/modifier",
+            meta: {
+                role: 'manager'
+            },
+        },
         // livraison routers
         {
             component: () => import('../components/achat/livraison/details.vue'),

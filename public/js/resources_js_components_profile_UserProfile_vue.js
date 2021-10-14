@@ -157,11 +157,8 @@ __webpack_require__.r(__webpack_exports__);
           form: this.password
         }).then(function () {
           _this2.loading = false;
-          _this2.password = {
-            old: "",
-            "new": "",
-            new_confirmation: ""
-          };
+
+          _this2.resetPasswordForm();
         })["catch"](function (error) {
           _this2.loading = false;
 
@@ -174,6 +171,14 @@ __webpack_require__.r(__webpack_exports__);
           }
         });
       }
+    },
+    resetPasswordForm: function resetPasswordForm() {
+      this.resetErrors();
+      this.password = {
+        old: "",
+        "new": "",
+        new_confirmation: ""
+      };
     }
   },
   mounted: function mounted() {
@@ -414,7 +419,14 @@ var render = function() {
                     [
                       _c("v-spacer"),
                       _vm._v(" "),
-                      _c("v-btn", { attrs: { text: "" } }, [_vm._v("Annuler")]),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { text: "" },
+                          on: { click: _vm.resetPasswordForm }
+                        },
+                        [_vm._v("Annuler")]
+                      ),
                       _vm._v(" "),
                       _c(
                         "v-btn",

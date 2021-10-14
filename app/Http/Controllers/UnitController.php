@@ -56,8 +56,11 @@ class UnitController extends Controller
 
     public function delete(Request $request)
     {
-        $unit = unit::find($request->id);
+        $unit = unit::where('id', '=', $request->id)->withCount('articles')->first();
         if ($unit) {
+            if ($unit->articles_count > 0) {
+                return response()->json(['message' => 'L\'unité n\'est pas vide'], 500);
+            }
             $process = $unit->delete();
             if ($process) {
                 return response()->json(['message' => 'L\'unité a été supprimée avec succès'], 200);

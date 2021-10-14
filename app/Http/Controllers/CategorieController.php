@@ -52,8 +52,12 @@ class CategorieController extends Controller
 
     public function delete(Request $request)
     {
-        $category = categorie::find($request->id);
+
+        $category = categorie::where('id', '=', $request->id)->withCount('articles')->first();
         if ($category) {
+            if ($category->articles_count > 0) {
+                return response()->json(['message' => 'La catégorie n\'est pas vide'], 500);
+            }
             $process = $category->delete();
             if ($process) {
                 return response()->json(['message' => 'La catégorie a été supprimée avec succès'], 200);

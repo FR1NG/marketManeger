@@ -8,7 +8,7 @@
         transition="dialog-bottom-transition"
         scrollable
       >
-        <v-card tile>
+        <v-card tile :disabled="loading" :loading="loading">
           <v-toolbar flat dark color="primary">
             <v-btn icon dark @click="closeDialog">
               <v-icon>mdi-close</v-icon>
@@ -155,13 +155,13 @@
               </v-row>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn outlined class="mr-4">Annuler</v-btn>
+                <v-btn outlined class="mr-4" @click="resetForm">Annuler</v-btn>
                 <v-btn
                   color="success"
                   class="mr-4"
                   type="submit"
                   :loading="loading"
-                  >Ajouter
+                  >Enregistrer
                 </v-btn>
               </v-card-actions>
             </v-form>
@@ -178,8 +178,8 @@
 export default {
   data() {
     return {
+      achat_id: null,
       form: {
-        achat_id: null,
         deliveryNoteNumber: null,
         date: null,
         deliveryMan: "",
@@ -237,7 +237,11 @@ export default {
     },
     addToCart() {
       // if item selected and quantity setted
-      if (this.item.article_id && this.item.quantity) {
+      if (
+        this.item.article_id &&
+        this.item.quantity &&
+        this.item.quantity != 0
+      ) {
         const exist = this.cartItems.some(
           (element) => element.article_id == this.selectedItem.article_id
         );
@@ -322,59 +326,66 @@ export default {
           timeOut: 5000,
         });
       } else {
-        this.loading = true;
-        console.log(this.form);
-        console.log(this.cartItems);
-        this.$store
-          .dispatch("livraison/store", {
-            form: this.form,
-            items: this.cartItems,
-          })
-          .then(() => {
-            this.loading = false;
-            this.form = {
-              deliveryNoteNumber: null,
-              date: null,
-              deliveryMan: "",
-              deliveryCost: null,
-            };
-            this.errors = {
-              deliveryNoteNumber: [],
-              date: [],
-              deliveryMan: [],
-              deliveryCost: [],
-            };
-            this.cartItems = [];
-            //   hide Dialog
-            this.$store.commit("achat/hideCreateDelivery");
-          })
-          .catch((error) => {
-            console.log(error);
-            this.loading = false;
-            if (error.data) {
-              error.data.errors.dilevery_note_number
-                ? (this.errors.deliveryNoteNumber =
-                    error.data.errors.dilevery_note_number)
-                : (this.errors.deliveryNoteNumber = []);
+        if (!this.loading) {
+          this.resetErrors();
+          this.loading = true;
+          this.$store
+            .dispatch("livraison/store", {
+              form: { ...this.form, achat_id: this.achat_id },
+              items: this.cartItems,
+            })
+            .then(() => {
+              this.loading = false;
 
-              error.data.errors.date
-                ? (this.errors.date = error.data.errors.date)
-                : (this.errors.date = []);
+              this.$store.commit("achat/hideCreateDelivery");
+              this.resetForm();
+              //   hide Dialog
+            })
+            .catch((error) => {
+              console.log(error);
+              this.loading = false;
+              if (error.data) {
+                error.data.errors.dilevery_note_number
+                  ? (this.errors.deliveryNoteNumber =
+                      error.data.errors.dilevery_note_number)
+                  : (this.errors.deliveryNoteNumber = []);
 
-              error.data.errors.delivery_man
-                ? (this.errors.deliveryMan = error.data.errors.delivery_man)
-                : (this.errors.deliveryMan = []);
+                error.data.errors.date
+                  ? (this.errors.date = error.data.errors.date)
+                  : (this.errors.date = []);
 
-              error.data.errors.delivery_cost
-                ? (this.errors.deliveryCost = error.data.errors.delivery_cost)
-                : (this.errors.deliveryCost = []);
-            }
-          });
+                error.data.errors.delivery_man
+                  ? (this.errors.deliveryMan = error.data.errors.delivery_man)
+                  : (this.errors.deliveryMan = []);
+
+                error.data.errors.delivery_cost
+                  ? (this.errors.deliveryCost = error.data.errors.delivery_cost)
+                  : (this.errors.deliveryCost = []);
+              }
+            });
+        }
       }
     },
-
+    resetErrors() {
+      this.errors = {
+        deliveryNoteNumber: [],
+        date: [],
+        deliveryMan: [],
+        deliveryCost: [],
+      };
+    },
+    resetForm() {
+      this.cartItems = [];
+      this.form = {
+        deliveryNoteNumber: null,
+        date: null,
+        deliveryMan: "",
+        deliveryCost: null,
+      };
+      this.resetErrors();
+    },
     setData() {
-      this.form.achat_id = this.$route.params.id;
+      this.achat_id = this.$route.params.id;
     },
   },
   created() {

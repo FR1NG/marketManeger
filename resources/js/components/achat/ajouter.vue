@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-card class="pa-4">
+    <v-card class="pa-4" :disabled="loading" :loading="loading">
       <v-toolbar flat>
         <v-toolbar-title> Nouveau Achat </v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
@@ -154,9 +154,9 @@
         </v-row>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn outlined class="mr-4">Annuler</v-btn>
+          <v-btn outlined class="mr-4" @click="resetForm">Annuler</v-btn>
           <v-btn color="success" class="mr-4" type="submit" :loading="loading"
-            >Ajouter
+            >Enregistrer
           </v-btn>
         </v-card-actions>
       </v-form>
@@ -280,52 +280,61 @@ export default {
       );
     },
     handleSubmit() {
-      this.loading = true;
-      this.$store
-        .dispatch("achat/store", {
-          form: this.form,
-          amount: this.total,
-          items: this.cartItems,
-        })
-        .then(() => {
-          this.loading = false;
-          this.form = {
-            ndbc: "",
-            fournisseur: "",
-            paymentMode: "",
-            checkNumber: "",
-            deadline: null,
-          };
-          this.errors = {
-            ndbc: [],
-            fournisseur: [],
-            paymentMode: [],
-            checkNumber: [],
-            deadline: [],
-          };
-          this.cartItems = [];
-        })
-        .catch((error) => {
-          console.log(error);
-          this.loading = false;
-          if (error.data) {
-            error.data.errors.ndbc
-              ? (this.errors.ndbc = error.data.errors.ndbc)
-              : (this.errors.ndbc = []);
+      if (!this.loading) {
+        this.resetErrors();
+        this.loading = true;
+        this.$store
+          .dispatch("achat/store", {
+            form: this.form,
+            amount: this.total,
+            items: this.cartItems,
+          })
+          .then(() => {
+            this.loading = false;
+            this.resetForm();
+          })
+          .catch((error) => {
+            console.log(error);
+            this.loading = false;
+            if (error.data) {
+              error.data.errors.ndbc
+                ? (this.errors.ndbc = error.data.errors.ndbc)
+                : (this.errors.ndbc = []);
 
-            error.data.errors.fournisseur
-              ? (this.errors.fournisseur = error.data.errors.fournisseur)
-              : (this.errors.fournisseur = []);
+              error.data.errors.fournisseur
+                ? (this.errors.fournisseur = error.data.errors.fournisseur)
+                : (this.errors.fournisseur = []);
 
-            error.data.errors.payment_mode
-              ? (this.errors.paymentMode = error.data.errors.payment_mode)
-              : (this.errors.paymentMode = []);
+              error.data.errors.payment_mode
+                ? (this.errors.paymentMode = error.data.errors.payment_mode)
+                : (this.errors.paymentMode = []);
 
-            error.data.errors.deadline
-              ? (this.errors.deadline = error.data.errors.deadline)
-              : (this.errors.deadline = []);
-          }
-        });
+              error.data.errors.deadline
+                ? (this.errors.deadline = error.data.errors.deadline)
+                : (this.errors.deadline = []);
+            }
+          });
+      }
+    },
+    resetErrors() {
+      this.errors = {
+        ndbc: [],
+        fournisseur: [],
+        paymentMode: [],
+        checkNumber: [],
+        deadline: [],
+      };
+    },
+    resetForm() {
+      this.cartItems = [];
+      this.resetErrors();
+      this.form = {
+        ndbc: "",
+        fournisseur: "",
+        paymentMode: "",
+        checkNumber: "",
+        deadline: null,
+      };
     },
     getData() {
       this.articlesLoading = true;

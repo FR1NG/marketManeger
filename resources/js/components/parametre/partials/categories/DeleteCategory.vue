@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="deleteDialog" persistent max-width="400">
-    <v-card>
+    <v-card :disabled="loading" :loading="loading">
       <v-card-title class="text-h5">
         êtes-vous sûr de vouloir supprimer cette Catégorie?
       </v-card-title>
@@ -33,15 +33,17 @@ export default {
       this.$store.commit("article/endDeleteCategory");
     },
     confirmDelete() {
-      this.loading = true;
-      this.$store
-        .dispatch("article/deleteCategory")
-        .then(() => {
-          this.loading = false;
-        })
-        .catch(() => {
-          this.loading = false;
-        });
+      if (!this.loading) {
+        this.loading = true;
+        this.$store
+          .dispatch("article/deleteCategory")
+          .then(() => {
+            this.loading = false;
+          })
+          .catch(() => {
+            this.loading = false;
+          });
+      }
     },
   },
 };

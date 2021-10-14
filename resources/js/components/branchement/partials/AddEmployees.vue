@@ -6,7 +6,7 @@
     max-width="500px"
     transition="dialog-transition"
   >
-    <v-card>
+    <v-card :loading="submitLoading" :disabled="submitLoading">
       <v-card-title> Sélectionner des employés</v-card-title>
       <v-form @submit.prevent="handleSubmit">
         <v-card-text>
@@ -59,18 +59,20 @@ export default {
       });
     },
     handleSubmit() {
-      this.submitLoading = true;
-      this.$store
-        .dispatch("branchement/addEmployees", {
-          employe_id: this.selectedEmployee,
-          branchement_id: this.$route.params.id,
-        })
-        .then(() => {
-          this.submitLoading = false;
-        })
-        .catch((error) => {
-          this.submitLoading = false;
-        });
+      if (!this.submitLoading) {
+        this.submitLoading = true;
+        this.$store
+          .dispatch("branchement/addEmployees", {
+            employe_id: this.selectedEmployee,
+            branchement_id: this.$route.params.id,
+          })
+          .then(() => {
+            this.submitLoading = false;
+          })
+          .catch((error) => {
+            this.submitLoading = false;
+          });
+      }
     },
     hideDialog() {
       this.$store.commit("branchement/hideAddEmployees");

@@ -47,6 +47,28 @@ class DashboardController extends Controller
             $count += $item->branchements_count;
         }
 
+        // warehouse shortage
+        $wh = article::with(['itemsInWarehouse' => function ($q) {
+            $q->where('market_id', '=', $this->market_id);
+        }])->get()
+            ->map(function ($article) {
+                return [
+                    'id'             => $article->id,
+                    'name'           => $article->name,
+                    'quantity'          => $article->itemsInWarehouse->sum('quantity'),
+                    'notification_quantity'           => $article->notification_quantity,
+                ];
+            });
+
+        $shortage_count = 0;
+        foreach ($wh as $item) {
+            if ($item['quantity'] <= $item['notification_quantity']) {
+                $shortage_count++;
+            }
+        }
+
+
+        // statistics by cities
         $articles = marketArticle::where('market_id', '=', $this->market_id)
             ->select(['id', 'display_name'])
             ->get();
@@ -102,6 +124,7 @@ class DashboardController extends Controller
         $accomplishement = [$branchements_count, ($quantity - $branchements_count)];
 
         return response()->json([
+            'shortage_count' => $shortage_count,
             'branchements' => $branchements,
             'incom' => $incom,
             'branchements_count' => $count,
